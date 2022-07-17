@@ -1,9 +1,9 @@
 ---
-title: "Downscaling Trace-21ka paleoclimate simulation."
+title: "Load UERRA"
 
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Downscaling Trace-21ka paleoclimate simulation.}
+  %\VignetteIndexEntry{Load UERRA}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
