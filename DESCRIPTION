@@ -13,5 +13,6 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://github.com/dinilu/dsclim
+URL: https://github.com/dinilu/dsclim,
+    http://dnietolugilde.com/dsclim/
 BugReports: https://github.com/dinilu/dsclim/issues

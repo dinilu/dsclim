@@ -2,6 +2,7 @@
 # dsclim
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/dinilu/dsclim/workflows/R-CMD-check/badge.svg)](https://github.com/dinilu/dsclim/actions)
 <!-- badges: end -->
 
 The goal of dsclim is to ...
