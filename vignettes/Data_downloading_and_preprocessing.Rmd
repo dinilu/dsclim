@@ -14,9 +14,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Trace-21ka paleoclimate data
+## TraCE21ka paleoclimate data
 
-Trace-21ka paleoclimate data can be downloaded from [https://www.earthsystemgrid.org/project/trace.html](https://www.earthsystemgrid.org/project/trace.html). This website, however, does not provide documentation with detailed information (file names, variable names, units, etcetera) used in the data repository. You have to look for such information in the following link [(http://www.cgd.ucar.edu/ccr/TraCE/fields.html)](http://www.cgd.ucar.edu/ccr/TraCE/fields.html). Complementary information can be found in documentation website for the model and the developing laboratory: [http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html](http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html) and [http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html](http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html).
+### Data download 
+
+TraCE21ka paleoclimate data can be downloaded from [https://www.earthsystemgrid.org/project/trace.html](https://www.earthsystemgrid.org/project/trace.html). This website, however, does not provide documentation with detailed information (file names, variable names, units, etcetera) used in the data repository. You have to look for such information in the following link [(http://www.cgd.ucar.edu/ccr/TraCE/fields.html)](http://www.cgd.ucar.edu/ccr/TraCE/fields.html). Complementary information can be found in documentation website for the model and the developing laboratory: [http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html](http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html) and [http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html](http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html).
 
 We opted to download files for all time periods (since 22.000 years BP to 1990 CE) for 'surface temperature (radiative)' (TS), 'maximum surface temperature over output period' (TSMX), 'minimum surface temperature over output period' (TSMN), 'solar insolation' (SOLIN), 'surface pressure' (PS), 'convective precipitation rate (liq + ice)' (PRECC), 'surface latent heat flux' (LHFLX), and 'vertically-integrated total cloud' (CLDTOT).
 
@@ -720,7 +722,7 @@ c.retrieve(
 Before importing the data in an R session, we need to define a dictionary to standarize units of variables to the `climate4R` vocabulary (check ` climate4R.UDG::C4R.vocabulary()`.
 
 ```{r create_cmip5_dictionary, eval = FALSE}
-file.create("../../Data/UERRA/UERRA_dictionary.dic")
+file.create("../../Data/CMIP5/CMIP5_dictionary.dic")
 
 writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface",
 "tasmax,tasmax,1mo,0,12,max,-273.15,1,0,0,",
