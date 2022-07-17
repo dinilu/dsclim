@@ -80,10 +80,14 @@
     
     
 <div class="section level2">
-<h2 id="trace-21ka-paleoclimate-data">Trace-21ka paleoclimate data<a class="anchor" aria-label="anchor" href="#trace-21ka-paleoclimate-data"></a>
+<h2 id="trace21ka-paleoclimate-data">TraCE21ka paleoclimate data<a class="anchor" aria-label="anchor" href="#trace21ka-paleoclimate-data"></a>
 </h2>
-<p>Trace-21ka paleoclimate data can be downloaded from <a href="https://www.earthsystemgrid.org/project/trace.html" class="external-link">https://www.earthsystemgrid.org/project/trace.html</a>. This website, however, does not provide documentation with detailed information (file names, variable names, units, etcetera) used in the data repository. You have to look for such information in the following link <a href="http://www.cgd.ucar.edu/ccr/TraCE/fields.html" class="external-link">(http://www.cgd.ucar.edu/ccr/TraCE/fields.html)</a>. Complementary information can be found in documentation website for the model and the developing laboratory: <a href="http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html" class="external-link">http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html</a> and <a href="http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html" class="external-link">http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html</a>.</p>
+<div class="section level3">
+<h3 id="data-download">Data download<a class="anchor" aria-label="anchor" href="#data-download"></a>
+</h3>
+<p>TraCE21ka paleoclimate data can be downloaded from <a href="https://www.earthsystemgrid.org/project/trace.html" class="external-link">https://www.earthsystemgrid.org/project/trace.html</a>. This website, however, does not provide documentation with detailed information (file names, variable names, units, etcetera) used in the data repository. You have to look for such information in the following link <a href="http://www.cgd.ucar.edu/ccr/TraCE/fields.html" class="external-link">(http://www.cgd.ucar.edu/ccr/TraCE/fields.html)</a>. Complementary information can be found in documentation website for the model and the developing laboratory: <a href="http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html" class="external-link">http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html</a> and <a href="http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html" class="external-link">http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html</a>.</p>
 <p>We opted to download files for all time periods (since 22.000 years BP to 1990 CE) for ‘surface temperature (radiative)’ (TS), ‘maximum surface temperature over output period’ (TSMX), ‘minimum surface temperature over output period’ (TSMN), ‘solar insolation’ (SOLIN), ‘surface pressure’ (PS), ‘convective precipitation rate (liq + ice)’ (PRECC), ‘surface latent heat flux’ (LHFLX), and ‘vertically-integrated total cloud’ (CLDTOT).</p>
+</div>
 <div class="section level3 tabset">
 <h3 id="inspect-files-and-variables">Inspect files and variables<a class="anchor" aria-label="anchor" href="#inspect-files-and-variables"></a>
 </h3>
@@ -686,10 +690,9 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section level3 tabset">
-<h3 id="future-projections">Future projections<a class="anchor" aria-label="anchor" href="#future-projections"></a>
-</h3>
+<div class="section level4 tabset">
+<h4 id="future-projections">Future projections<a class="anchor" aria-label="anchor" href="#future-projections"></a>
+</h4>
 <p>Select a General Circulation Model</p>
 
 
@@ -783,12 +786,14 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section level3">
 <h3 id="create-dictionary-2">Create dictionary<a class="anchor" aria-label="anchor" href="#create-dictionary-2"></a>
 </h3>
 <p>Before importing the data in an R session, we need to define a dictionary to standarize units of variables to the <code>climate4R</code> vocabulary (check <code><a href="https://rdrr.io/pkg/climate4R.UDG/man/C4R.vocabulary.html" class="external-link">climate4R.UDG::C4R.vocabulary()</a></code>.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.create</a></span><span class="op">(</span><span class="st">"../../Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.create</a></span><span class="op">(</span><span class="st">"../../Data/CMIP5/CMIP5_dictionary.dic"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface"</span>,</span>
 <span><span class="st">"tasmax,tasmax,1mo,0,12,max,-273.15,1,0,0,"</span>,</span>
