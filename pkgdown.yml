@@ -3,7 +3,12 @@ pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   Data_downloading_and_preprocessing: Data_downloading_and_preprocessing.html
-last_built: 2022-07-17T22:37Z
+  Downscale_with_Cross-validation: Downscale_with_Cross-validation.html
+  Load_Trace21ka: Load_Trace21ka.html
+  Load_UERRA: Load_UERRA.html
+  Model_calibration_and_cross_validation: Model_calibration_and_cross_validation.html
+  Summary_cross-validation: Summary_cross-validation.html
+last_built: 2022-07-17T22:46Z
 urls:
   reference: http://dnietolugilde.com/dsclim/reference
   article: http://dnietolugilde.com/dsclim/articles
