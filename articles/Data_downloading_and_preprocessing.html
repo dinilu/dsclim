@@ -578,6 +578,230 @@
 <span>           <span class="st">"../../Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
+<div class="section level2">
+<h2 id="cmip5-data">CMIP5 data<a class="anchor" aria-label="anchor" href="#cmip5-data"></a>
+</h2>
+<div class="section level3">
+<h3 id="downloading-files-from-dataserver-1">Downloading files from dataserver<a class="anchor" aria-label="anchor" href="#downloading-files-from-dataserver-1"></a>
+</h3>
+<blockquote>
+<p>Note that CDS requires to register a free account to access data. Downloading scripts could request user and password in each iteration or can be configured to store account data in the system.</p>
+</blockquote>
+<blockquote>
+<p>Data format: Data were downloaded in GRIB format because the Climate Data Operator library (cdo) seems to behave better with GRIB than with NetCDF files.</p>
+</blockquote>
+<div class="section level4 tabset">
+<h4 id="historical-data">Historical data<a class="anchor" aria-label="anchor" href="#historical-data"></a>
+</h4>
+<p>Select a General Circulation Model</p>
+
+
+
+<ul class="nav nav-tabs" id="historical-data" role="tablist">
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#cesm1_cam5" id="cesm1_cam5-tab" type="button" role="tab" aria-controls="cesm1_cam5" aria-selected="true" class="active nav-link">CESM1_CAM5</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#csiro-mk3-6-0" id="csiro-mk3-6-0-tab" type="button" role="tab" aria-controls="csiro-mk3-6-0" aria-selected="false" class="nav-link">CSIRO-Mk3-6-0</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#ipsl-cm5a-mr" id="ipsl-cm5a-mr-tab" type="button" role="tab" aria-controls="ipsl-cm5a-mr" aria-selected="false" class="nav-link">IPSL-CM5A-MR</button></li>
+</ul>
+<div class="tab-content">
+<div class="active  tab-pane" id="cesm1_cam5" role="tabpanel" aria-labelledby="cesm1_cam5-tab">
+
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1"></a><span class="im">import</span> cdsapi</span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a>c <span class="op">=</span> cdsapi.Client()</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a>c.retrieve(</span>
+<span id="cb20-6"><a href="#cb20-6"></a>  <span class="st">'projections-cmip5-monthly-single-levels'</span>,</span>
+<span id="cb20-7"><a href="#cb20-7"></a>  {</span>
+<span id="cb20-8"><a href="#cb20-8"></a>    <span class="st">'ensemble_member'</span>: <span class="st">'r1i1p1'</span>,</span>
+<span id="cb20-9"><a href="#cb20-9"></a>    <span class="st">'format'</span>: <span class="st">'zip'</span>,</span>
+<span id="cb20-10"><a href="#cb20-10"></a>    <span class="st">'experiment'</span>: <span class="st">'historical'</span>,</span>
+<span id="cb20-11"><a href="#cb20-11"></a>    <span class="st">'variable'</span>: [</span>
+<span id="cb20-12"><a href="#cb20-12"></a>      <span class="st">'10m_wind_speed'</span>,</span>
+<span id="cb20-13"><a href="#cb20-13"></a>      <span class="st">'2m_temperature'</span>,</span>
+<span id="cb20-14"><a href="#cb20-14"></a>      <span class="st">'maximum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb20-15"><a href="#cb20-15"></a>      <span class="st">'minimum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb20-16"><a href="#cb20-16"></a>      <span class="st">'near_surface_relative_humidity'</span>,</span>
+<span id="cb20-17"><a href="#cb20-17"></a>      <span class="st">'surface_pressure'</span>,</span>
+<span id="cb20-18"><a href="#cb20-18"></a>      <span class="st">'total_cloud_cover'</span>,</span>
+<span id="cb20-19"><a href="#cb20-19"></a>      <span class="st">'mean_precipitation_flux'</span>, </span>
+<span id="cb20-20"><a href="#cb20-20"></a>      ],</span>
+<span id="cb20-21"><a href="#cb20-21"></a>    <span class="st">'model'</span>: <span class="st">'cesm1_cam5'</span>,</span>
+<span id="cb20-22"><a href="#cb20-22"></a>    <span class="st">'period'</span>: <span class="st">'185001-200512'</span>,</span>
+<span id="cb20-23"><a href="#cb20-23"></a>  },</span>
+<span id="cb20-24"><a href="#cb20-24"></a>  <span class="st">'CESM1-CAM5_historical.zip'</span>)</span></code></pre></div>
+</div>
+<div class="tab-pane" id="csiro-mk3-6-0" role="tabpanel" aria-labelledby="csiro-mk3-6-0-tab">
+
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a><span class="im">import</span> cdsapi</span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a>c <span class="op">=</span> cdsapi.Client()</span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a>c.retrieve(</span>
+<span id="cb21-6"><a href="#cb21-6"></a>  <span class="st">'projections-cmip5-monthly-single-levels'</span>,</span>
+<span id="cb21-7"><a href="#cb21-7"></a>  {</span>
+<span id="cb21-8"><a href="#cb21-8"></a>    <span class="st">'ensemble_member'</span>: <span class="st">'r1i1p1'</span>,</span>
+<span id="cb21-9"><a href="#cb21-9"></a>    <span class="st">'format'</span>: <span class="st">'zip'</span>,</span>
+<span id="cb21-10"><a href="#cb21-10"></a>    <span class="st">'experiment'</span>: <span class="st">'historical'</span>,</span>
+<span id="cb21-11"><a href="#cb21-11"></a>    <span class="st">'variable'</span>: [</span>
+<span id="cb21-12"><a href="#cb21-12"></a>      <span class="st">'10m_wind_speed'</span>,</span>
+<span id="cb21-13"><a href="#cb21-13"></a>      <span class="st">'2m_temperature'</span>,</span>
+<span id="cb21-14"><a href="#cb21-14"></a>      <span class="st">'maximum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb21-15"><a href="#cb21-15"></a>      <span class="st">'minimum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb21-16"><a href="#cb21-16"></a>      <span class="st">'near_surface_relative_humidity'</span>,</span>
+<span id="cb21-17"><a href="#cb21-17"></a>      <span class="st">'surface_pressure'</span>,</span>
+<span id="cb21-18"><a href="#cb21-18"></a>      <span class="st">'total_cloud_cover'</span>,</span>
+<span id="cb21-19"><a href="#cb21-19"></a>      <span class="st">'mean_precipitation_flux'</span>, </span>
+<span id="cb21-20"><a href="#cb21-20"></a>    ],</span>
+<span id="cb21-21"><a href="#cb21-21"></a>    <span class="st">'model'</span>: <span class="st">'csiro_mk3_6_0'</span>,</span>
+<span id="cb21-22"><a href="#cb21-22"></a>    <span class="st">'period'</span>: <span class="st">'185001-200512'</span>,</span>
+<span id="cb21-23"><a href="#cb21-23"></a>  },</span>
+<span id="cb21-24"><a href="#cb21-24"></a>  <span class="st">'CSIRO-Mk3-6-0_historical.zip'</span>)</span></code></pre></div>
+</div>
+<div class="tab-pane" id="ipsl-cm5a-mr" role="tabpanel" aria-labelledby="ipsl-cm5a-mr-tab">
+
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1"></a><span class="im">import</span> cdsapi</span>
+<span id="cb22-2"><a href="#cb22-2"></a></span>
+<span id="cb22-3"><a href="#cb22-3"></a>c <span class="op">=</span> cdsapi.Client()</span>
+<span id="cb22-4"><a href="#cb22-4"></a></span>
+<span id="cb22-5"><a href="#cb22-5"></a>c.retrieve(</span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="st">'projections-cmip5-monthly-single-levels'</span>,</span>
+<span id="cb22-7"><a href="#cb22-7"></a>  {</span>
+<span id="cb22-8"><a href="#cb22-8"></a>    <span class="st">'ensemble_member'</span>: <span class="st">'r1i1p1'</span>,</span>
+<span id="cb22-9"><a href="#cb22-9"></a>    <span class="st">'format'</span>: <span class="st">'zip'</span>,</span>
+<span id="cb22-10"><a href="#cb22-10"></a>    <span class="st">'experiment'</span>: <span class="st">'historical'</span>,</span>
+<span id="cb22-11"><a href="#cb22-11"></a>    <span class="st">'variable'</span>: [</span>
+<span id="cb22-12"><a href="#cb22-12"></a>      <span class="st">'10m_wind_speed'</span>,</span>
+<span id="cb22-13"><a href="#cb22-13"></a>      <span class="st">'2m_temperature'</span>,</span>
+<span id="cb22-14"><a href="#cb22-14"></a>      <span class="st">'maximum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb22-15"><a href="#cb22-15"></a>      <span class="st">'minimum_2m_temperature_in_the_last_24_hours'</span>, </span>
+<span id="cb22-16"><a href="#cb22-16"></a>      <span class="st">'near_surface_relative_humidity'</span>,</span>
+<span id="cb22-17"><a href="#cb22-17"></a>      <span class="st">'surface_pressure'</span>,</span>
+<span id="cb22-18"><a href="#cb22-18"></a>      <span class="st">'total_cloud_cover'</span>,</span>
+<span id="cb22-19"><a href="#cb22-19"></a>      <span class="st">'mean_precipitation_flux'</span>, </span>
+<span id="cb22-20"><a href="#cb22-20"></a>    ],</span>
+<span id="cb22-21"><a href="#cb22-21"></a>    <span class="st">'model'</span>: <span class="st">'ipsl_cm5a_mr'</span>,</span>
+<span id="cb22-22"><a href="#cb22-22"></a>    <span class="st">'period'</span>: <span class="st">'185001-200512'</span>,</span>
+<span id="cb22-23"><a href="#cb22-23"></a>  },</span>
+<span id="cb22-24"><a href="#cb22-24"></a>  <span class="st">'IPSL-CM5A-MR_historical.zip'</span>)</span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3 tabset">
+<h3 id="future-projections">Future projections<a class="anchor" aria-label="anchor" href="#future-projections"></a>
+</h3>
+<p>Select a General Circulation Model</p>
+
+
+
+<ul class="nav nav-tabs" id="future-projections" role="tablist">
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#cesm1_cam5-1" id="cesm1_cam5-1-tab" type="button" role="tab" aria-controls="cesm1_cam5-1" aria-selected="true" class="active nav-link">CESM1_CAM5</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#csiro-mk3-6-0-1" id="csiro-mk3-6-0-1-tab" type="button" role="tab" aria-controls="csiro-mk3-6-0-1" aria-selected="false" class="nav-link">CSIRO-Mk3-6-0</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#ipsl-cm5a-mr-1" id="ipsl-cm5a-mr-1-tab" type="button" role="tab" aria-controls="ipsl-cm5a-mr-1" aria-selected="false" class="nav-link">IPSL-CM5A-MR</button></li>
+</ul>
+<div class="tab-content">
+<div class="active  tab-pane" id="cesm1_cam5-1" role="tabpanel" aria-labelledby="cesm1_cam5-1-tab">
+
+<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1"></a><span class="im">import</span> cdsapi</span>
+<span id="cb23-2"><a href="#cb23-2"></a></span>
+<span id="cb23-3"><a href="#cb23-3"></a>c <span class="op">=</span> cdsapi.Client()</span>
+<span id="cb23-4"><a href="#cb23-4"></a></span>
+<span id="cb23-5"><a href="#cb23-5"></a>c.retrieve(</span>
+<span id="cb23-6"><a href="#cb23-6"></a>  <span class="st">'projections-cmip5-monthly-single-levels'</span>,</span>
+<span id="cb23-7"><a href="#cb23-7"></a>  {</span>
+<span id="cb23-8"><a href="#cb23-8"></a>    <span class="st">'ensemble_member'</span>: <span class="st">'r1i1p1'</span>,</span>
+<span id="cb23-9"><a href="#cb23-9"></a>    <span class="st">'format'</span>: <span class="st">'zip'</span>,</span>
+<span id="cb23-10"><a href="#cb23-10"></a>    <span class="st">'experiment'</span>: <span class="st">'rcp_2_6'</span>,</span>
+<span id="cb23-11"><a href="#cb23-11"></a>    <span class="st">'variable'</span>: [</span>
+<span id="cb23-12"><a href="#cb23-12"></a>      <span class="st">'10m_wind_speed'</span>,</span>
+<span id="cb23-13"><a href="#cb23-13"></a>      <span class="st">'2m_temperature'</span>,</span>
+<span id="cb23-14"><a href="#cb23-14"></a>      <span class="st">'maximum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb23-15"><a href="#cb23-15"></a>      <span class="st">'minimum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb23-16"><a href="#cb23-16"></a>      <span class="st">'near_surface_relative_humidity'</span>,</span>
+<span id="cb23-17"><a href="#cb23-17"></a>      <span class="st">'surface_pressure'</span>,</span>
+<span id="cb23-18"><a href="#cb23-18"></a>      <span class="st">'total_cloud_cover'</span>,</span>
+<span id="cb23-19"><a href="#cb23-19"></a>      <span class="st">'mean_precipitation_flux'</span>, </span>
+<span id="cb23-20"><a href="#cb23-20"></a>      ],</span>
+<span id="cb23-21"><a href="#cb23-21"></a>    <span class="st">'model'</span>: <span class="st">'cesm1_cam5'</span>,</span>
+<span id="cb23-22"><a href="#cb23-22"></a>    <span class="st">'period'</span>: <span class="st">'200601-210012'</span>,</span>
+<span id="cb23-23"><a href="#cb23-23"></a>  },</span>
+<span id="cb23-24"><a href="#cb23-24"></a>  <span class="st">'CESM1-CAM5_RCP_2_6.zip'</span>)</span></code></pre></div>
+</div>
+<div class="tab-pane" id="csiro-mk3-6-0-1" role="tabpanel" aria-labelledby="csiro-mk3-6-0-1-tab">
+
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1"></a><span class="im">import</span> cdsapi</span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a>c <span class="op">=</span> cdsapi.Client()</span>
+<span id="cb24-4"><a href="#cb24-4"></a></span>
+<span id="cb24-5"><a href="#cb24-5"></a>c.retrieve(</span>
+<span id="cb24-6"><a href="#cb24-6"></a>  <span class="st">'projections-cmip5-monthly-single-levels'</span>,</span>
+<span id="cb24-7"><a href="#cb24-7"></a>  {</span>
+<span id="cb24-8"><a href="#cb24-8"></a>    <span class="st">'ensemble_member'</span>: <span class="st">'r1i1p1'</span>,</span>
+<span id="cb24-9"><a href="#cb24-9"></a>    <span class="st">'format'</span>: <span class="st">'zip'</span>,</span>
+<span id="cb24-10"><a href="#cb24-10"></a>    <span class="st">'experiment'</span>: <span class="st">'rcp_2_6'</span>,</span>
+<span id="cb24-11"><a href="#cb24-11"></a>    <span class="st">'variable'</span>: [</span>
+<span id="cb24-12"><a href="#cb24-12"></a>      <span class="st">'10m_wind_speed'</span>,</span>
+<span id="cb24-13"><a href="#cb24-13"></a>      <span class="st">'2m_temperature'</span>,</span>
+<span id="cb24-14"><a href="#cb24-14"></a>      <span class="st">'maximum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb24-15"><a href="#cb24-15"></a>      <span class="st">'minimum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb24-16"><a href="#cb24-16"></a>      <span class="st">'near_surface_relative_humidity'</span>,</span>
+<span id="cb24-17"><a href="#cb24-17"></a>      <span class="st">'surface_pressure'</span>,</span>
+<span id="cb24-18"><a href="#cb24-18"></a>      <span class="st">'total_cloud_cover'</span>,</span>
+<span id="cb24-19"><a href="#cb24-19"></a>      <span class="st">'mean_precipitation_flux'</span>, </span>
+<span id="cb24-20"><a href="#cb24-20"></a>    ],</span>
+<span id="cb24-21"><a href="#cb24-21"></a>    <span class="st">'model'</span>: <span class="st">'csiro_mk3_6_0'</span>,</span>
+<span id="cb24-22"><a href="#cb24-22"></a>    <span class="st">'period'</span>: <span class="st">'200601-210012'</span>,</span>
+<span id="cb24-23"><a href="#cb24-23"></a>  },</span>
+<span id="cb24-24"><a href="#cb24-24"></a>  <span class="st">'CSIRO-Mk3-6-0_RCP_2_6.zip'</span>)</span></code></pre></div>
+</div>
+<div class="tab-pane" id="ipsl-cm5a-mr-1" role="tabpanel" aria-labelledby="ipsl-cm5a-mr-1-tab">
+
+<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1"></a><span class="im">import</span> cdsapi</span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a>c <span class="op">=</span> cdsapi.Client()</span>
+<span id="cb25-4"><a href="#cb25-4"></a></span>
+<span id="cb25-5"><a href="#cb25-5"></a>c.retrieve(</span>
+<span id="cb25-6"><a href="#cb25-6"></a>  <span class="st">'projections-cmip5-monthly-single-levels'</span>,</span>
+<span id="cb25-7"><a href="#cb25-7"></a>  {</span>
+<span id="cb25-8"><a href="#cb25-8"></a>    <span class="st">'ensemble_member'</span>: <span class="st">'r1i1p1'</span>,</span>
+<span id="cb25-9"><a href="#cb25-9"></a>    <span class="st">'format'</span>: <span class="st">'zip'</span>,</span>
+<span id="cb25-10"><a href="#cb25-10"></a>    <span class="st">'experiment'</span>: <span class="st">'rcp_2_6'</span>,</span>
+<span id="cb25-11"><a href="#cb25-11"></a>    <span class="st">'variable'</span>: [</span>
+<span id="cb25-12"><a href="#cb25-12"></a>      <span class="st">'10m_wind_speed'</span>,</span>
+<span id="cb25-13"><a href="#cb25-13"></a>      <span class="st">'2m_temperature'</span>,</span>
+<span id="cb25-14"><a href="#cb25-14"></a>      <span class="st">'maximum_2m_temperature_in_the_last_24_hours'</span>,</span>
+<span id="cb25-15"><a href="#cb25-15"></a>      <span class="st">'minimum_2m_temperature_in_the_last_24_hours'</span>, </span>
+<span id="cb25-16"><a href="#cb25-16"></a>      <span class="st">'near_surface_relative_humidity'</span>,</span>
+<span id="cb25-17"><a href="#cb25-17"></a>      <span class="st">'surface_pressure'</span>,</span>
+<span id="cb25-18"><a href="#cb25-18"></a>      <span class="st">'total_cloud_cover'</span>,</span>
+<span id="cb25-19"><a href="#cb25-19"></a>      <span class="st">'mean_precipitation_flux'</span>, </span>
+<span id="cb25-20"><a href="#cb25-20"></a>    ],</span>
+<span id="cb25-21"><a href="#cb25-21"></a>    <span class="st">'model'</span>: <span class="st">'ipsl_cm5a_mr'</span>,</span>
+<span id="cb25-22"><a href="#cb25-22"></a>    <span class="st">'period'</span>: <span class="st">'200601-210012'</span>,</span>
+<span id="cb25-23"><a href="#cb25-23"></a>  },</span>
+<span id="cb25-24"><a href="#cb25-24"></a>  <span class="st">'IPSL-CM5A-MR_RCP_2_6.zip'</span>)</span></code></pre></div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="create-dictionary-2">Create dictionary<a class="anchor" aria-label="anchor" href="#create-dictionary-2"></a>
+</h3>
+<p>Before importing the data in an R session, we need to define a dictionary to standarize units of variables to the <code>climate4R</code> vocabulary (check <code><a href="https://rdrr.io/pkg/climate4R.UDG/man/C4R.vocabulary.html" class="external-link">climate4R.UDG::C4R.vocabulary()</a></code>.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.create</a></span><span class="op">(</span><span class="st">"../../Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/writeLines.html" class="external-link">writeLines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface"</span>,</span>
+<span><span class="st">"tasmax,tasmax,1mo,0,12,max,-273.15,1,0,0,"</span>,</span>
+<span><span class="st">"tasmin,tasmin,1mo,0,12,min,-273.15,1,0,0,"</span>,</span>
+<span><span class="st">"tas,tas,1mo,0,12,mean,-273.15,1,0,0,"</span>,</span>
+<span><span class="st">"pr,pr,1mo,0,12,mean,0,2592000,0,0,"</span>,</span>
+<span><span class="st">"hurs,hurs,1mo,0,12,mean,0,1,0,0,"</span>,</span>
+<span><span class="st">"cld,clt,1mo,0,12,mean,0,1,0,0,"</span>,</span>
+<span><span class="st">"ps,ps,1mo,0,12,mean,0,1,0,0,"</span>,</span>
+<span><span class="st">"wss,sfcWind,1mo,0,12,mean,0,1,0,0,"</span></span>
+<span><span class="op">)</span>, <span class="st">"../../Data/CMIP5/CMIP5_dictionary.dic"</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
 </div>
