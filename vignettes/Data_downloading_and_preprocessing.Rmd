@@ -522,3 +522,215 @@ writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,
            "../../Data/UERRA/UERRA_dictionary.dic")
 ```
 
+
+## CMIP5 data
+
+### Downloading files from dataserver
+
+> Note that CDS requires to register a free account to access data. Downloading scripts could request user and password in each iteration or can be configured to store account data in the system.
+
+> Data format: Data were downloaded in GRIB format because the Climate Data Operator library (cdo) seems to behave better with GRIB than with NetCDF files.
+
+#### Historical data {.tabset}
+
+Select a General Circulation Model
+
+##### CESM1_CAM5
+
+```{python Download_CMIP5_historical_CESM1_CAM5, eval=FALSE}
+import cdsapi
+
+c = cdsapi.Client()
+
+c.retrieve(
+  'projections-cmip5-monthly-single-levels',
+  {
+    'ensemble_member': 'r1i1p1',
+    'format': 'zip',
+    'experiment': 'historical',
+    'variable': [
+      '10m_wind_speed',
+      '2m_temperature',
+      'maximum_2m_temperature_in_the_last_24_hours',
+      'minimum_2m_temperature_in_the_last_24_hours',
+      'near_surface_relative_humidity',
+      'surface_pressure',
+      'total_cloud_cover',
+      'mean_precipitation_flux', 
+      ],
+    'model': 'cesm1_cam5',
+    'period': '185001-200512',
+  },
+  'CESM1-CAM5_historical.zip')
+```
+
+##### CSIRO-Mk3-6-0
+
+```{python Download_CMIP5_historical_CSIRO-Mk3-6-0, eval=FALSE}
+import cdsapi
+
+c = cdsapi.Client()
+
+c.retrieve(
+  'projections-cmip5-monthly-single-levels',
+  {
+    'ensemble_member': 'r1i1p1',
+    'format': 'zip',
+    'experiment': 'historical',
+    'variable': [
+      '10m_wind_speed',
+      '2m_temperature',
+      'maximum_2m_temperature_in_the_last_24_hours',
+      'minimum_2m_temperature_in_the_last_24_hours',
+      'near_surface_relative_humidity',
+      'surface_pressure',
+      'total_cloud_cover',
+      'mean_precipitation_flux', 
+    ],
+    'model': 'csiro_mk3_6_0',
+    'period': '185001-200512',
+  },
+  'CSIRO-Mk3-6-0_historical.zip')
+```
+
+##### IPSL-CM5A-MR
+
+```{python Download_CMIP5_historical_IPSL-CM5A-MR, eval=FALSE}
+import cdsapi
+
+c = cdsapi.Client()
+
+c.retrieve(
+  'projections-cmip5-monthly-single-levels',
+  {
+    'ensemble_member': 'r1i1p1',
+    'format': 'zip',
+    'experiment': 'historical',
+    'variable': [
+      '10m_wind_speed',
+      '2m_temperature',
+      'maximum_2m_temperature_in_the_last_24_hours',
+      'minimum_2m_temperature_in_the_last_24_hours', 
+      'near_surface_relative_humidity',
+      'surface_pressure',
+      'total_cloud_cover',
+      'mean_precipitation_flux', 
+    ],
+    'model': 'ipsl_cm5a_mr',
+    'period': '185001-200512',
+  },
+  'IPSL-CM5A-MR_historical.zip')
+```
+
+
+### Future projections {.tabset}  
+
+Select a General Circulation Model
+
+##### CESM1_CAM5
+
+```{python Download_CMIP5_rcp26_CESM1_CAM5, eval=FALSE}
+import cdsapi
+
+c = cdsapi.Client()
+
+c.retrieve(
+  'projections-cmip5-monthly-single-levels',
+  {
+    'ensemble_member': 'r1i1p1',
+    'format': 'zip',
+    'experiment': 'rcp_2_6',
+    'variable': [
+      '10m_wind_speed',
+      '2m_temperature',
+      'maximum_2m_temperature_in_the_last_24_hours',
+      'minimum_2m_temperature_in_the_last_24_hours',
+      'near_surface_relative_humidity',
+      'surface_pressure',
+      'total_cloud_cover',
+      'mean_precipitation_flux', 
+      ],
+    'model': 'cesm1_cam5',
+    'period': '200601-210012',
+  },
+  'CESM1-CAM5_RCP_2_6.zip')
+```
+
+##### CSIRO-Mk3-6-0
+
+```{python Download_CMIP5_rcp26_CSIRO-Mk3-6-0, eval=FALSE}
+import cdsapi
+
+c = cdsapi.Client()
+
+c.retrieve(
+  'projections-cmip5-monthly-single-levels',
+  {
+    'ensemble_member': 'r1i1p1',
+    'format': 'zip',
+    'experiment': 'rcp_2_6',
+    'variable': [
+      '10m_wind_speed',
+      '2m_temperature',
+      'maximum_2m_temperature_in_the_last_24_hours',
+      'minimum_2m_temperature_in_the_last_24_hours',
+      'near_surface_relative_humidity',
+      'surface_pressure',
+      'total_cloud_cover',
+      'mean_precipitation_flux', 
+    ],
+    'model': 'csiro_mk3_6_0',
+    'period': '200601-210012',
+  },
+  'CSIRO-Mk3-6-0_RCP_2_6.zip')
+```
+
+##### IPSL-CM5A-MR
+
+```{python Download_CMIP5_rcp26_IPSL-CM5A-MR, eval=FALSE}
+import cdsapi
+
+c = cdsapi.Client()
+
+c.retrieve(
+  'projections-cmip5-monthly-single-levels',
+  {
+    'ensemble_member': 'r1i1p1',
+    'format': 'zip',
+    'experiment': 'rcp_2_6',
+    'variable': [
+      '10m_wind_speed',
+      '2m_temperature',
+      'maximum_2m_temperature_in_the_last_24_hours',
+      'minimum_2m_temperature_in_the_last_24_hours', 
+      'near_surface_relative_humidity',
+      'surface_pressure',
+      'total_cloud_cover',
+      'mean_precipitation_flux', 
+    ],
+    'model': 'ipsl_cm5a_mr',
+    'period': '200601-210012',
+  },
+  'IPSL-CM5A-MR_RCP_2_6.zip')
+```
+
+
+### Create dictionary
+
+Before importing the data in an R session, we need to define a dictionary to standarize units of variables to the `climate4R` vocabulary (check ` climate4R.UDG::C4R.vocabulary()`.
+
+```{r create_cmip5_dictionary, eval = FALSE}
+file.create("../../Data/UERRA/UERRA_dictionary.dic")
+
+writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface",
+"tasmax,tasmax,1mo,0,12,max,-273.15,1,0,0,",
+"tasmin,tasmin,1mo,0,12,min,-273.15,1,0,0,",
+"tas,tas,1mo,0,12,mean,-273.15,1,0,0,",
+"pr,pr,1mo,0,12,mean,0,2592000,0,0,",
+"hurs,hurs,1mo,0,12,mean,0,1,0,0,",
+"cld,clt,1mo,0,12,mean,0,1,0,0,",
+"ps,ps,1mo,0,12,mean,0,1,0,0,",
+"wss,sfcWind,1mo,0,12,mean,0,1,0,0,"
+), "../../Data/CMIP5/CMIP5_dictionary.dic")
+```
+
