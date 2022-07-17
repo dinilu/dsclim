@@ -8,7 +8,7 @@ output:
 ```{r global_options, include=FALSE}
 options(java.parameters = "-Xmx16g")
 library(knitr)
-opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, cache=TRUE)
+opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, cache=TRUE, eval = FALSE)
 ```
 
 # Trace-21ka data

@@ -1,0 +1,224 @@
+---
+title: "Downscaling Trace-21ka paleoclimate simulation."
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, cache=TRUE, eval = FALSE)
+```
+
+This file is to document the downscaling process of Trace-21ka paleoclimate data using the most updated and finer resolution "historical" climate data for the Western Mediterranean region and the methods and tools implemented in the `climate4R` framework.
+
+# Downscaling
+
+## Defining variables and folds for crossvalidation
+```{r defining_predictos_and_folds}
+vars <- c("tas", "tasmax", "tasmin", "solin", "ps",
+          "precc", "lhflx")
+
+folds <- list(1961:1965, 1966:1970, 1971:1975, 1976:1980, 1981:1985, 1986:1990)
+```
+
+
+## Defining parameters for downscaling
+
+```{r defining_ds_parameters}
+library(downscaleR)
+
+spatial.pars <- list(which.combine = vars,
+                        v.exp = .95,
+                        rot = FALSE)
+
+scaling.pars <- list(type = "standardize",
+                     spatial.frame = "field")
+
+local.pars.M21 <- list(n = 1, vars = "tasmin")
+
+local.pars.M24 <- list(n = 4, vars = "tasmin")
+
+local.pars.M31 <- list(n = 1, vars = vars)
+
+local.pars.M34 <- list(n = 4, vars = vars)
+
+```
+
+## Downscaling
+
+```{r fit_M1cv}
+# Downscale with cross-validation 
+# M1cv <- downscaleR::downscaleCV(x = hist.trace,
+#                     y = uerra.tasmin,
+#                     method = "GLM",
+#                     family = gaussian(link="identity"),
+#                     folds = folds,
+#                     prepareData.args = list(
+#                       global.vars = NULL,
+#                       local.predictors = NULL,
+#                       spatial.predictors = NULL,
+#                       combined.only = TRUE))
+# 
+# visualizeR::spatialPlot(transformeR::climatology(M1cv))
+```
+
+
+```{r fit_GLM.1.sp}
+GLM.1.sp <- downscaleR::downscaleCV(x = hist.trace,
+                                   y = uerra.tasmin,
+                                   method = "GLM",
+                                   family = gaussian(link="identity"),
+                                   folds = folds,
+                                   prepareData.args = list(
+                                     global.vars = NULL,
+                                     local.predictors = NULL,
+                                     spatial.predictors = spatial.pars,
+                                     combined.only = TRUE))
+
+visualizeR::spatialPlot(transformeR::climatology(GLM.1.sp))
+```
+
+
+```{r fit_ANN.1.sp}
+ANN.1.sp <- downscaleR::downscaleCV(x = hist.trace,
+                                   y = uerra.tasmin,
+                                   method = "NN",
+                                   output = "linear",
+                                   folds = folds,
+                                   prepareData.args = list(
+                                     global.vars = NULL,
+                                     local.predictors = NULL,
+                                     spatial.predictors = spatial.pars,
+                                     combined.only = TRUE))
+
+visualizeR::spatialPlot(transformeR::climatology(ANN.1.sp))
+```
+
+
+```{r fit_GLM.21}
+GLM.21 <- downscaleR::downscaleCV(x = hist.trace,
+                    y = uerra.tasmin,
+                    method = "GLM",
+                    family = gaussian(link="identity"),
+                    folds = folds,
+                    prepareData.args = list(
+                      global.vars = NULL,
+                      local.predictors = local.pars.M21,
+                      spatial.predictors = NULL))
+
+visualizeR::spatialPlot(transformeR::climatology(GLM.21))
+```
+
+```{r fit_GLM.21.sp}
+GLM.21.sp <- downscaleR::downscaleCV(x = hist.trace,
+                                    y = uerra.tasmin,
+                                    method = "GLM",
+                                    family = gaussian(link="identity"),
+                                    folds = folds,
+                                    prepareData.args = list(
+                                      global.vars = NULL,
+                                      local.predictors = local.pars.M21,
+                                      spatial.predictors = spatial.pars,
+                                      combined.only=TRUE))
+
+visualizeR::spatialPlot(transformeR::climatology(GLM.21.sp))
+```
+
+```{r fit_GLM.24}
+GLM.24 <- downscaleR::downscaleCV(x = hist.trace,
+                    y = uerra.tasmin,
+                    method = "GLM",
+                    family = gaussian(link="identity"),
+                    folds = folds,
+                    prepareData.args = list(
+                      global.vars = NULL,
+                      local.predictors = local.pars.M24,
+                      spatial.predictors = NULL))
+
+visualizeR::spatialPlot(transformeR::climatology(GLM.24))
+```
+
+```{r fit_GLM.24.sp}
+GLM.24.sp <- downscaleR::downscaleCV(x = hist.trace,
+                    y = uerra.tasmin,
+                    method = "GLM",
+                    family = gaussian(link="identity"),
+                    folds = folds,
+                    prepareData.args = list(
+                      global.vars = NULL,
+                      local.predictors = local.pars.M24,
+                      spatial.predictors = spatial.pars))
+
+visualizeR::spatialPlot(transformeR::climatology(GLM.24.sp))
+```
+
+```{r fit_GLM.31}
+GLM.31 <- downscaleR::downscaleCV(x = hist.trace,
+                    y = uerra.tasmin,
+                    method = "GLM",
+                    family = gaussian(link="identity"),
+                    folds = folds,
+                    prepareData.args = list(
+                      global.vars = NULL,
+                      local.predictors = local.pars.M31,
+                      spatial.predictors = NULL))
+
+visualizeR::spatialPlot(transformeR::climatology(GLM.31))
+```
+
+```{r fit_GLM.31.sp}
+GLM.31.sp <- downscaleR::downscaleCV(x = hist.trace,
+                    y = uerra.tasmin,
+                    method = "GLM",
+                    family = gaussian(link="identity"),
+                    folds = folds,
+                    prepareData.args = list(
+                      global.vars = NULL,
+                      local.predictors = local.pars.M31,
+                      spatial.predictors = spatial.pars))
+
+visualizeR::spatialPlot(transformeR::climatology(GLM.31.sp))
+```
+
+```{r fit_GLM.34}
+GLM.34 <- downscaleR::downscaleCV(x = hist.trace,
+                    y = uerra.tasmin,
+                    method = "GLM",
+                    family = gaussian(link="identity"),
+                    folds = folds,
+                    prepareData.args = list(
+                      global.vars = NULL,
+                      local.predictors = local.pars.M34,
+                      spatial.predictors = NULL))
+
+visualizeR::spatialPlot(transformeR::climatology(GLM.34))
+```
+
+```{r fit_GLM.34.sp}
+GLM.34.sp <- downscaleR::downscaleCV(x = hist.trace,
+                    y = uerra.tasmin,
+                    method = "GLM",
+                    family = gaussian(link="identity"),
+                    folds = folds,
+                    prepareData.args = list(
+                      global.vars = NULL,
+                      local.predictors = local.pars.M34,
+                      spatial.predictors = spatial.pars))
+
+visualizeR::spatialPlot(transformeR::climatology(GLM.34.sp))
+```
+
+```{r fit_ANN.34.sp}
+ANN.34.sp <- downscaleR::downscaleCV(x = hist.trace,
+                    y = uerra.tasmin,
+                    method = "NN",
+                    output = "linear",
+                    folds = folds,
+                    prepareData.args = list(
+                      global.vars = NULL,
+                      local.predictors = local.pars.M34,
+                      spatial.predictors = spatial.pars))
+
+visualizeR::spatialPlot(transformeR::climatology(ANN.34.sp))
+```

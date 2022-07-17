@@ -30,7 +30,7 @@ Downloaded files can be inspected with the following code:
 
 #### TSMX
 
-```{r explore_tsmx, eval = FALSE}
+```{r explore_tsmxTraCE, eval = TRUE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -38,7 +38,7 @@ str(di.trace)
 
 #### TSMN
 
-```{r explore_tsmn, eval = FALSE} 
+```{r explore_tsmnTraCE, eval = TRUE} 
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -46,7 +46,7 @@ str(di.trace)
 
 #### TS
 
-```{r explore_ts, eval = FALSE}
+```{r explore_tsTraCE, eval = TRUE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -54,7 +54,7 @@ str(di.trace)
 
 #### PRECC
 
-```{r explore_precc, eval = FALSE}
+```{r explore_preccTraCE, eval = TRUE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -64,14 +64,14 @@ str(di.trace)
 
 The file for relative humidity in TraCE21ka have information for different atmospheric levels. In this case, we first selected surface preasure level and then create a new file with the information to simplify the rest of computation.
 
-```{bash extract_relhum_surface_level, eval=FALSE}
+```{bash extract_relhum_surface_level, eval = FALSE}
 # BASH script 
 cdo sellevel,992.5561 ../../Data/TraCE21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc ../../Data/TraCE21ka/RELHUM/surface_level/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc
 ```
 
 Once, the surface pressure level was selected the new file was inspected.
 
-```{r explore_relhum, eval = FALSE}
+```{r explore_relhumTraCE, eval = TRUE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/RELHUM/surface_level/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -79,7 +79,7 @@ str(di.trace)
 
 #### CLDTOT
 
-```{r explore_cldtot, eval = FALSE}
+```{r explore_cldtotTraCE, eval = TRUE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -87,7 +87,7 @@ str(di.trace)
 
 #### PS
 
-```{r explore_ps, eval = FALSE}
+```{r explore_psTraCE, eval = TRUE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -95,7 +95,7 @@ str(di.trace)
 
 #### U
 
-```{r explore_u, eval = FALSE}
+```{r explore_uTraCE, eval = TRUE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -103,7 +103,7 @@ str(di.trace)
 
 #### V
 
-```{r explore_v, eval = FALSE}
+```{r explore_vTraCE, eval = TRUE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -113,7 +113,7 @@ str(di.trace)
 
 In order to load those files in R, the `climate4R` framework allow to create a dictionary that is used to standardize variables.
 
-```{r create_trace_dictionary, eval = FALSE} 
+```{r create_trace_dictionaryTraCE, eval = FALSE} 
 file.create("../../Data/TraCE21ka/dictionary.dic")
 writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface",
              "tasmax,TSMX,1mo,0,12,max,-273.15,1,0,0,",
@@ -146,7 +146,7 @@ While we were interested in downscaling at the spatial resolution of the UERRA-H
 
 #### Temperature
 
-```{python Download_UERRA-HARMONIE_2m_temperature, eval=FALSE}
+```{python Download_UERRA-HARMONIE_2m_temperature, eval = FALSE}
 # Python script 
 import cdsapi
 
@@ -194,7 +194,7 @@ for y in range(1961, 1990):
 
 #### Precipitation
               
-```{python Download_MESCAN-SURFEX_total_precipitation, eval=FALSE}
+```{python Download_MESCAN-SURFEX_total_precipitation, eval = FALSE}
 # Python script 
 import cdsapi
 
@@ -242,7 +242,7 @@ for y in range(1961, 1990):
                             
 #### Relative humidity
                             
-```{python Download_UERRA-HARMONIE_2m_relative_humidity, eval=FALSE}
+```{python Download_UERRA-HARMONIE_2m_relative_humidity, eval = FALSE}
 # Python script 
 import cdsapi
 
@@ -290,7 +290,7 @@ for y in range(1961, 1990):
                                           
 #### Wind speed
                                           
-```{python Download_UERRA-HARMONIE_10m_wind_speed, eval=FALSE}
+```{python Download_UERRA-HARMONIE_10m_wind_speed, eval = FALSE}
 # Python script 
 import cdsapi
 
@@ -338,7 +338,7 @@ for y in range(1961, 1990):
                                                         
 #### Total cloud cover
                                                         
-```{python Download_UERRA-HARMONIE_total_cloud_cover, eval=FALSE}
+```{python Download_UERRA-HARMONIE_total_cloud_cover, eval = FALSE}
 # Python script 
 import cdsapi
 
@@ -386,7 +386,7 @@ for y in range(1961, 1990):
 
 #### Surface pressure
 
-```{python Download_UERRA-HARMONIE_surface_pressure, eval=FALSE}
+```{python Download_UERRA-HARMONIE_surface_pressure, eval = FALSE}
 # Python script 
 import cdsapi
 
@@ -437,7 +437,7 @@ for y in range(1961, 1990):
 Subdaily data from the original files were aggregated to daily and then to monthly data using the Climate Data Operator library (cdo). All variables were kept in their original metric and units, but temperature that was used to calculate maximum, minimum and average daily temperatures. In the case of precipitations, the aggregation was carried out by suming daily data, for the rest of variables aggregation was carried out by averaging subdaily and daily data.
 
 
-```{bash aggregate_climate_data, eval=FALSE} 
+```{bash aggregate_climate_data, eval = FALSE} 
 # BASH script 
 years=($(seq 1961 1990))
 
@@ -509,7 +509,7 @@ rm ${tmin_files[@]} ${tmax_files[@]} ${tmean_files[@]} ${prec_files[@]} ${cloud_
 
 In order to load those files in R, the `climate4R` framework allow to create a dictionary that is used to standardize variables to the `climate4R` vocabulary (check `climate4R.UDG::C4R.vocabulary()`).
 
-```{r create_uerra_dictionary, eval = FALSE}
+```{r create_uerra_dictionaryTraCE, eval = FALSE}
 file.create("../../Data/UERRA/UERRA_dictionary.dic")
 
 writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface", 
@@ -539,7 +539,7 @@ Select a General Circulation Model
 
 ##### CESM1_CAM5
 
-```{python Download_CMIP5_historical_CESM1_CAM5, eval=FALSE}
+```{python Download_CMIP5_historical_CESM1_CAM5, eval = FALSE}
 import cdsapi
 
 c = cdsapi.Client()
@@ -568,7 +568,7 @@ c.retrieve(
 
 ##### CSIRO-Mk3-6-0
 
-```{python Download_CMIP5_historical_CSIRO-Mk3-6-0, eval=FALSE}
+```{python Download_CMIP5_historical_CSIRO-Mk3-6-0, eval = FALSE}
 import cdsapi
 
 c = cdsapi.Client()
@@ -597,7 +597,7 @@ c.retrieve(
 
 ##### IPSL-CM5A-MR
 
-```{python Download_CMIP5_historical_IPSL-CM5A-MR, eval=FALSE}
+```{python Download_CMIP5_historical_IPSL-CM5A-MR, eval = FALSE}
 import cdsapi
 
 c = cdsapi.Client()
@@ -625,13 +625,13 @@ c.retrieve(
 ```
 
 
-### Future projections {.tabset}  
+#### Future projections {.tabset}  
 
 Select a General Circulation Model
 
 ##### CESM1_CAM5
 
-```{python Download_CMIP5_rcp26_CESM1_CAM5, eval=FALSE}
+```{python Download_CMIP5_rcp26_CESM1_CAM5, eval = FALSE}
 import cdsapi
 
 c = cdsapi.Client()
@@ -660,7 +660,7 @@ c.retrieve(
 
 ##### CSIRO-Mk3-6-0
 
-```{python Download_CMIP5_rcp26_CSIRO-Mk3-6-0, eval=FALSE}
+```{python Download_CMIP5_rcp26_CSIRO-Mk3-6-0, eval = FALSE}
 import cdsapi
 
 c = cdsapi.Client()
@@ -689,7 +689,7 @@ c.retrieve(
 
 ##### IPSL-CM5A-MR
 
-```{python Download_CMIP5_rcp26_IPSL-CM5A-MR, eval=FALSE}
+```{python Download_CMIP5_rcp26_IPSL-CM5A-MR, eval = FALSE}
 import cdsapi
 
 c = cdsapi.Client()
@@ -721,7 +721,8 @@ c.retrieve(
 
 Before importing the data in an R session, we need to define a dictionary to standarize units of variables to the `climate4R` vocabulary (check ` climate4R.UDG::C4R.vocabulary()`.
 
-```{r create_cmip5_dictionary, eval = FALSE}
+```{r create_cmip5_dictionaryTraCE, eval = FALSE}
+
 file.create("../../Data/CMIP5/CMIP5_dictionary.dic")
 
 writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface",

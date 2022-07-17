@@ -1,0 +1,113 @@
+---
+title: "Downscaling Trace-21ka paleoclimate simulation."
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r global_options, include=FALSE}
+options(java.parameters = "-Xmx16g")
+library(knitr)
+opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, cache=TRUE, eval = FALSE)
+```
+
+# UERRA historical reanalisis data
+
+Now, we are ready to import the files in R and check them out with the `climate4r` framework. More specifically, we are using the `loadeR` and `visualizeR` packages.
+
+## Defining region limits for UERRA data
+
+```{r set_uerra_limits}
+uerra.lon <- c(-11, 12)
+uerra.lat <- c(28, 44)
+# uerra.lon <- c(-11, 4)
+# uerra.lat <- c(36, 44)
+```
+
+## Loading Trace21ka data {.tabset} 
+
+Select a variable 
+
+### TASMIN
+
+```{r load_tasmin} 
+library(loadeR)
+
+uerra.tasmin <- loadeR::loadGridData("../../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", var = "tasmin", lonLim=uerra.lon, latLim=uerra.lat, dictionary="../../../Data/UERRA/UERRA_dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(uerra.tasmin), main="tasmin", backdrop.theme="countries", rev.colors=TRUE, at=seq(-15,40,1))
+```
+
+### TAS
+
+```{r load_tas} 
+uerra.tas <- loadeR::loadGridData("../../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc", var = "tas", lonLim=uerra.lon, latLim=uerra.lat,  dictionary="../../../Data/UERRA/UERRA_dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(uerra.tas), main="tas", backdrop.theme="countries", rev.colors=TRUE, at=seq(-15,40,1))
+```
+
+### TASMAX
+
+```{r load_tasmax} 
+uerra.tasmax <- loadeR::loadGridData("../../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmax.nc", var = "tasmax", lonLim=uerra.lon, latLim=uerra.lat, dictionary="../../../Data/UERRA/UERRA_dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(uerra.tasmax), main="tasmax", backdrop.theme="countries", rev.colors=TRUE, at=seq(-15,40,1))
+```
+
+### PR
+
+```{r load_pr} 
+uerra.pr <- loadeR::loadGridData("../../../Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/1961-90_total_precipitation.nc", var = "pr", lonLim=uerra.lon, latLim=uerra.lat, dictionary="../../../Data/UERRA/UERRA_dictionary.dic")
+
+uerra.pr <- transformeR::upscaleGrid(uerra.pr, times=2, aggr.fun=list(FUN=mean))
+
+uerra.pr <- transformeR::interpGrid(uerra.pr, new.coordinates=transformeR::getGrid(uerra.tas), method="bilinear")
+
+visualizeR::spatialPlot(transformeR::climatology(uerra.pr), main="pr", backdrop.theme="countries", at=seq(0,400,25))
+```
+
+### HURS
+
+```{r load_hurs} 
+uerra.hurs <- loadeR::loadGridData("../../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc", var = "hurs", lonLim=uerra.lon, latLim=uerra.lat, dictionary="../../../Data/UERRA/UERRA_dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(uerra.hurs), main="hurs", backdrop.theme="countries", rev.colors=TRUE)
+```
+
+### CLD
+
+```{r load_cld} 
+uerra.cld <- loadeR::loadGridData("../../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc", var = "cld", lonLim=uerra.lon, latLim=uerra.lat, dictionary="../../../Data/UERRA/UERRA_dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(uerra.cld), main="cld", backdrop.theme="countries", rev.colors=TRUE)
+```
+
+### WSS
+
+```{r load_wss} 
+uerra.wss <- loadeR::loadGridData("../../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc", var = "wss", lonLim=uerra.lon, latLim=uerra.lat, dictionary="../../../Data/UERRA/UERRA_dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(uerra.wss), main="wss", backdrop.theme="countries", rev.colors=TRUE)
+```
+
+## Fix dates 
+
+```{r correct_uerra_dates}
+modifyDates <- function(uerra, start_date="1961-01-01", end_date="1990-12-31") {
+  
+  uerra$Dates$start <- paste(DateSeq(start_date, end_date, 12, 0), "00:00:00 GMT", sep = " ")
+  
+  uerra$Dates$end <- paste(DateSeq(start_date, end_date, 12, 1), "00:00:00 GMT", sep = " ")
+  
+  return(uerra)
+}
+
+uerra.tasmax <- modifyDates(uerra.tasmax)
+uerra.tasmin <- modifyDates(uerra.tasmin)
+uerra.tas <- modifyDates(uerra.tas)
+uerra.pr <- modifyDates(uerra.pr)
+uerra.hurs <- modifyDates(uerra.hurs)
+uerra.cld <- modifyDates(uerra.cld)
+uerra.wss <- modifyDates(uerra.wss)
+```
+
