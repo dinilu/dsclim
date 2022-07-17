@@ -2,8 +2,8 @@ pandoc: 2.7.3
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
-  package_intro: package_intro.html
-last_built: 2022-07-17T17:30Z
+  Data_downloading_and_preprocessing: Data_downloading_and_preprocessing.html
+last_built: 2022-07-17T19:02Z
 urls:
   reference: http://dnietolugilde.com/dsclim/reference
   article: http://dnietolugilde.com/dsclim/articles
