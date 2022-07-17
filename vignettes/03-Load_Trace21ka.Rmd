@@ -1,0 +1,161 @@
+---
+title: "Loading Trace-21ka paleoclimate simulation."
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r global_options, include=FALSE}
+options(java.parameters = "-Xmx16g")
+library(knitr)
+opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, cache=TRUE)
+```
+
+# Trace-21ka data
+
+## Wrapping functions
+```{r wrapping_functions}
+DateSeq <- function(st, en, freq, frac=0) {
+  st <- zoo::as.Date(zoo::as.yearmon(st)) 
+  en <- zoo::as.Date(zoo::as.yearmon(en)) 
+  result <- zoo::as.Date(zoo::as.yearmon(seq(st, en, by = paste(as.character(12/freq), "months"))), frac = frac)
+  return(result)
+}
+
+loadTraceData <- function(file, var=NULL, lonLim=NULL, latLim=NULL, start_date="1551-01-01", end_date="1990-12-31", years=1961:1990, dictionary=FALSE) {
+  require(loadeR)
+  require(transformeR)
+  if(is.null(var)){
+    stop("Argument var not defined. Please define a variable to be loaded.")
+  } 
+  trace <- loadeR::loadGridData(dataset = file,
+                                var = var,
+                                lonLim = lonLim,
+                                latLim = latLim, 
+                                dictionary = dictionary)
+  trace$Dates$start <- paste(DateSeq(start_date, end_date, 12, 0), "00:00:00 GMT", sep = " ")
+  trace$Dates$end <- paste(DateSeq(start_date, end_date, 12, 1), "00:00:00 GMT", sep = " ")
+  
+  trace <- transformeR::subsetGrid(trace, years=years)  
+  
+  return(trace)
+}
+
+```
+
+
+
+## Defining region limits for Trace21ka data
+
+```{r set_trace_limits}
+trace.lon <- c(-25, 25)
+trace.lat <- c(25, 50)
+```
+
+## Loading Trace21ka data {.tabset} 
+
+Select a variable 
+
+### TSMX
+
+```{r load_tsmx}
+trace.tsmx <- loadTraceData("../../../Data/Trace21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc", var="tasmax", lonLim=trace.lon, latLim = trace.lat, dictionary="../../../Data/Trace21ka/dictionary.dic")
+
+visualizeR::spatialPlot(climatology(trace.tsmx), backdrop.theme = "countries", rev.colors=TRUE)
+```
+
+### TSMN
+
+```{r load_tsmn}
+trace.tsmn <- loadTraceData("../../../Data/Trace21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc", var="tasmin", lonLim=trace.lon, latLim = trace.lat, dictionary="../../../Data/Trace21ka/dictionary.dic")
+
+visualizeR::spatialPlot(climatology(trace.tsmn), backdrop.theme = "countries", rev.colors=TRUE)
+```
+
+### TS
+
+```{r load_ts}
+trace.ts <- loadTraceData("../../../Data/Trace21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc", var="tas", lonLim=trace.lon, latLim = trace.lat, dictionary="../../../Data/Trace21ka/dictionary.dic")
+
+visualizeR::spatialPlot(climatology(trace.ts), backdrop.theme = "countries", rev.colors=TRUE)
+```
+
+### PRECC
+
+```{r load_precc}
+trace.precc <- loadTraceData("../../../Data/Trace21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc", var="pr", lonLim=trace.lon, latLim = trace.lat, dictionary="../../../Data/Trace21ka/dictionary.dic")
+
+visualizeR::spatialPlot(climatology(trace.precc), backdrop.theme = "countries")
+```
+
+### RELHUM
+
+```{r load_relhum}
+trace.relhum <- loadTraceData("../../../Data/Trace21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc", var="hurs@992.5561", lonLim=trace.lon, latLim = trace.lat, dictionary="../../../Data/Trace21ka/dictionary.dic")
+
+visualizeR::spatialPlot(climatology(trace.relhum), backdrop.theme = "countries")
+```
+
+### CLDTOT
+
+```{r load_cldtot}
+trace.cldtot <- loadTraceData("../../../Data/Trace21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc", var="cldtot", lonLim=trace.lon, latLim = trace.lat, dictionary="../../../Data/Trace21ka/dictionary.dic")
+
+visualizeR::spatialPlot(climatology(trace.cldtot), backdrop.theme = "countries")
+```
+
+### PS
+
+```{r load_ps}
+trace.ps <- loadTraceData("../../../Data/Trace21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc", var="ps", lonLim=trace.lon, latLim = trace.lat, dictionary="../../../Data/Trace21ka/dictionary.dic")
+
+visualizeR::spatialPlot(climatology(trace.ps), backdrop.theme = "countries")
+```
+
+### U, V, WSS
+
+```{r load_u}
+trace.u <- loadTraceData("../../../Data/Trace21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc", var="u@992.5561", lonLim=trace.lon, latLim = trace.lat, dictionary="../../../Data/Trace21ka/dictionary.dic")
+
+visualizeR::spatialPlot(climatology(trace.u), backdrop.theme = "countries")
+```
+
+```{r load_v}
+trace.v <- loadTraceData("../../../Data/Trace21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc", var="v@992.5561", lonLim=trace.lon, latLim = trace.lat, dictionary="../../../Data/Trace21ka/dictionary.dic")
+
+visualizeR::spatialPlot(climatology(trace.v), backdrop.theme = "countries")
+```
+
+```{r compute_wss}
+compute_wind_speed <- function(u, v) {
+  
+  u <- gridArithmetics(u, u, operator="*")
+  v <- gridArithmetics(v, v, operator="*")
+  
+  ws <- gridArithmetics(u, v, operator="+")
+
+  ws$Data <- sqrt(ws$Data)
+  ws$Variable$varName <- "wss"
+  ws$Variable$level <- NA
+  attr(ws$Variable, "use_dictionary") <- TRUE
+  attr(ws$Variable, "description") <- "Wind speed at surface level"
+  attr(ws$Variable, "units") <- "m/s"
+  attr(ws$Variable, "longname") <- "wind speed"
+
+  return(ws)
+}
+
+trace.wss <- compute_wind_speed(trace.u, trace.v)
+
+visualizeR::spatialPlot(climatology(trace.wss), backdrop.theme = "countries")
+```
+
+
+## Make multivariable grid
+
+```{r combine_trace_data}
+hist.trace <- makeMultiGrid(trace.tsmx, trace.tsmn, trace.ts, trace.precc, trace.relhum, trace.cldtot, trace.ps, trace.wss)
+
+rm(trace.tsmx, trace.tsmn, trace.ts, trace.precc, trace.relhum, trace.cldtot, trace.ps, trace.wss, trace.u, trace.v)
+```
+
