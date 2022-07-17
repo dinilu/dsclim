@@ -31,7 +31,7 @@ Downloaded files can be inspected with the following code:
 
 #### TSMX
 
-```{r explore_tsmxTraCE, eval = TRUE}
+```{r explore_tsmxTraCE, eval = FALSE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -39,7 +39,7 @@ str(di.trace)
 
 #### TSMN
 
-```{r explore_tsmnTraCE, eval = TRUE} 
+```{r explore_tsmnTraCE, eval = FALSE} 
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -47,7 +47,7 @@ str(di.trace)
 
 #### TS
 
-```{r explore_tsTraCE, eval = TRUE}
+```{r explore_tsTraCE, eval = FALSE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -55,7 +55,7 @@ str(di.trace)
 
 #### PRECC
 
-```{r explore_preccTraCE, eval = TRUE}
+```{r explore_preccTraCE, eval = FALSE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -80,7 +80,7 @@ str(di.trace)
 
 #### CLDTOT
 
-```{r explore_cldtotTraCE, eval = TRUE}
+```{r explore_cldtotTraCE, eval = FALSE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -88,7 +88,7 @@ str(di.trace)
 
 #### PS
 
-```{r explore_psTraCE, eval = TRUE}
+```{r explore_psTraCE, eval = FALSE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -96,7 +96,7 @@ str(di.trace)
 
 #### U
 
-```{r explore_uTraCE, eval = TRUE}
+```{r explore_uTraCE, eval = FALSE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc")
 str(di.trace)
 ```
@@ -104,7 +104,7 @@ str(di.trace)
 
 #### V
 
-```{r explore_vTraCE, eval = TRUE}
+```{r explore_vTraCE, eval = FALSE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc")
 str(di.trace)
 ```
