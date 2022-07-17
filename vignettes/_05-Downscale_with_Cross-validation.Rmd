@@ -1,8 +1,11 @@
 ---
 title: "Downscaling Trace-21ka paleoclimate simulation."
-output:
-  html_document:
-    df_print: paged
+
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Downscaling Trace-21ka paleoclimate simulation.}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r global_options, include=FALSE}
