@@ -72,7 +72,7 @@ cdo sellevel,992.5561 ../../Data/TraCE21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.
 
 Once, the surface pressure level was selected the new file was inspected.
 
-```{r explore_relhumTraCE, eval = TRUE}
+```{r explore_relhumTraCE, eval = FALSE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/RELHUM/surface_level/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc")
 str(di.trace)
 ```
