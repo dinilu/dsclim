@@ -1,18 +1,44 @@
 Package: dsclim
-Title: What the Package Does (One Line, Title Case)
+Title: Functions to downscale grid climate data (TraCE21ka or CMIP5)
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    c(person("Diego", "Nieto-Lugilde", , "dnietolugilde@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-4135-2881")), person("Daniel", "Romera-Romera", , "", role = "aut",
+           comment = c(ORCID = "0000-0003-4135-2881")))
+Author: Diego Nieto-Lugilde [aut, cre], Daniel Romera-Romera [aut]  
+Maintainer: Diego Nieto-Lugilde <dnietolugilde@gmail.com>
+Description: The package provides to ease the use of climate4R R-package to downscale climate data. More specifically,
+	the package facilitate the loading of TraCE21ka and CMIP5 data in a convenient format for the downscaling approach, and 
+	provides wrapping functions to run the downscaling in a geographical region of interest.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+LazyData: true
+Imports: 
+    climate4R.UDG,
+    downscaleR,
+    loadeR.2nc,
+    loadeR.java,
+    ncdf4,
+    rJava,
+    transformeR,
+    utils,
+    zoo
+Depends: 
+    loadeR,
+    R (>= 2.10)
 Suggests: 
     knitr,
     rmarkdown
+Remotes: SantanderMetGroup/loadeR,
+    SantanderMetGroup/climate4R.UDG,
+    SantanderMetGroup/downscaleR,
+    SantanderMetGroup/loadeR.2nc,
+    SantanderMetGroup/loadeR.java,
+    SantanderMetGroup/transformeR
 VignetteBuilder: knitr
 URL: https://github.com/dinilu/dsclim,
-    http://dnietolugilde.com/dsclim/
+    https://dnietolugilde.com/dsclim/, 
+    https://dinilu.github.io/dsclim
 BugReports: https://github.com/dinilu/dsclim/issues

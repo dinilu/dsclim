@@ -1,0 +1,524 @@
+---
+title: "1. Data downloading and preprocessing"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{1. Data downloading and preprocessing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Trace-21ka paleoclimate data
+
+Trace-21ka paleoclimate data can be downloaded from [https://www.earthsystemgrid.org/project/trace.html](https://www.earthsystemgrid.org/project/trace.html). This website, however, does not provide documentation with detailed information (file names, variable names, units, etcetera) used in the data repository. You have to look for such information in the following link [(http://www.cgd.ucar.edu/ccr/TraCE/fields.html)](http://www.cgd.ucar.edu/ccr/TraCE/fields.html). Complementary information can be found in documentation website for the model and the developing laboratory: [http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html](http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html) and [http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html](http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html).
+
+We opted to download files for all time periods (since 22.000 years BP to 1990 CE) for 'surface temperature (radiative)' (TS), 'maximum surface temperature over output period' (TSMX), 'minimum surface temperature over output period' (TSMN), 'solar insolation' (SOLIN), 'surface pressure' (PS), 'convective precipitation rate (liq + ice)' (PRECC), 'surface latent heat flux' (LHFLX), and 'vertically-integrated total cloud' (CLDTOT).
+
+
+### Inspect files and variables {.tabset}   
+
+Downloaded files can be inspected with the following code:
+
+
+#### TSMX
+
+```{r explore_tsmx, eval = FALSE}
+di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc")
+str(di.trace)
+```
+
+
+#### TSMN
+
+```{r explore_tsmn, eval = FALSE} 
+di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc")
+str(di.trace)
+```
+
+
+#### TS
+
+```{r explore_ts, eval = FALSE}
+di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc")
+str(di.trace)
+```
+
+
+#### PRECC
+
+```{r explore_precc, eval = FALSE}
+di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc")
+str(di.trace)
+```
+
+
+#### RELHUM
+
+The file for relative humidity in TraCE21ka have information for different atmospheric levels. In this case, we first selected surface preasure level and then create a new file with the information to simplify the rest of computation.
+
+```{bash extract_relhum_surface_level, eval=FALSE}
+# BASH script 
+cdo sellevel,992.5561 ../../Data/TraCE21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc ../../Data/TraCE21ka/RELHUM/surface_level/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc
+```
+
+Once, the surface pressure level was selected the new file was inspected.
+
+```{r explore_relhum, eval = FALSE}
+di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/RELHUM/surface_level/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc")
+str(di.trace)
+```
+
+
+#### CLDTOT
+
+```{r explore_cldtot, eval = FALSE}
+di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc")
+str(di.trace)
+```
+
+
+#### PS
+
+```{r explore_ps, eval = FALSE}
+di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc")
+str(di.trace)
+```
+
+
+#### U
+
+```{r explore_u, eval = FALSE}
+di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc")
+str(di.trace)
+```
+
+
+#### V
+
+```{r explore_v, eval = FALSE}
+di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc")
+str(di.trace)
+```
+
+
+### Create dictionary
+
+In order to load those files in R, the `climate4R` framework allow to create a dictionary that is used to standardize variables.
+
+```{r create_trace_dictionary, eval = FALSE} 
+file.create("../../Data/TraCE21ka/dictionary.dic")
+writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface",
+             "tasmax,TSMX,1mo,0,12,max,-273.15,1,0,0,",
+             "tasmin,TSMN,1mo,0,12,min,-273.15,1,0,0,",
+             "tas,TS,1mo,0,12,mean,-273.15,1,0,0,",
+             "pr,PRECC,1mo,0,12,mean,0,2592000000,0,0,",
+             "hurs,RELHUM,1mo,0,12,mean,0,1,0,0,",
+             "cld,CLDTOT,1mo,0,12,mean,0,1,0,0,",
+             "ps,PS,1mo,0,12,mean,0,1,0,0,",
+             "u,U,1mo,0,12,mean,0,1,0,0,",
+             "v,V,1mo,0,12,mean,0,1,0,0,"),
+           "../../Data/TraCE21ka/dictionary.dic")
+```
+
+
+## UERRA historical reanalisis data
+
+Reanalysis data for the historical period (1961-1990) comes from the UERRA project ([https://www.uerra.eu/](https://www.uerra.eu/)). The data can be downloaded from the Climate Data Store at the Copernicus website ([https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-uerra-europe-single-levels?tab=overview](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-uerra-europe-single-levels?tab=overview)). Technical details can be found in the same Climate Data Store or at the links provided in the website of the European Centre for Medium-Range Weather Forecasts (ECMWF) for the UERRA project ([https://www.ecmwf.int/en/research/projects/uerra](https://www.ecmwf.int/en/research/projects/uerra)).
+
+The project provide reanalysis from two different systems (UERRA-HARMONIE and MESCAN-SURFEX) that produce data in Lambert Conformal Conic Grid at two spatial resolutions: 11km x 11km for the UERRA-HARMONIE system and 5.5km x 5.5km for the MESCAN-SURFEX system. Because we were mainly insterested in downscaling temperature and precipitation variables and reanalysis data would be our predictand variables, we downloaded temperature and precipitation data using the following python scripts.
+
+> Note that CDS requires to register a free account to access data. Downloading scripts could request user and password in each iteration or can be configured to store account data in the system.
+
+> Data format: Data were downloaded in GRIB format because the Climate Data Operator library (cdo) seems to behave better with GRIB than with NetCDF files.
+
+
+### Downloading files from dataserver {.tabset}
+
+While we were interested in downscaling at the spatial resolution of the UERRA-HARMONIE, precipitation data were downloaded from the MESCAN-SURFEX system. The main reason is that precipitation data from UERRA-HARMONIE were not available at the mean time. Because MESCAN-SURFEX system produce reanalysis data at a finer resolution they could be afterwards resampled at the desired resolution.
+
+#### Temperature
+
+```{python Download_UERRA-HARMONIE_2m_temperature, eval=FALSE}
+# Python script 
+import cdsapi
+
+c = cdsapi.Client()
+
+for y in range(1961, 1990):
+  print(y)
+  
+  c.retrieve(
+    'reanalysis-uerra-europe-single-levels',
+    {
+      'format': 'grib',
+      'origin': 'uerra_harmonie',
+      'variable': '2m_temperature',
+      'year': [
+        str(y),
+        ],
+      'month': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        ],
+      'day': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        '13', '14', '15',
+        '16', '17', '18',
+        '19', '20', '21',
+        '22', '23', '24',
+        '25', '26', '27',
+        '28', '29', '30',
+        '31',
+        ],
+      'time': [
+        '00:00', '06:00', '12:00',
+        '18:00',
+        ],
+    },
+    'UERRA-HARMONIE/2m_temperature/'+ str(y) +'_2m_temperature.grib')
+```
+              
+
+#### Precipitation
+              
+```{python Download_MESCAN-SURFEX_total_precipitation, eval=FALSE}
+# Python script 
+import cdsapi
+
+c = cdsapi.Client()
+
+for y in range(1961, 1990):
+  print(y)
+  
+  c.retrieve(
+    'reanalysis-uerra-europe-single-levels',
+    {
+      'format': 'grib',
+      'origin': 'mescan_surfex',
+      'variable': 'total_precipitation',
+      'year': [
+        str(y),
+        ],
+      'month': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        ],
+      'day': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        '13', '14', '15',
+        '16', '17', '18',
+        '19', '20', '21',
+        '22', '23', '24',
+        '25', '26', '27',
+        '28', '29', '30',
+        '31',
+        ],
+      'time': [
+        '00:00', '06:00', '12:00',
+        '18:00',
+        ],
+    },
+    'MESCAN-SURFEX/total_precipitation/'+ str(y) +'_total_precipitation.grib')
+```
+                            
+                            
+#### Relative humidity
+                            
+```{python Download_UERRA-HARMONIE_2m_relative_humidity, eval=FALSE}
+# Python script 
+import cdsapi
+
+c = cdsapi.Client()
+
+for y in range(1961, 1990):
+  print(y)
+  
+  c.retrieve(
+    'reanalysis-uerra-europe-single-levels',
+    {
+      'format': 'grib',
+      'origin': 'uerra_harmonie',
+      'variable': '2m_relative_humidity',
+      'year': [
+        str(y),
+        ],
+      'month': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        ],
+      'day': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        '13', '14', '15',
+        '16', '17', '18',
+        '19', '20', '21',
+        '22', '23', '24',
+        '25', '26', '27',
+        '28', '29', '30',
+        '31',
+        ],
+      'time': [
+        '00:00', '06:00', '12:00',
+        '18:00',
+        ],
+    },
+    'UERRA-HARMONIE/2m_relative_humidity/'+ str(y) +'_2m_relative_humidity.grib')
+```
+                                          
+                                          
+#### Wind speed
+                                          
+```{python Download_UERRA-HARMONIE_10m_wind_speed, eval=FALSE}
+# Python script 
+import cdsapi
+
+c = cdsapi.Client()
+
+for y in range(1961, 1990):
+  print(y)
+  
+  c.retrieve(
+    'reanalysis-uerra-europe-single-levels',
+    {
+      'format': 'grib',
+      'origin': 'uerra_harmonie',
+      'variable': '10m_wind_speed',
+      'year': [
+        str(y),
+        ],
+      'month': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        ],
+      'day': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        '13', '14', '15',
+        '16', '17', '18',
+        '19', '20', '21',
+        '22', '23', '24',
+        '25', '26', '27',
+        '28', '29', '30',
+        '31',
+        ],
+      'time': [
+        '00:00', '06:00', '12:00',
+        '18:00',
+        ],
+    },
+    'UERRA-HARMONIE/10m_wind_speed/'+ str(y) +'_10m_wind_speed.grib')
+```
+                                                        
+                                                        
+#### Total cloud cover
+                                                        
+```{python Download_UERRA-HARMONIE_total_cloud_cover, eval=FALSE}
+# Python script 
+import cdsapi
+
+c = cdsapi.Client()
+
+for y in range(1961, 1990):
+  print(y)
+  
+  c.retrieve(
+    'reanalysis-uerra-europe-single-levels',
+    {
+      'format': 'grib',
+      'origin': 'uerra_harmonie',
+      'variable': 'total_cloud_cover',
+      'year': [
+        str(y),
+        ],
+      'month': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        ],
+      'day': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        '13', '14', '15',
+        '16', '17', '18',
+        '19', '20', '21',
+        '22', '23', '24',
+        '25', '26', '27',
+        '28', '29', '30',
+        '31',
+        ],
+      'time': [
+        '00:00', '06:00', '12:00',
+        '18:00',
+        ],
+    },
+    'UERRA-HARMONIE/total_cloud_cover/'+ str(y) +'_total_cloud_cover.grib')
+```
+
+
+#### Surface pressure
+
+```{python Download_UERRA-HARMONIE_surface_pressure, eval=FALSE}
+# Python script 
+import cdsapi
+
+c = cdsapi.Client()
+
+for y in range(1961, 1990):
+  print(y)
+  
+  c.retrieve(
+    'reanalysis-uerra-europe-single-levels',
+    {
+      'format': 'grib',
+      'origin': 'uerra_harmonie',
+      'variable': 'surface_pressure',
+      'year': [
+        str(y),
+        ],
+      'month': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        ],
+      'day': [
+        '01', '02', '03',
+        '04', '05', '06',
+        '07', '08', '09',
+        '10', '11', '12',
+        '13', '14', '15',
+        '16', '17', '18',
+        '19', '20', '21',
+        '22', '23', '24',
+        '25', '26', '27',
+        '28', '29', '30',
+        '31',
+        ],
+      'time': [
+        '00:00', '06:00', '12:00',
+        '18:00',
+        ],
+    },
+    'UERRA-HARMONIE/surface_pressure/'+ str(y) +'_surface_pressure.grib')
+```
+
+                                                              
+### Data aggregation
+
+Subdaily data from the original files were aggregated to daily and then to monthly data using the Climate Data Operator library (cdo). All variables were kept in their original metric and units, but temperature that was used to calculate maximum, minimum and average daily temperatures. In the case of precipitations, the aggregation was carried out by suming daily data, for the rest of variables aggregation was carried out by averaging subdaily and daily data.
+
+
+```{bash aggregate_climate_data, eval=FALSE} 
+# BASH script 
+years=($(seq 1961 1990))
+
+for y in "${years[@]}"
+do
+
+# Temperature data aggregation
+cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg -daymin ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/${y}_2m_temperature.grib ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/${y}_2m_tmin.nc
+
+cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg -daymax ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/${y}_2m_temperature.grib ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/${y}_2m_tmax.nc
+
+cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg -dayavg ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/${y}_2m_temperature.grib ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/${y}_2m_temperature.nc
+
+# Precipitation data aggregation
+
+cdo -s -f nc remapcon,../../Data/UERRA/template_SURFEX.nc -monsum ../../Data/UERRA/MESCAN-SURFEX/total_precipitation/${y}_total_precipitation.grib ../../Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/${y}_total_precipitation.nc
+
+# Relative Humidity data aggregation
+
+cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg ../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/${y}_2m_relative_humidity.grib ../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/${y}_2m_relative_humidity.nc
+
+# Total Cloud Cover data aggregation
+
+cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg ../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/${y}_total_cloud_cover.grib ../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/${y}_total_cloud_cover.nc
+
+# Wind Speed data aggregation
+
+cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg ../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/${y}_10m_wind_speed.grib ../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/${y}_10m_wind_speed.nc
+
+# Surface pressure data aggregation
+
+cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg ../../Data/UERRA/UERRA-HARMONIE/surface_pressure/${y}_surface_pressure.grib ../../Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/${y}_surface_pressure.nc
+
+done
+
+# Temporal merging
+tmin_files=( ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/*_2m_tmin.nc )
+cdo mergetime ${tmin_files[@]}  ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc
+
+tmax_files=( ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/*_2m_tmax.nc )
+cdo mergetime ${tmax_files[@]} ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmax.nc
+
+tmean_files=( ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/*_2m_temperature.nc )
+cdo mergetime ${tmean_files[@]} ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc
+
+prec_files=( ../../Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/*_total_precipitation.nc )
+cdo mergetime ${prec_files[@]} ../../Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/1961-90_total_precipitation.nc
+
+cloud_files=( ../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/*_total_cloud_cover.nc )
+cdo mergetime ${cloud_files[@]}  ../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc
+
+rhum_files=( ../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/*_2m_relative_humidity.nc )
+cdo mergetime ${rhum_files[@]} ../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc
+
+wspeed_files=( ../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/*_10m_wind_speed.nc )
+cdo mergetime ${wspeed_files[@]} ../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc
+
+ps_files=( ../../Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/*_surface_pressure.nc )
+cdo mergetime ${ps_files[@]} ../../Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/1961-90_surface_pressure.nc
+
+
+# Remove temporary files
+
+rm ${tmin_files[@]} ${tmax_files[@]} ${tmean_files[@]} ${prec_files[@]} ${cloud_files[@]} ${rhum_files[@]} ${wspeed_files[@]} ${ps_files} 
+```
+
+
+### Create dictionary
+
+In order to load those files in R, the `climate4R` framework allow to create a dictionary that is used to standardize variables to the `climate4R` vocabulary (check `climate4R.UDG::C4R.vocabulary()`).
+
+```{r create_uerra_dictionary, eval = FALSE}
+file.create("../../Data/UERRA/UERRA_dictionary.dic")
+
+writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface", 
+             "tasmin,2t,1mo,1,12,min,-273.15,1,0,0,",
+             "tasmax,2t,1mo,1,12,max,-273.15,1,0,0,",
+             "tas,2t,1mo,1,12,mean,-273.15,1,0,0,",
+             "pr,tp,1mo,1,12,sum,0,1,0,0,",
+             "hurs,2r,1mo,1,12,mean,0,1,0,0,",
+             "cld,tcc,1mo,1,12,mean,0,1,0,0,",
+             "wss,10si,1mo,1,12,mean,0,1,0,0,",
+             "ps,sp,1mo,1,12,mean,0,1,0,0,"),
+           "../../Data/UERRA/UERRA_dictionary.dic")
+```
+

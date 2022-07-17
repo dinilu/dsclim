@@ -1,0 +1,9 @@
+identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface
+tasmin,2t,1mo,1,12,min,-273.15,1,0,0,
+tasmax,2t,1mo,1,12,max,-273.15,1,0,0,
+tas,2t,1mo,1,12,mean,-273.15,1,0,0,
+pr,tp,1mo,1,12,sum,0,1,0,0,
+hurs,2r,1mo,1,12,mean,0,1,0,0,
+cld,tcc,1mo,1,12,mean,0,1,0,0,
+wss,10si,1mo,1,12,mean,0,1,0,0,
+ps,sp,1mo,1,12,mean,0,1,0,0,

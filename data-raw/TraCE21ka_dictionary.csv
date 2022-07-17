@@ -1,0 +1,12 @@
+identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface
+tasmax,TSMX,1mo,0,12,max,-273.15,1,0,0,
+tasmin,TSMN,1mo,0,12,min,-273.15,1,0,0,
+tas,TS,1mo,0,12,mean,-273.15,1,0,0,
+pr,PRECC,1mo,0,12,mean,0,2592000000,0,0,
+hurs,RELHUM,1mo,0,12,mean,0,1,0,0,
+cld,CLDTOT,1mo,0,12,mean,0,1,0,0,
+ps,PS,1mo,0,12,mean,0,1,0,0,
+u,U,1mo,0,12,mean,0,1,0,0,
+v,V,1mo,0,12,mean,0,1,0,0,
+lhflx,LHFLX,1mo,0,12,mean,0,1,0,0,
+solin,SOLIN,1mo,0,12,mean,0,1,0,0,
