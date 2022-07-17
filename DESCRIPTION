@@ -13,3 +13,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/dinilu/dsclim
+BugReports: https://github.com/dinilu/dsclim/issues
