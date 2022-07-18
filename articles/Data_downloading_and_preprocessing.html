@@ -91,7 +91,7 @@
 <h3 id="data-download">Data download<a class="anchor" aria-label="anchor" href="#data-download"></a>
 </h3>
 <p>TraCE21ka paleoclimate data can be downloaded from <a href="https://www.earthsystemgrid.org/project/trace.html" class="external-link">https://www.earthsystemgrid.org/project/trace.html</a>. This website, however, does not provide documentation with detailed information (file names, variable names, units, etcetera) used in the data repository. You have to look for such information in the following link <a href="http://www.cgd.ucar.edu/ccr/TraCE/fields.html" class="external-link">(http://www.cgd.ucar.edu/ccr/TraCE/fields.html)</a>. Complementary information can be found in documentation website for the model and the developing laboratory: <a href="http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html" class="external-link">http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html</a> and <a href="http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html" class="external-link">http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html</a>.</p>
-<p>We opted to download files for all time periods (since 22.000 years BP to 1990 CE) for ‘surface temperature (radiative)’ (TS), ‘maximum surface temperature over output period’ (TSMX), ‘minimum surface temperature over output period’ (TSMN), ‘solar insolation’ (SOLIN), ‘surface pressure’ (PS), ‘convective precipitation rate (liq + ice)’ (PRECC), ‘surface latent heat flux’ (LHFLX), and ‘vertically-integrated total cloud’ (CLDTOT).</p>
+<p>We opted to download files for all time periods (since 22.000 years BP to 1990 CE) for ‘surface temperature (radiative)’ (TS), ‘maximum surface temperature over output period’ (TSMX), ‘minimum surface temperature over output period’ (TSMN), ‘surface pressure’ (PS), ‘convective precipitation rate (liq + ice)’ (PRECC), ‘relative humidity’ (RELHUM), ‘wind speed (horizontal and vertical components)’ (U +v) and ‘vertically-integrated total cloud’ (CLDTOT).</p>
 </div>
 <div class="section level3 tabset">
 <h3 id="inspect-files-and-variables">Inspect files and variables<a class="anchor" aria-label="anchor" href="#inspect-files-and-variables"></a>
@@ -120,7 +120,6 @@
 <div class="tab-content">
 <div class="active  tab-pane" id="tsmx" role="tabpanel" aria-labelledby="tsmx-tab">
 
-<p>prueba</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">di.trace</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/dataInventory.html" class="external-link">dataInventory</a></span><span class="op">(</span><span class="st">"../../Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">di.trace</span><span class="op">)</span></span></code></pre></div>
@@ -202,7 +201,7 @@
 <h2 id="uerra-historical-reanalisis-data">UERRA historical reanalisis data<a class="anchor" aria-label="anchor" href="#uerra-historical-reanalisis-data"></a>
 </h2>
 <p>Reanalysis data for the historical period (1961-1990) comes from the UERRA project (<a href="https://www.uerra.eu/" class="external-link">https://www.uerra.eu/</a>). The data can be downloaded from the Climate Data Store at the Copernicus website (<a href="https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-uerra-europe-single-levels?tab=overview" class="external-link">https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-uerra-europe-single-levels?tab=overview</a>). Technical details can be found in the same Climate Data Store or at the links provided in the website of the European Centre for Medium-Range Weather Forecasts (ECMWF) for the UERRA project (<a href="https://www.ecmwf.int/en/research/projects/uerra" class="external-link">https://www.ecmwf.int/en/research/projects/uerra</a>).</p>
-<p>The project provide reanalysis from two different systems (UERRA-HARMONIE and MESCAN-SURFEX) that produce data in Lambert Conformal Conic Grid at two spatial resolutions: 11km x 11km for the UERRA-HARMONIE system and 5.5km x 5.5km for the MESCAN-SURFEX system. Because we were mainly insterested in downscaling temperature and precipitation variables and reanalysis data would be our predictand variables, we downloaded temperature and precipitation data using the following python scripts.</p>
+<p>The project provide reanalysis from two different systems (UERRA-HARMONIE and MESCAN-SURFEX) that produce data in Lambert Conformal Conic Grid at two spatial resolutions: 11km x 11km for the UERRA-HARMONIE system and 5.5km x 5.5km for the MESCAN-SURFEX system. Because reanalysis data would be our predictand variables, we downloaded mean, maximum and minimum temperature, precipitation, relative humidity, cloud cover, surface pressure and wind speed data using the following python scripts.</p>
 <blockquote>
 <p>Note that CDS requires to register a free account to access data. Downloading scripts could request user and password in each iteration or can be configured to store account data in the system.</p>
 </blockquote>
@@ -591,6 +590,7 @@
 <div class="section level2">
 <h2 id="cmip5-data">CMIP5 data<a class="anchor" aria-label="anchor" href="#cmip5-data"></a>
 </h2>
+<p>CMIP5 data were download for two periods. On the one hand, historical period which corresponded to 1850-2005 interval. On the other hand, future scenarios projections which corresponded to 2006-2100 interval.</p>
 <div class="section level3">
 <h3 id="downloading-files-from-dataserver-1">Downloading files from dataserver<a class="anchor" aria-label="anchor" href="#downloading-files-from-dataserver-1"></a>
 </h3>
