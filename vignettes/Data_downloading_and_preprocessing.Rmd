@@ -31,6 +31,8 @@ Downloaded files can be inspected with the following code:
 
 #### TSMX
 
+prueba
+
 ```{r explore_tsmxTraCE, eval = FALSE}
 di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc")
 str(di.trace)
