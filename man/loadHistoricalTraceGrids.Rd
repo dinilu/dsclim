@@ -12,8 +12,7 @@ loadHistoricalTraceGrids(
   start_date = "1551-01-01",
   end_date = "1990-12-31",
   years = 1961:1990,
-  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package =
-    "TraCE21kaDSR"),
+  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim"),
   selection_vars = c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps", "pr", "cld",
     "wss"),
   compute_wss = TRUE
@@ -48,8 +47,8 @@ Title
 }
 \examples{
 # historical.files <- traceFileNames(
-#                         "Data/TraCE21ka/", 36)  
+#                         "Data/TraCE21ka/", 36)
 # data <- loadHistoricalTraceGrids(historical.files,
 #                                  c("tas", "tasmax", "tasmin", "hurs@992.5561",
-#                                  "ps", "pr", "cld", "u@992.5561", "v@992.5561")) 
+#                                  "ps", "pr", "cld", "u@992.5561", "v@992.5561"))
 }

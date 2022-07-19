@@ -7,40 +7,49 @@
 loadCMIP(
   var_list,
   var_new_list,
-  indir = "../../Data/CMIP5/",
+  indir,
   rcp,
   mod,
   lonLim = NULL,
   latLim = NULL,
   years = NULL,
-  dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "TraCE21kaDSR")
+  dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim")
 )
 }
 \arguments{
-\item{var_list}{TBW}
+\item{var_list}{A character vector with names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).}
 
-\item{var_new_list}{TBW}
+\item{var_new_list}{A character vector with names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).}
 
-\item{indir}{TBW}
+\item{indir}{A character string with the directory path for CMIP5 data. This directory should have a folder with the name of the RCP that is going to be loaded. The RCP folder should have in turn a folder with the name of the General Circulation Model that is goint to be loaded.}
 
-\item{rcp}{TBW}
+\item{rcp}{A character vector with the name of the RCP that is going to be loaded.}
 
-\item{mod}{TBW}
+\item{mod}{A character vector with the name of the GCM that is going to be loaded.}
 
-\item{lonLim}{TBW}
+\item{lonLim}{A numeric vector (length = 2) with the longitudinal extent that is going to be loaded.}
 
-\item{latLim}{TBW}
+\item{latLim}{A numeric vector (length = 2) with the latitudinal extent that is going to be loaded.}
 
-\item{years}{TBW}
+\item{years}{A numeric vector with the sequence of years that are going to be loaded.}
 
-\item{dictionary}{TBW}
+\item{dictionary}{A data dictionary (as in \code{\link[loadeR]{loadGridData}}) that is going to be used to load the data. By default it uses an internal dictionary that standardize CMIP5, TraCE21ka, and UERRA data to the same format.}
 }
 \value{
-TBW
+A list object with the structure suitable for the climate4R suite. More specifically the data are as returned from the \code{\link[loadeR]{loadGridData}} function.
 }
 \description{
 Load CMIP5 data into climate4R grid format
 }
 \examples{
-#TBW
+\dontrun{
+dsclim::loadCMIP("tas",
+                 "tas",
+                 "data/",
+                 "rcp2.6",
+                 "CESM1-CAM5",
+                 c(-11.25, 12.50),
+                 c(27, 45),
+                 2006:2100)
+}
 }

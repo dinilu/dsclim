@@ -9,7 +9,7 @@ loadUerra(
   var,
   lonLim = NULL,
   latLim = NULL,
-  dictionary = system.file("extdata", "UERRA_dictionary.csv", package = "TraCE21kaDSR"),
+  dictionary = system.file("extdata", "UERRA_dictionary.csv", package = "dsclim"),
   aggr.times = NULL,
   aggr.fun = mean
 )

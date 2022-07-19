@@ -9,8 +9,7 @@ loadTraceGrids(
   vars = NULL,
   lonLim = c(-25, 25),
   latLim = c(25, 50),
-  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package =
-    "TraCE21kaDSR"),
+  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim"),
   selection_vars = c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps", "pr", "cld",
     "wss"),
   compute_wss = TRUE
@@ -39,7 +38,7 @@ Title
 }
 \examples{
 # LGM.files <- traceFileNames(
-#                         "../Data/TraCE21ka/", 1)  
+#                         "../Data/TraCE21ka/", 1)
 # data <- loadTraceGrids(LGM.files,
 #                                  c("tas", "tasmax", "tasmin", "hurs@992.5561",
 #                                  "ps", "pr", "cld", "u@992.5561", "v@992.5561"), 1,

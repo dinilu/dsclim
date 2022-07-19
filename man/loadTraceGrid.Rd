@@ -9,8 +9,7 @@ loadTraceGrid(
   var,
   lonLim = c(-25, 25),
   latLim = c(25, 50),
-  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package =
-    "TraCE21kaDSR")
+  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")
 )
 }
 \arguments{
@@ -33,5 +32,5 @@ Title
 \examples{
 # tas <- loadTraceGrid(
 #            "Data/TraCE21ka/TS/trace.01.22000-20001BP.cam2.h0.TS.0000101-0200012.nc",
-#            "tas", 1, lonLim = NULL, latLim=NULL) 
+#            "tas", 1, lonLim = NULL, latLim=NULL)
 }

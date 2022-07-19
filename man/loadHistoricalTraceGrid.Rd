@@ -12,8 +12,7 @@ loadHistoricalTraceGrid(
   start_date = "1551-01-01",
   end_date = "1990-12-31",
   years = 1961:1990,
-  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package =
-    "TraCE21kaDSR")
+  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")
 )
 }
 \arguments{
