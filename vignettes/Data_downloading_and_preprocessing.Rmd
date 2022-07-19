@@ -15,24 +15,29 @@ knitr::opts_chunk$set(
 )
 ```
 
+In this vignette, we illustrate how to download and preprocess the climate data we used to downscale continuous climate data from the Last Glacial Maximum (~22ka BP), to the future (2100 cal years). In particular, we used data from TraCE21ka paleoreconstruction for the past, Climate Model Intercomparison Project 5 (CIMP5) for the future, and Uncertainties in Ensembles of Regional ReAnalyses (UERRA) for historical period (i.e., 1961-1990) at high spatial resolution.
+
 ## TraCE21ka paleoclimate data
 
 ### Data download 
 
-TraCE21ka paleoclimate data can be downloaded from [https://www.earthsystemgrid.org/project/trace.html](https://www.earthsystemgrid.org/project/trace.html). This website, however, does not provide documentation with detailed information (file names, variable names, units, etcetera) used in the data repository. You have to look for such information in the following link [(http://www.cgd.ucar.edu/ccr/TraCE/fields.html)](http://www.cgd.ucar.edu/ccr/TraCE/fields.html). Complementary information can be found in documentation website for the model and the developing laboratory: [http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html](http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html) and [http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html](http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html).
+TraCE21ka paleoclimate data can be downloaded from [https://www.earthsystemgrid.org/project/trace.html](https://www.earthsystemgrid.org/project/trace.html). This website, however, does not provide documentation with detailed information (e.g., meaning of file names, variable names, units, etcetera). You can find such information in the following link [(http://www.cgd.ucar.edu/ccr/TraCE/fields.html)](http://www.cgd.ucar.edu/ccr/TraCE/fields.html). Complementary information can be found in documentation website for the model and the developing laboratory: [http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html](http://www.cesm.ucar.edu/projects/community-projects/LENS/data-sets.html) and [http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html](http://www.cesm.ucar.edu/models/atm-cam/docs/cam2.0/UsersGuide/UG-45.html).
 
-We opted to download files for all time periods (since 22.000 years BP to 1990 CE) for 'surface temperature (radiative)' (TS), 'maximum surface temperature over output period' (TSMX), 'minimum surface temperature over output period' (TSMN), 'surface pressure' (PS), 'convective precipitation rate (liq + ice)' (PRECC), 'relative humidity' (RELHUM), 'wind speed (horizontal and vertical components)' (U +v) and 'vertically-integrated total cloud' (CLDTOT).
+We opted to download files for all time periods (since 22.000 years BP to 1990 CE) for 'surface temperature (radiative)' (TS), 'maximum surface temperature over output period' (TSMX), 'minimum surface temperature over output period' (TSMN), 'surface pressure' (PS), 'convective precipitation rate (liq + ice)' (PRECC), 'relative humidity' (RELHUM), 'wind speed (horizontal and vertical components)' (U + V) and 'vertically-integrated total cloud' (CLDTOT).
+
+<div class="alert alert-primary" role="alert">The code in the rest of the vignette assume you have downloaded at least the files for the most recent time periods of each variable from the TraCE21ka website. Those file should be stored under the following folder structure since the working directory: Data/TraCE21ka/TSMX/ (changing TSMX for each variable accordingly). </div>
 
 
-### Inspect files and variables {.tabset}   
+### Inspect files and variables {.tabset .tabset-pills}   
 
-Downloaded files can be inspected with the following code:
+Downloaded files can be inspected with functions from the `{loadeR}` package, using the the following code (select a variable):
+
 
 
 #### TSMX
 
 ```{r explore_tsmxTraCE, eval = FALSE}
-di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc")
+di.trace <- loadeR::dataInventory("Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc")
 str(di.trace)
 ```
 
@@ -40,7 +45,7 @@ str(di.trace)
 #### TSMN
 
 ```{r explore_tsmnTraCE, eval = FALSE} 
-di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc")
+di.trace <- loadeR::dataInventory("Data/TraCE21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc")
 str(di.trace)
 ```
 
@@ -48,7 +53,7 @@ str(di.trace)
 #### TS
 
 ```{r explore_tsTraCE, eval = FALSE}
-di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc")
+di.trace <- loadeR::dataInventory("Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc")
 str(di.trace)
 ```
 
@@ -56,24 +61,24 @@ str(di.trace)
 #### PRECC
 
 ```{r explore_preccTraCE, eval = FALSE}
-di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc")
+di.trace <- loadeR::dataInventory("Data/TraCE21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc")
 str(di.trace)
 ```
 
 
 #### RELHUM
 
-The file for relative humidity in TraCE21ka have information for different atmospheric levels. In this case, we first selected surface preasure level and then create a new file with the information to simplify the rest of computation.
+The file for relative humidity in TraCE21ka have information for different atmospheric levels. In this case, we first selected surface preasure level and then create a new file with the information to simplify the subsequent computations.
 
 ```{bash extract_relhum_surface_level, eval = FALSE}
 # BASH script 
-cdo sellevel,992.5561 ../../Data/TraCE21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc ../../Data/TraCE21ka/RELHUM/surface_level/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc
+cdo sellevel,992.5561 Data/TraCE21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc Data/TraCE21ka/RELHUM/surface_level/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc
 ```
 
 Once, the surface pressure level was selected the new file was inspected.
 
 ```{r explore_relhumTraCE, eval = FALSE}
-di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/RELHUM/surface_level/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc")
+di.trace <- loadeR::dataInventory("Data/TraCE21ka/RELHUM/surface_level/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc")
 str(di.trace)
 ```
 
@@ -81,7 +86,7 @@ str(di.trace)
 #### CLDTOT
 
 ```{r explore_cldtotTraCE, eval = FALSE}
-di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc")
+di.trace <- loadeR::dataInventory("Data/TraCE21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc")
 str(di.trace)
 ```
 
@@ -89,7 +94,7 @@ str(di.trace)
 #### PS
 
 ```{r explore_psTraCE, eval = FALSE}
-di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc")
+di.trace <- loadeR::dataInventory("Data/TraCE21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc")
 str(di.trace)
 ```
 
@@ -97,7 +102,7 @@ str(di.trace)
 #### U
 
 ```{r explore_uTraCE, eval = FALSE}
-di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc")
+di.trace <- loadeR::dataInventory("Data/TraCE21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc")
 str(di.trace)
 ```
 
@@ -105,17 +110,17 @@ str(di.trace)
 #### V
 
 ```{r explore_vTraCE, eval = FALSE}
-di.trace <- loadeR::dataInventory("../../Data/TraCE21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc")
+di.trace <- loadeR::dataInventory("Data/TraCE21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc")
 str(di.trace)
 ```
 
 
 ### Create dictionary
 
-In order to load those files in R, the `climate4R` framework allow to create a dictionary that is used to standardize variables.
+In order to load those files in R, the [climate4R](https://github.com/SantanderMetGroup/climate4R)  framework allow to create a dictionary that is used to standardize variables.
 
-```{r create_trace_dictionaryTraCE, eval = FALSE} 
-file.create("../../Data/TraCE21ka/dictionary.dic")
+```{r create_trace_dictionary, eval = FALSE} 
+file.create("Data/TraCE21ka/TraCE21ka_dictionary.dic")
 writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface",
              "tasmax,TSMX,1mo,0,12,max,-273.15,1,0,0,",
              "tasmin,TSMN,1mo,0,12,min,-273.15,1,0,0,",
@@ -126,24 +131,24 @@ writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,
              "ps,PS,1mo,0,12,mean,0,1,0,0,",
              "u,U,1mo,0,12,mean,0,1,0,0,",
              "v,V,1mo,0,12,mean,0,1,0,0,"),
-           "../../Data/TraCE21ka/dictionary.dic")
+           "Data/TraCE21ka/TraCE21ka_dictionary.dic")
 ```
 
 
-## UERRA historical reanalisis data
+## UERRA historical reanalysis data
 
 Reanalysis data for the historical period (1961-1990) comes from the UERRA project ([https://www.uerra.eu/](https://www.uerra.eu/)). The data can be downloaded from the Climate Data Store at the Copernicus website ([https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-uerra-europe-single-levels?tab=overview](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-uerra-europe-single-levels?tab=overview)). Technical details can be found in the same Climate Data Store or at the links provided in the website of the European Centre for Medium-Range Weather Forecasts (ECMWF) for the UERRA project ([https://www.ecmwf.int/en/research/projects/uerra](https://www.ecmwf.int/en/research/projects/uerra)).
 
-The project provide reanalysis from two different systems (UERRA-HARMONIE and MESCAN-SURFEX) that produce data in Lambert Conformal Conic Grid at two spatial resolutions: 11km x 11km for the UERRA-HARMONIE system and 5.5km x 5.5km for the MESCAN-SURFEX system. Because reanalysis data would be our predictand variables, we downloaded subdaily temperature, precipitation, relative humidity, cloud cover, surface pressure and wind speed data using the following python scripts.
+The project provide reanalysis from two different systems (UERRA-HARMONIE and MESCAN-SURFEX) that produce data in Lambert Conformal Conic Grid at 6 hours temporal resolution and two spatial resolutions: 11km x 11km for the UERRA-HARMONIE system and 5.5km x 5.5km for the MESCAN-SURFEX system. Because reanalysis data would be our predictand variables, we downloaded temperature, precipitation, relative humidity, cloud cover, surface pressure, and wind speed data using the following python scripts.
 
-> Note that CDS requires to register a free account to access data. Downloading scripts could request user and password in each iteration or can be configured to store account data in the system.
+<div class="alert alert-primary" role="alert"> Note that CDS requires to register a free account to access data. Downloading scripts could request user and password in each iteration or can be configured to store account data in the system. See prevous links for detailed information. </div>
 
-> Data format: Data were downloaded in GRIB format because the Climate Data Operator library (cdo) seems to behave better with GRIB than with NetCDF files.
+<div class="alert alert-warning" role="alert">Data were downloaded in GRIB format because the Climate Data Operator library (cdo) seems to behave better with GRIB than with NetCDF files. </div>
 
 
-### Downloading files from dataserver {.tabset}
+### Downloading files from dataserver {.tabset .tabset-pills}
 
-While we were interested in downscaling at the spatial resolution of the UERRA-HARMONIE, precipitation data were downloaded from the MESCAN-SURFEX system. The main reason is that precipitation data from UERRA-HARMONIE were not available at the mean time. Because MESCAN-SURFEX system produce reanalysis data at a finer resolution they could be afterwards resampled at the desired resolution.
+While we were interested in downscaling at the spatial resolution of the UERRA-HARMONIE, precipitation data were downloaded from the MESCAN-SURFEX system. The main reason is that UERRA-HARMONIE doesn't provide precipitation data. Because MESCAN-SURFEX system produce data at a finer spatial resolution they could be afterwards aggregated (or upscaled) at the desired resolution.
 
 #### Temperature
 
@@ -433,85 +438,158 @@ for y in range(1961, 1990):
 ```
 
                                                               
-### Data aggregation
+### Reprojection and data aggregation {.tabset .tabset-pills}  
+UERRA data come in Lambert Conformal Conic Grid projection that should be transformed to WGS84 to match with data from TraCE21ka and CMIP5. Furthermore, subdaily (6 hour) data from the original files were aggregated to daily and then monthly data. All variables were kept in their original metric and units, but temperature that was used to calculate maximum, minimum, and mean daily temperatures, and then monthly averages. In the case of precipitations, the aggregation was carried out by summing daily data, for the rest of variables aggregation was carried out by averaging subdaily (to daily) and daily (to monthly) data. All these transformations were carried out using the Climate Data Operator library (cdo). 
 
-Subdaily data from the original files were aggregated to daily and then to monthly data using the Climate Data Operator library (cdo). All variables were kept in their original metric and units, but temperature that was used to calculate maximum, minimum and average daily temperatures. In the case of precipitations, the aggregation was carried out by suming daily data, for the rest of variables aggregation was carried out by averaging subdaily and daily data.
+#### Temperature  
 
-
-```{bash aggregate_climate_data, eval = FALSE} 
+```{bash aggregate_UERRA_temperature, eval = FALSE} 
 # BASH script 
 years=($(seq 1961 1990))
 
 for y in "${years[@]}"
 do
 
-# Temperature data aggregation
-cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg -daymin ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/${y}_2m_temperature.grib ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/${y}_2m_tmin.nc
+# Temporal and spatial aggregation
+cdo -s -f nc remapcon,Data/UERRA/template_HARMONIE.nc -monavg -daymin Data/UERRA/UERRA-HARMONIE/2m_temperature/${y}_2m_temperature.grib Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/${y}_2m_tmin.nc
 
-cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg -daymax ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/${y}_2m_temperature.grib ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/${y}_2m_tmax.nc
+cdo -s -f nc remapcon,Data/UERRA/template_HARMONIE.nc -monavg -daymax Data/UERRA/UERRA-HARMONIE/2m_temperature/${y}_2m_temperature.grib Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/${y}_2m_tmax.nc
 
-cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg -dayavg ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/${y}_2m_temperature.grib ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/${y}_2m_temperature.nc
-
-# Precipitation data aggregation
-
-cdo -s -f nc remapcon,../../Data/UERRA/template_SURFEX.nc -monsum ../../Data/UERRA/MESCAN-SURFEX/total_precipitation/${y}_total_precipitation.grib ../../Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/${y}_total_precipitation.nc
-
-# Relative Humidity data aggregation
-
-cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg ../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/${y}_2m_relative_humidity.grib ../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/${y}_2m_relative_humidity.nc
-
-# Total Cloud Cover data aggregation
-
-cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg ../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/${y}_total_cloud_cover.grib ../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/${y}_total_cloud_cover.nc
-
-# Wind Speed data aggregation
-
-cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg ../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/${y}_10m_wind_speed.grib ../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/${y}_10m_wind_speed.nc
-
-# Surface pressure data aggregation
-
-cdo -s -f nc remapcon,../../Data/UERRA/template_HARMONIE.nc -monavg ../../Data/UERRA/UERRA-HARMONIE/surface_pressure/${y}_surface_pressure.grib ../../Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/${y}_surface_pressure.nc
+cdo -s -f nc remapcon,Data/UERRA/template_HARMONIE.nc -monavg -dayavg Data/UERRA/UERRA-HARMONIE/2m_temperature/${y}_2m_temperature.grib Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/${y}_2m_temperature.nc
 
 done
 
 # Temporal merging
-tmin_files=( ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/*_2m_tmin.nc )
-cdo mergetime ${tmin_files[@]}  ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc
+tmin_files=( Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/*_2m_tmin.nc )
+cdo mergetime ${tmin_files[@]}  Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc
 
-tmax_files=( ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/*_2m_tmax.nc )
-cdo mergetime ${tmax_files[@]} ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmax.nc
+tmax_files=( Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/*_2m_tmax.nc )
+cdo mergetime ${tmax_files[@]} Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmax.nc
 
-tmean_files=( ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/*_2m_temperature.nc )
-cdo mergetime ${tmean_files[@]} ../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc
-
-prec_files=( ../../Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/*_total_precipitation.nc )
-cdo mergetime ${prec_files[@]} ../../Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/1961-90_total_precipitation.nc
-
-cloud_files=( ../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/*_total_cloud_cover.nc )
-cdo mergetime ${cloud_files[@]}  ../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc
-
-rhum_files=( ../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/*_2m_relative_humidity.nc )
-cdo mergetime ${rhum_files[@]} ../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc
-
-wspeed_files=( ../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/*_10m_wind_speed.nc )
-cdo mergetime ${wspeed_files[@]} ../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc
-
-ps_files=( ../../Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/*_surface_pressure.nc )
-cdo mergetime ${ps_files[@]} ../../Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/1961-90_surface_pressure.nc
-
+tmean_files=( Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/*_2m_temperature.nc )
+cdo mergetime ${tmean_files[@]} Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc
 
 # Remove temporary files
+rm ${tmin_files[@]} ${tmax_files[@]} ${tmean_files[@]}
+```
 
-rm ${tmin_files[@]} ${tmax_files[@]} ${tmean_files[@]} ${prec_files[@]} ${cloud_files[@]} ${rhum_files[@]} ${wspeed_files[@]} ${ps_files} 
+#### Precipitation  
+
+```{bash aggregate_UERRA_precipitation, eval = FALSE} 
+# BASH script 
+years=($(seq 1961 1990))
+
+for y in "${years[@]}"
+do
+
+# Temporal and spatial aggregation
+cdo -s -f nc remapcon,Data/UERRA/template_SURFEX.nc -monsum Data/UERRA/MESCAN-SURFEX/total_precipitation/${y}_total_precipitation.grib Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/${y}_total_precipitation.nc
+
+done
+
+# Temporal merging
+prec_files=( Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/*_total_precipitation.nc )
+cdo mergetime ${prec_files[@]} Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/1961-90_total_precipitation.nc
+
+# Remove temporary files
+rm ${prec_files[@]} 
 ```
 
 
+#### Cloudiness  
+
+```{bash aggregate_UERRA_cloudiness, eval = FALSE} 
+# BASH script 
+years=($(seq 1961 1990))
+
+for y in "${years[@]}"
+do
+
+# Temporal and spatial aggregation
+cdo -s -f nc remapcon,Data/UERRA/template_HARMONIE.nc -monavg Data/UERRA/UERRA-HARMONIE/total_cloud_cover/${y}_total_cloud_cover.grib Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/${y}_total_cloud_cover.nc
+
+done
+
+# Temporal merging
+cloud_files=( Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/*_total_cloud_cover.nc )
+cdo mergetime ${cloud_files[@]}  Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc
+
+# Remove temporary files
+rm ${cloud_files[@]} 
+```
+
+#### Relative humidity  
+
+```{bash aggregate_UERRA_relative_humidity, eval = FALSE} 
+# BASH script 
+years=($(seq 1961 1990))
+
+for y in "${years[@]}"
+do
+
+# Temporal and spatial aggregation
+cdo -s -f nc remapcon,Data/UERRA/template_HARMONIE.nc -monavg Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/${y}_2m_relative_humidity.grib Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/${y}_2m_relative_humidity.nc
+
+done
+
+# Temporal merging
+rhum_files=( Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/*_2m_relative_humidity.nc )
+cdo mergetime ${rhum_files[@]} Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc
+
+# Remove temporary files
+rm ${rhum_files[@]}
+```
+
+#### Wind speed  
+
+```{bash aggregate_UERRA_wind_speed, eval = FALSE} 
+# BASH script 
+years=($(seq 1961 1990))
+
+for y in "${years[@]}"
+do
+
+# Temporal and spatial aggregation
+cdo -s -f nc remapcon,Data/UERRA/template_HARMONIE.nc -monavg Data/UERRA/UERRA-HARMONIE/10m_wind_speed/${y}_10m_wind_speed.grib Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/${y}_10m_wind_speed.nc
+
+done
+
+# Temporal merging
+wspeed_files=( Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/*_10m_wind_speed.nc )
+cdo mergetime ${wspeed_files[@]} Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc
+
+# Remove temporary files
+rm ${wspeed_files[@]} 
+```
+
+#### Surface pressure  
+
+```{bash aggregate_UERRA_surface_pressure, eval = FALSE} 
+# BASH script 
+years=($(seq 1961 1990))
+
+for y in "${years[@]}"
+do
+
+# Temporal and spatial aggregation
+cdo -s -f nc remapcon,Data/UERRA/template_HARMONIE.nc -monavg Data/UERRA/UERRA-HARMONIE/surface_pressure/${y}_surface_pressure.grib Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/${y}_surface_pressure.nc
+
+done
+
+# Temporal merging
+ps_files=( Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/*_surface_pressure.nc )
+cdo mergetime ${ps_files[@]} Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/1961-90_surface_pressure.nc
+
+# Remove temporary files
+rm ${ps_files} 
+```
+
 ### Create dictionary
 
-In order to load those files in R, the `climate4R` framework allow to create a dictionary that is used to standardize variables to the `climate4R` vocabulary (check `climate4R.UDG::C4R.vocabulary()`).
+In order to load those files in R, the [climate4R](https://github.com/SantanderMetGroup/climate4R) framework allow to create a dictionary that is used to standardize variables to the `climate4R` vocabulary (check `climate4R.UDG::C4R.vocabulary()`).
 
-```{r create_uerra_dictionaryTraCE, eval = FALSE}
-file.create("../../Data/UERRA/UERRA_dictionary.dic")
+```{r create_uerra_dictionary, eval = FALSE}
+file.create("Data/UERRA/UERRA_dictionary.dic")
 
 writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface", 
              "tasmin,2t,1mo,1,12,min,-273.15,1,0,0,",
@@ -522,23 +600,23 @@ writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,
              "cld,tcc,1mo,1,12,mean,0,1,0,0,",
              "wss,10si,1mo,1,12,mean,0,1,0,0,",
              "ps,sp,1mo,1,12,mean,0,1,0,0,"),
-           "../../Data/UERRA/UERRA_dictionary.dic")
+           "Data/UERRA/UERRA_dictionary.dic")
 ```
 
 
 ## CMIP5 data
 
-CMIP5 data were download for two periods. On the one hand, historical period which corresponded to 1850-2005 interval. On the other hand, future scenarios projections which corresponded to 2006-2100 interval.
+CMIP5 data are available from different sources (e.g., [CMIP5 website](https://www.wcrp-climate.org/wgcm-cmip/wgcm-cmip5) or the Climate Data Store). Given the convenience downloading system of the Climate Data Store, which we use also to download UERRA data, we selected this option.
 
 ### Downloading files from dataserver
 
-> Note that CDS requires to register a free account to access data. Downloading scripts could request user and password in each iteration or can be configured to store account data in the system.
+CMIP5 data were download for two periods. On the one hand, historical period which correspond to 1850-2005 interval in the CMIP5 project. On the other hand, future scenarios projections which corresponded to 2006-2100 interval. Although there are available data from multiple General Circulation Models (GCMs) in the CMIP5 datasets, there were only three that have all the needed variables for the all four representative path ways (RCPs). Hence, we downloaded the needed variables (matching those from the TraCE21ka and UERRA datasets) for such three GCMs and four RCPs.
 
-> Data format: Data were downloaded in GRIB format because the Climate Data Operator library (cdo) seems to behave better with GRIB than with NetCDF files.
+<div class="alert alert-primary" role="alert">Note that CDS requires to register a free account to access data. Downloading scripts could request user and password in each iteration or can be configured to store account data in the system. </div>
 
-#### Historical data {.tabset}
+#### Historical data {.tabset .tabset-pils}
 
-Select a General Circulation Model
+Select a GCM
 
 ##### CESM1_CAM5
 
@@ -628,7 +706,7 @@ c.retrieve(
 ```
 
 
-#### Future projections {.tabset}  
+#### Future projections {.tabset .tabset-pills}  
 
 Select a General Circulation Model
 
@@ -719,14 +797,18 @@ c.retrieve(
   'IPSL-CM5A-MR_RCP_2_6.zip')
 ```
 
+####
+
+<div class="alert alert-primary" role="alert">For saving space in this vignette, we only report the code to download data from one of the four RCPs. If a user desire to download the rest of the RCPs, just need to change the code above, indicating any other RCPs code (_4_5, _6_0, _8_5) where they now specify _2_6 </div>
+
 
 ### Create dictionary
 
-Before importing the data in an R session, we need to define a dictionary to standarize units of variables to the `climate4R` vocabulary (check ` climate4R.UDG::C4R.vocabulary()`.
+Before importing the data in an R session, we need to define a dictionary to standarize units of variables to the [climate4R](https://github.com/SantanderMetGroup/climate4R) vocabulary (check ` climate4R.UDG::C4R.vocabulary()`.
 
-```{r create_cmip5_dictionaryTraCE, eval = FALSE}
+```{r create_cmip5_dictionary, eval = FALSE}
 
-file.create("../../Data/CMIP5/CMIP5_dictionary.dic")
+file.create("Data/CMIP5/CMIP5_dictionary.dic")
 
 writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,cell_method,offset,scale,deaccum,derived,interface",
 "tasmax,tasmax,1mo,0,12,max,-273.15,1,0,0,",
@@ -737,6 +819,6 @@ writeLines(c("identifier,short_name,time_step,lower_time_bound,upper_time_bound,
 "cld,clt,1mo,0,12,mean,0,1,0,0,",
 "ps,ps,1mo,0,12,mean,0,1,0,0,",
 "wss,sfcWind,1mo,0,12,mean,0,1,0,0,"
-), "../../Data/CMIP5/CMIP5_dictionary.dic")
+), "Data/CMIP5/CMIP5_dictionary.dic")
 ```
 

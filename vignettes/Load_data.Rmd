@@ -19,95 +19,106 @@ knitr::opts_chunk$set(
 )
 ```
 
-<div class="alert alert-primary" role="alert">This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow `vignette("Data_downloading_and_preprocessing", package="dsclim")` before going on.</div>  
+<div class="alert alert-warning" role="alert">This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow `vignette("Data_downloading_and_preprocessing"")` before going on.</div>  
 
-## Trace-21ka data
+## TraCE21ka data
 
-### Defining region limits for Trace21ka data
+### Defining region limits for TraCE21ka data
 
 ```{r set_trace_limits}
 trace.lon <- c(-25, 25)
 trace.lat <- c(25, 50)
 ```
 
-### Loading Trace21ka data {.tabset} 
+### Loading TraCE21ka data {.tabset} 
 
-Select a variable 
+To load the TraCE21ka data for the historical period, we use the `dsclim::loadHistoricalTraceGrid` function. This function internally use functions from the `{loadeR}` package. This function require the file (including the path to the file) and the variable name (as it is specified in the data dictionary for standardization). Optionally, the spatial coverage can be controlled, specifying an extent by the longitudinal and latitudinal extents. The function also allow to specify the starting and ending year of the desired period. If not specified, it uses the period 1961 to 1990, both years included.
+
+Once the data are loaded, we used the `transformeR::climatology` function to calculate the average value of the variable for the whole period (e.g. 1961-1990) and the `visualizeR::spatialPlot` to plot the resulting map.
+
+Select a variable:
 
 #### TSMX
 
 ```{r load_tsmx}
-trace.tsmx <- loadHistoricalTraceGrid("Data/Trace21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc", var="tasmax", lonLim=trace.lon, latLim = trace.lat)
+trace.tsmx <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc", var="tasmax", lonLim=trace.lon, latLim = trace.lat)
 
-visualizeR::spatialPlot(climatology(trace.tsmx), backdrop.theme = "countries", rev.colors=TRUE)
+visualizeR::spatialPlot(transformeR::climatology(trace.tsmx), backdrop.theme = "countries", rev.colors=TRUE)
 ```
+
+![TraCE21ka historical tsmx](img/vign2_load_tsmx_trace.png)
 
 #### TSMN
 
 ```{r load_tsmn}
-trace.tsmn <- loadHistoricalTraceGrid("Data/Trace21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc", var="tasmin", lonLim=trace.lon, latLim = trace.lat)
+trace.tsmn <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc", var="tasmin", lonLim=trace.lon, latLim = trace.lat)
 
-visualizeR::spatialPlot(climatology(trace.tsmn), backdrop.theme = "countries", rev.colors=TRUE)
+visualizeR::spatialPlot(transformeR::climatology(trace.tsmn), backdrop.theme = "countries", rev.colors=TRUE)
 ```
+
+![TraCE21ka historical tsmn](img/vign2_load_tsmn_trace.png)
+
 
 #### TS
 
 ```{r load_ts}
-trace.ts <- loadHistoricalTraceGrid("Data/Trace21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc", var="tas", lonLim=trace.lon, latLim = trace.lat)
+trace.ts <- dsclim::loadHistoricalTraceGrid("../../Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc", var="tas", lonLim=trace.lon, latLim = trace.lat)
 
-visualizeR::spatialPlot(climatology(trace.ts), backdrop.theme = "countries", rev.colors=TRUE)
+visualizeR::spatialPlot(transformeR::climatology(trace.ts), backdrop.theme = "countries", rev.colors=TRUE)
 ```
+
+![TraCE21ka historical tsmx](img/vign2_load_tsmx_trace.png)
 
 #### PRECC
 
 ```{r load_precc}
-trace.precc <- loadHistoricalTraceGrid("Data/Trace21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc", var="pr", lonLim=trace.lon, latLim = trace.lat)
+trace.precc <- loadHistoricalTraceGrid("Data/TraCE21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc", var="pr", lonLim=trace.lon, latLim = trace.lat)
 
-visualizeR::spatialPlot(climatology(trace.precc), backdrop.theme = "countries")
+visualizeR::spatialPlot(transformeR::climatology(trace.precc), backdrop.theme = "countries")
 ```
 
 #### RELHUM
 
 ```{r load_relhum}
-trace.relhum <- loadHistoricalTraceGrid("Data/Trace21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc", var="hurs@992.5561", lonLim=trace.lon, latLim = trace.lat)
+trace.relhum <- loadHistoricalTraceGrid("Data/TraCE21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc", var="hurs@992.5561", lonLim=trace.lon, latLim = trace.lat)
 
-visualizeR::spatialPlot(climatology(trace.relhum), backdrop.theme = "countries")
+visualizeR::spatialPlot(transformeR::climatology(trace.relhum), backdrop.theme = "countries")
 ```
 
 #### CLDTOT
 
 ```{r load_cldtot}
-trace.cldtot <- loadHistoricalTraceGrid("Data/Trace21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc", var="cldtot", lonLim=trace.lon, latLim = trace.lat)
+trace.cldtot <- loadHistoricalTraceGrid("Data/TraCE21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc", var="cldtot", lonLim=trace.lon, latLim = trace.lat)
 
-visualizeR::spatialPlot(climatology(trace.cldtot), backdrop.theme = "countries")
+visualizeR::spatialPlot(transformeR::climatology(trace.cldtot), backdrop.theme = "countries")
 ```
 
 #### PS
 
 ```{r load_ps}
-trace.ps <- loadHistoricalTraceGrid("Data/Trace21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc", var="ps", lonLim=trace.lon, latLim = trace.lat)
+trace.ps <- loadHistoricalTraceGrid("Data/TraCE21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc", var="ps", lonLim=trace.lon, latLim = trace.lat)
 
-visualizeR::spatialPlot(climatology(trace.ps), backdrop.theme = "countries")
+visualizeR::spatialPlot(transformeR::climatology(trace.ps), backdrop.theme = "countries")
 ```
 
 #### U, V, WSS
 
 ```{r load_u}
-trace.u <- loadHistoricalTraceGrid("Data/Trace21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc", var="u@992.5561", lonLim=trace.lon, latLim = trace.lat)
+trace.u <- loadHistoricalTraceGrid("Data/TraCE21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc", var="u@992.5561", lonLim=trace.lon, latLim = trace.lat)
 
-visualizeR::spatialPlot(climatology(trace.u), backdrop.theme = "countries")
+visualizeR::spatialPlot(transformeR::climatology(trace.u), backdrop.theme = "countries")
 ```
 
 ```{r load_v}
-trace.v <- loadHistoricalTraceGrid("Data/Trace21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc", var="v@992.5561", lonLim=trace.lon, latLim = trace.lat)
+trace.v <- loadHistoricalTraceGrid("Data/TraCE21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc", var="v@992.5561", lonLim=trace.lon, latLim = trace.lat)
 
-visualizeR::spatialPlot(climatology(trace.v), backdrop.theme = "countries")
+visualizeR::spatialPlot(transformeR::climatology(trace.v), backdrop.theme = "countries")
 ```
 
 ```{r compute_wss}
 trace.wss <- compute_wind_speed(trace.u, trace.v)
 
-visualizeR::spatialPlot(climatology(trace.wss), backdrop.theme = "countries")
+visualizeR::spatialPlot(transformeR::climatology(trace.wss), backdrop.theme = "countries")
 ```
 
 
@@ -132,7 +143,7 @@ uerra.lat <- c(28, 44)
 # uerra.lat <- c(36, 44)
 ```
 
-### Loading Trace21ka data {.tabset} 
+### Loading TraCE21ka data {.tabset} 
 
 Select a variable 
 
