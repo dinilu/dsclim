@@ -38,7 +38,7 @@ Title
 }
 \examples{
 # LGM.files <- traceFileNames(
-#                         "../Data/TraCE21ka/", 1)
+#                         "Data/TraCE21ka/", 1)
 # data <- loadTraceGrids(LGM.files,
 #                                  c("tas", "tasmax", "tasmin", "hurs@992.5561",
 #                                  "ps", "pr", "cld", "u@992.5561", "v@992.5561"), 1,

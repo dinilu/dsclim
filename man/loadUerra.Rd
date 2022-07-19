@@ -36,7 +36,7 @@ TBW
 Load UERRA data into climate4R grid format
 }
 \examples{
-# uerra.file <- "../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"
+# uerra.file <- "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"
 # local.var <- "tas"
 # uerra = loadUerra(uerra.file, local.var)
 }
