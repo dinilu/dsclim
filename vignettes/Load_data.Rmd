@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-<div class="alert alert-primary" role="alert">This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow `vignette(Data_download_and_preprocessing, package = "dsclim")` before going on.</div>  
+<div class="alert alert-primary" role="alert">This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow `vignette("Data_downloading_and_preprocessing", package="dsclim")` before going on.</div>  
 
 ## Trace-21ka data
 
