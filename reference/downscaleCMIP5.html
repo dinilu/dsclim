@@ -26,8 +26,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Data_downloading_and_preprocessing.html">1. Data downloading and preprocessing</a>
     <a class="dropdown-item" href="../articles/Downscale_with_Cross-validation.html">Downscaling Trace-21ka paleoclimate simulation.</a>
-    <a class="dropdown-item" href="../articles/Load_Trace21ka.html">Loading Trace-21ka paleoclimate simulation.</a>
-    <a class="dropdown-item" href="../articles/Load_UERRA.html">Load UERRA</a>
+    <a class="dropdown-item" href="../articles/Load_data.html">2. Load data.</a>
     <a class="dropdown-item" href="../articles/Model_calibration_and_cross_validation.html">2. Model calibration and cross validation</a>
     <a class="dropdown-item" href="../articles/Summary_cross-validation.html">Downscaling Trace-21ka: Summary cross-validation</a>
   </div>
@@ -70,7 +69,7 @@
 <span>  <span class="va">mod</span>,</span>
 <span>  lonLim <span class="op">=</span> <span class="va">cmip5.lon</span>,</span>
 <span>  latLim <span class="op">=</span> <span class="va">cmip5.lat</span>,</span>
-<span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CMIP5_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"TraCE21kaDSR"</span><span class="op">)</span>,</span>
+<span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CMIP5_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"dsclim"</span><span class="op">)</span>,</span>
 <span>  indir <span class="op">=</span> <span class="st">"../../Data/CMIP5/"</span>,</span>
 <span>  outdir <span class="op">=</span> <span class="st">"../../Output/CMIP5/"</span>,</span>
 <span>  <span class="va">local.var</span>,</span>

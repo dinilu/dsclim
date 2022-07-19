@@ -26,8 +26,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Data_downloading_and_preprocessing.html">1. Data downloading and preprocessing</a>
     <a class="dropdown-item" href="../articles/Downscale_with_Cross-validation.html">Downscaling Trace-21ka paleoclimate simulation.</a>
-    <a class="dropdown-item" href="../articles/Load_Trace21ka.html">Loading Trace-21ka paleoclimate simulation.</a>
-    <a class="dropdown-item" href="../articles/Load_UERRA.html">Load UERRA</a>
+    <a class="dropdown-item" href="../articles/Load_data.html">2. Load data.</a>
     <a class="dropdown-item" href="../articles/Model_calibration_and_cross_validation.html">2. Model calibration and cross validation</a>
     <a class="dropdown-item" href="../articles/Summary_cross-validation.html">Downscaling Trace-21ka: Summary cross-validation</a>
   </div>
@@ -65,65 +64,73 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">loadCMIP</span><span class="op">(</span></span>
 <span>  <span class="va">var_list</span>,</span>
 <span>  <span class="va">var_new_list</span>,</span>
-<span>  indir <span class="op">=</span> <span class="st">"../../Data/CMIP5/"</span>,</span>
+<span>  <span class="va">indir</span>,</span>
 <span>  <span class="va">rcp</span>,</span>
 <span>  <span class="va">mod</span>,</span>
 <span>  lonLim <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  latLim <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  years <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CMIP5_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"TraCE21kaDSR"</span><span class="op">)</span></span>
+<span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CMIP5_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"dsclim"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>var_list</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character vector with names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).</p></dd>
 
 
 <dt>var_new_list</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character vector with names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).</p></dd>
 
 
 <dt>indir</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character string with the directory path for CMIP5 data. This directory should have a folder with the name of the RCP that is going to be loaded. The RCP folder should have in turn a folder with the name of the General Circulation Model that is goint to be loaded.</p></dd>
 
 
 <dt>rcp</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character vector with the name of the RCP that is going to be loaded.</p></dd>
 
 
 <dt>mod</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character vector with the name of the GCM that is going to be loaded.</p></dd>
 
 
 <dt>lonLim</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A numeric vector (length = 2) with the longitudinal extent that is going to be loaded.</p></dd>
 
 
 <dt>latLim</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A numeric vector (length = 2) with the latitudinal extent that is going to be loaded.</p></dd>
 
 
 <dt>years</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A numeric vector with the sequence of years that are going to be loaded.</p></dd>
 
 
 <dt>dictionary</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A data dictionary (as in <code><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></code>) that is going to be used to load the data. By default it uses an internal dictionary that standardize CMIP5, TraCE21ka, and UERRA data to the same format.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>TBW</p>
+<p>A list object with the structure suitable for the climate4R suite. More specifically the data are as returned from the <code><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></code> function.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#TBW</span></span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">dsclim</span><span class="fu">::</span><span class="fu">loadCMIP</span><span class="op">(</span><span class="st">"tas"</span>,</span></span>
+<span class="r-in"><span>                 <span class="st">"tas"</span>,</span></span>
+<span class="r-in"><span>                 <span class="st">"data/"</span>,</span></span>
+<span class="r-in"><span>                 <span class="st">"rcp2.6"</span>,</span></span>
+<span class="r-in"><span>                 <span class="st">"CESM1-CAM5"</span>,</span></span>
+<span class="r-in"><span>                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11.25</span>, <span class="fl">12.50</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">45</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 <span class="fl">2006</span><span class="op">:</span><span class="fl">2100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
