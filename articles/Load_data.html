@@ -85,23 +85,25 @@
 
     
     
-<div class="alert alert-primary" role="alert">
-This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow <code><a href="../articles/Data_downloading_and_preprocessing.html">vignette("Data_downloading_and_preprocessing", package="dsclim")</a></code> before going on.
+<div class="alert alert-warning" role="alert">
+This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow <code>vignette("Data_downloading_and_preprocessing"")</code> before going on.
 </div>
 <div class="section level2">
-<h2 id="trace-21ka-data">Trace-21ka data<a class="anchor" aria-label="anchor" href="#trace-21ka-data"></a>
+<h2 id="trace21ka-data">TraCE21ka data<a class="anchor" aria-label="anchor" href="#trace21ka-data"></a>
 </h2>
 <div class="section level3">
-<h3 id="defining-region-limits-for-trace21ka-data">Defining region limits for Trace21ka data<a class="anchor" aria-label="anchor" href="#defining-region-limits-for-trace21ka-data"></a>
+<h3 id="defining-region-limits-for-trace21ka-data">Defining region limits for TraCE21ka data<a class="anchor" aria-label="anchor" href="#defining-region-limits-for-trace21ka-data"></a>
 </h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trace.lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">25</span>, <span class="fl">25</span><span class="op">)</span></span>
 <span><span class="va">trace.lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3 tabset">
-<h3 id="loading-trace21ka-data">Loading Trace21ka data<a class="anchor" aria-label="anchor" href="#loading-trace21ka-data"></a>
+<h3 id="loading-trace21ka-data">Loading TraCE21ka data<a class="anchor" aria-label="anchor" href="#loading-trace21ka-data"></a>
 </h3>
-<p>Select a variable</p>
+<p>To load the TraCE21ka data for the historical period, we use the <code><a href="../reference/loadHistoricalTraceGrid.html">dsclim::loadHistoricalTraceGrid</a></code> function. This function internally use functions from the <a href="https://github.com/SantanderMetGroup/loadeR/wiki" class="external-link">loadeR</a> package. This function require the file (including the path to the file) and the variable name (as it is specified in the data dictionary for standardization). Optionally, the spatial coverage can be controlled, specifying an extent by the longitudinal and latitudinal extents. The function also allow to specify the starting and ending year of the desired period. If not specified, it uses the period 1961 to 1990, both years included.</p>
+<p>Once the data are loaded, we used the <code><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">transformeR::climatology</a></code> function to calculate the average value of the variable for the whole period (e.g. 1961-1990) and the <code>visualizeR::spatialPlot</code> to plot the resulting map.</p>
+<p>Select a variable:</p>
 
 
 
@@ -124,66 +126,75 @@ This vignettes require climate data from three different sources: TraCE21ka, UER
 <div class="active  tab-pane" id="tsmx" role="tabpanel" aria-labelledby="tsmx-tab">
 
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.tsmx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/Trace21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"tasmax"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.tsmx</span> <span class="op">&lt;-</span> <span class="fu">dsclim</span><span class="fu">::</span><span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"tasmax"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.tsmx</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.tsmx</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="img/vign2_load_tsmx_trace.png" alt=""><p class="caption">TraCE21ka historical tsmx</p>
+</div>
 </div>
 <div class="tab-pane" id="tsmn" role="tabpanel" aria-labelledby="tsmn-tab">
 
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.tsmn</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/Trace21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"tasmin"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.tsmn</span> <span class="op">&lt;-</span> <span class="fu">dsclim</span><span class="fu">::</span><span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/TraCE21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"tasmin"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.tsmn</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.tsmn</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="img/vign2_load_tsmn_trace.png" alt=""><p class="caption">TraCE21ka historical tsmn</p>
+</div>
 </div>
 <div class="tab-pane" id="ts" role="tabpanel" aria-labelledby="ts-tab">
 
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/Trace21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"tas"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.ts</span> <span class="op">&lt;-</span> <span class="fu">dsclim</span><span class="fu">::</span><span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"../../Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"tas"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.ts</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.ts</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="img/vign2_load_tsmx_trace.png" alt=""><p class="caption">TraCE21ka historical tsmx</p>
+</div>
 </div>
 <div class="tab-pane" id="precc" role="tabpanel" aria-labelledby="precc-tab">
 
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.precc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/Trace21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"pr"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.precc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/TraCE21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"pr"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.precc</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.precc</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="tab-pane" id="relhum" role="tabpanel" aria-labelledby="relhum-tab">
 
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.relhum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/Trace21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"hurs@992.5561"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.relhum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/TraCE21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"hurs@992.5561"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.relhum</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.relhum</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="tab-pane" id="cldtot" role="tabpanel" aria-labelledby="cldtot-tab">
 
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.cldtot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/Trace21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"cldtot"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.cldtot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/TraCE21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"cldtot"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.cldtot</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.cldtot</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="tab-pane" id="ps" role="tabpanel" aria-labelledby="ps-tab">
 
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/Trace21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"ps"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.ps</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/TraCE21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"ps"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.ps</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.ps</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="tab-pane" id="u-v-wss" role="tabpanel" aria-labelledby="u-v-wss-tab">
 
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.u</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/Trace21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"u@992.5561"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.u</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/TraCE21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"u@992.5561"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.u</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.u</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/Trace21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"v@992.5561"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadHistoricalTraceGrid.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"Data/TraCE21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc"</span>, var<span class="op">=</span><span class="st">"v@992.5561"</span>, lonLim<span class="op">=</span><span class="va">trace.lon</span>, latLim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.v</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.v</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trace.wss</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/compute_wind_speed.html">compute_wind_speed</a></span><span class="op">(</span><span class="va">trace.u</span>, <span class="va">trace.v</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.wss</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.wss</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
@@ -210,7 +221,7 @@ This vignettes require climate data from three different sources: TraCE21ka, UER
 <span><span class="co"># uerra.lat &lt;- c(36, 44)</span></span></code></pre></div>
 </div>
 <div class="section level3 tabset">
-<h3 id="loading-trace21ka-data-1">Loading Trace21ka data<a class="anchor" aria-label="anchor" href="#loading-trace21ka-data-1"></a>
+<h3 id="loading-trace21ka-data-1">Loading TraCE21ka data<a class="anchor" aria-label="anchor" href="#loading-trace21ka-data-1"></a>
 </h3>
 <p>Select a variable</p>
 
