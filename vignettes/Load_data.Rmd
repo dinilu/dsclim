@@ -1,8 +1,11 @@
 ---
-title: "2. Load data."
+title: "2. Load data"
 output: rmarkdown::html_vignette
+description: >
+  Learn how to load climate data from the three sources
+  (i.e. TraCE21ka, UERRA, and CMIP5) to R in climate4r format
 vignette: >
-  %\VignetteIndexEntry{2. Load data.}
+  %\VignetteIndexEntry{2. Load data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,6 +19,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+<div class="alert alert-primary" role="alert">This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow `vignette(Data_download_and_preprocessing, package = "dsclim")` before going on.</div>  
 
 ## Trace-21ka data
 

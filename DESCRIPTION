@@ -39,6 +39,5 @@ Remotes: SantanderMetGroup/loadeR,
     SantanderMetGroup/transformeR
 VignetteBuilder: knitr
 URL: https://github.com/dinilu/dsclim,
-    https://dnietolugilde.com/dsclim/, 
-    https://dinilu.github.io/dsclim
+    https://dnietolugilde.com/dsclim/
 BugReports: https://github.com/dinilu/dsclim/issues
