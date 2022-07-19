@@ -12,7 +12,7 @@ downscaleCMIP5(
   mod,
   lonLim = cmip5.lon,
   latLim = cmip5.lat,
-  dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "TraCE21kaDSR"),
+  dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"),
   indir = "../../Data/CMIP5/",
   outdir = "../../Output/CMIP5/",
   local.var,
