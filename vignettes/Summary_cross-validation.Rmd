@@ -10,7 +10,7 @@ vignette: >
 ```{r global_options, include=FALSE}
 options(java.parameters = "-Xmx16g")
 library(knitr)
-opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, cache=TRUE, eval = FALSE)
+opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 ```
 
 # Create function to extract info
