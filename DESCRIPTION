@@ -13,7 +13,7 @@ Description: The package provides to ease the use of climate4R R-package to down
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 LazyData: true
 Imports: 
     climate4R.UDG,
