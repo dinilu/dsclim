@@ -40,7 +40,7 @@ Select a variable:
 
 #### TSMX
 
-```{r load_tsmx}
+```{r load_tsmx_trace}
 trace.tsmx <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc", var="tasmax", lonLim=trace.lon, latLim = trace.lat)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.tsmx), backdrop.theme = "countries", rev.colors=TRUE)
@@ -50,7 +50,7 @@ visualizeR::spatialPlot(transformeR::climatology(trace.tsmx), backdrop.theme = "
 
 #### TSMN
 
-```{r load_tsmn}
+```{r load_tsmn_trace}
 trace.tsmn <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/TSMN/trace.36.400BP-1990CE.cam2.h0.TSMN.2160101-2204012.nc", var="tasmin", lonLim=trace.lon, latLim = trace.lat)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.tsmn), backdrop.theme = "countries", rev.colors=TRUE)
@@ -61,7 +61,7 @@ visualizeR::spatialPlot(transformeR::climatology(trace.tsmn), backdrop.theme = "
 
 #### TS
 
-```{r load_ts}
+```{r load_ts_trace}
 trace.ts <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc", var="tas", lonLim=trace.lon, latLim = trace.lat)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.ts), backdrop.theme = "countries", rev.colors=TRUE)
@@ -71,7 +71,7 @@ visualizeR::spatialPlot(transformeR::climatology(trace.ts), backdrop.theme = "co
 
 #### PRECC
 
-```{r load_precc}
+```{r load_precc_trace}
 trace.precc <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/PRECC/trace.36.400BP-1990CE.cam2.h0.PRECC.2160101-2204012.nc", var="pr", lonLim=trace.lon, latLim = trace.lat)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.precc), backdrop.theme = "countries")
@@ -81,7 +81,7 @@ visualizeR::spatialPlot(transformeR::climatology(trace.precc), backdrop.theme = 
 
 #### RELHUM
 
-```{r load_relhum}
+```{r load_relhum_trace}
 trace.relhum <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/RELHUM/trace.36.400BP-1990CE.cam2.h0.RELHUM.2160101-2204012.nc", var="hurs@992.5561", lonLim=trace.lon, latLim = trace.lat)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.relhum), backdrop.theme = "countries")
@@ -91,7 +91,7 @@ visualizeR::spatialPlot(transformeR::climatology(trace.relhum), backdrop.theme =
 
 #### CLDTOT
 
-```{r load_cldtot}
+```{r load_cldtot_trace}
 trace.cldtot <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/CLDTOT/trace.36.400BP-1990CE.cam2.h0.CLDTOT.2160101-2204012.nc", var="cld", lonLim=trace.lon, latLim = trace.lat)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.cldtot), backdrop.theme = "countries")
@@ -101,7 +101,7 @@ visualizeR::spatialPlot(transformeR::climatology(trace.cldtot), backdrop.theme =
 
 #### PS
 
-```{r load_ps}
+```{r load_ps_trace}
 trace.ps <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/PS/trace.36.400BP-1990CE.cam2.h0.PS.2160101-2204012.nc", var="ps", lonLim=trace.lon, latLim = trace.lat)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.ps), backdrop.theme = "countries")
@@ -111,7 +111,7 @@ visualizeR::spatialPlot(transformeR::climatology(trace.ps), backdrop.theme = "co
 
 #### U
 
-```{r load_u}
+```{r load_u_trace}
 trace.u <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc", var="u@992.5561", lonLim=trace.lon, latLim = trace.lat)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.u), backdrop.theme = "countries")
@@ -121,7 +121,7 @@ visualizeR::spatialPlot(transformeR::climatology(trace.u), backdrop.theme = "cou
 
 #### V 
 
-```{r load_v}
+```{r load_v_trace}
 trace.v <- dsclim::loadHistoricalTraceGrid("Data/TraCE21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc", var="v@992.5561", lonLim=trace.lon, latLim = trace.lat)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.v), backdrop.theme = "countries")
@@ -131,7 +131,7 @@ visualizeR::spatialPlot(transformeR::climatology(trace.v), backdrop.theme = "cou
 
 #### WSS
 
-```{r compute_wss}
+```{r compute_wss_trace}
 trace.wss <- dsclim::compute_wind_speed(trace.u, trace.v)
 
 visualizeR::spatialPlot(transformeR::climatology(trace.wss), backdrop.theme = "countries")
@@ -166,69 +166,96 @@ uerra.lat <- c(28, 44)
 # uerra.lat <- c(36, 44)
 ```
 
-### Loading TraCE21ka data {.tabset} 
+
+### Loading UERRA data {.tabset} 
 
 Select a variable 
 
 #### TASMIN
 
-```{r load_tasmin} 
-uerra.tasmin <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", var = "tasmin", lonLim=uerra.lon, latLim=uerra.lat)
+```{r load_tasmin_uerra} 
+uerra.tasmin <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", var = "tasmin", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "Data/UERRA/UERRA_dictionary.dic")
 
 visualizeR::spatialPlot(transformeR::climatology(uerra.tasmin), main="tasmin", backdrop.theme="countries", rev.colors=TRUE, at=seq(-15,40,1))
 ```
 
+![UERRA tasmin](figures/vign2_load_tsmn_uerra.png)
+
 #### TAS
 
-```{r load_tas} 
-uerra.tas <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc", var = "tas", lonLim=uerra.lon, latLim=uerra.lat,  dictionary="Data/UERRA/UERRA_dictionary.dic")
+```{r load_tas_uerra} 
+uerra.tas <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc", var = "tas", lonLim = uerra.lon, latLim = uerra.lat, dictionary="Data/UERRA/UERRA_dictionary.dic")
 
 visualizeR::spatialPlot(transformeR::climatology(uerra.tas), main="tas", backdrop.theme="countries", rev.colors=TRUE, at=seq(-15,40,1))
 ```
+![UERRA tas](figures/vign2_load_ts_uerra.png)
 
 #### TASMAX
 
-```{r load_tasmax} 
-uerra.tasmax <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmax.nc", var = "tasmax", lonLim=uerra.lon, latLim=uerra.lat)
+```{r load_tasmax_uerra} 
+uerra.tasmax <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmax.nc", var = "tasmax", lonLim = uerra.lon, latLim = uerra.lat, dictionary="Data/UERRA/UERRA_dictionary.dic")
 
 visualizeR::spatialPlot(transformeR::climatology(uerra.tasmax), main="tasmax", backdrop.theme="countries", rev.colors=TRUE, at=seq(-15,40,1))
 ```
 
+![UERRA tasmax](figures/vign2_load_tsmx_uerra.png)
+
+
 #### PR
 
-```{r load_pr} 
-uerra.pr <- loadeR::loadGridData("Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/1961-90_total_precipitation.nc", var = "pr", lonLim=uerra.lon, latLim=uerra.lat)
+```{r load_pr_uerra} 
+uerra.pr <- loadeR::loadGridData("Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/1961-90_total_precipitation.nc", var = "pr", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "Data/UERRA/UERRA_dictionary.dic")
 
-uerra.pr <- transformeR::upscaleGrid(uerra.pr, times=2, aggr.fun=list(FUN=mean))
+uerra.pr <- transformeR::upscaleGrid(uerra.pr, times = 2, aggr.fun = list(FUN = mean))
 
-uerra.pr <- transformeR::interpGrid(uerra.pr, new.coordinates=transformeR::getGrid(uerra.tas), method="bilinear")
+uerra.pr <- transformeR::interpGrid(uerra.pr, new.coordinates = transformeR::getGrid(uerra.tas), method="bilinear")
 
-visualizeR::spatialPlot(transformeR::climatology(uerra.pr), main="pr", backdrop.theme="countries", at=seq(0,400,25))
+visualizeR::spatialPlot(transformeR::climatology(uerra.pr), main = "pr", backdrop.theme = "countries", at = seq(0,400,25))
 ```
+
+![UERRA pr](figures/vign2_load_pr_uerra.png) 
 
 #### HURS
 
-```{r load_hurs} 
-uerra.hurs <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc", var = "hurs", lonLim=uerra.lon, latLim=uerra.lat)
+```{r load_hurs_uerra} 
+uerra.hurs <- loadeR::loadGridData("../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc", var = "hurs", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "../../Data/UERRA/UERRA_dictionary.dic")
 
 visualizeR::spatialPlot(transformeR::climatology(uerra.hurs), main="hurs", backdrop.theme="countries", rev.colors=TRUE)
 ```
 
+![UERRA rhum](figures/vign2_load_rhum_uerra.png) 
+
+
+#### PS
+
+```{r load_ps_uerra} 
+uerra.ps <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/1961-90_surface_pressure.nc", var = "ps", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "Data/UERRA/UERRA_dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(uerra.ps), main="ps", backdrop.theme="countries", rev.colors=TRUE)
+```
+
+![UERRA ps](figures/vign2_load_ps_uerra.png) 
+
 #### CLD
 
-```{r load_cld} 
-uerra.cld <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc", var = "cld", lonLim=uerra.lon, latLim=uerra.lat)
+```{r load_cld_uerra} 
+uerra.cld <- loadeR::loadGridData("../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc", var = "cld", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "../../Data/UERRA/UERRA_dictionary.dic")
 
 visualizeR::spatialPlot(transformeR::climatology(uerra.cld), main="cld", backdrop.theme="countries", rev.colors=TRUE)
 ```
 
+![UERRA cld](figures/vign2_load_cld_uerra.png) 
+
+
 #### WSS
 
-```{r load_wss} 
-uerra.wss <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc", var = "wss", lonLim=uerra.lon, latLim=uerra.lat)
+```{r load_wss_uerra} 
+uerra.wss <- loadeR::loadGridData("../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc", var = "wss", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "../../Data/UERRA/UERRA_dictionary.dic")
 
 visualizeR::spatialPlot(transformeR::climatology(uerra.wss), main="wss", backdrop.theme="countries", rev.colors=TRUE)
 ```
+
+![UERRA wss](figures/vign2_load_wss_uerra.png) 
 
 ### Fix dates 
 
