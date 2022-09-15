@@ -257,7 +257,7 @@ This vignettes require climate data from three different sources: TraCE21ka, UER
 <span><span class="co"># uerra.lat &lt;- c(36, 44)</span></span></code></pre></div>
 </div>
 <div class="section level3 tabset">
-<h3 id="loading-trace21ka-data-1">Loading TraCE21ka data<a class="anchor" aria-label="anchor" href="#loading-trace21ka-data-1"></a>
+<h3 id="loading-uerra-data">Loading UERRA data<a class="anchor" aria-label="anchor" href="#loading-uerra-data"></a>
 </h3>
 <p>Select a variable</p>
 
@@ -267,12 +267,14 @@ This vignettes require climate data from three different sources: TraCE21ka, UER
 
 
 
-<ul class="nav nav-tabs" id="loading-trace21ka-data-1" role="tablist">
+
+<ul class="nav nav-tabs" id="loading-uerra-data" role="tablist">
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#tasmin" id="tasmin-tab" type="button" role="tab" aria-controls="tasmin" aria-selected="true" class="active nav-link">TASMIN</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#tas" id="tas-tab" type="button" role="tab" aria-controls="tas" aria-selected="false" class="nav-link">TAS</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#tasmax" id="tasmax-tab" type="button" role="tab" aria-controls="tasmax" aria-selected="false" class="nav-link">TASMAX</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#pr" id="pr-tab" type="button" role="tab" aria-controls="pr" aria-selected="false" class="nav-link">PR</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#hurs" id="hurs-tab" type="button" role="tab" aria-controls="hurs" aria-selected="false" class="nav-link">HURS</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#ps-1" id="ps-1-tab" type="button" role="tab" aria-controls="ps-1" aria-selected="false" class="nav-link">PS</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#cld" id="cld-tab" type="button" role="tab" aria-controls="cld" aria-selected="false" class="nav-link">CLD</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#wss-1" id="wss-1-tab" type="button" role="tab" aria-controls="wss-1" aria-selected="false" class="nav-link">WSS</button></li>
 </ul>
@@ -280,62 +282,93 @@ This vignettes require climate data from three different sources: TraCE21ka, UER
 <div class="active  tab-pane" id="tasmin" role="tabpanel" aria-labelledby="tasmin-tab">
 
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uerra.tasmin</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc"</span>, var <span class="op">=</span> <span class="st">"tasmin"</span>, lonLim<span class="op">=</span><span class="va">uerra.lon</span>, latLim<span class="op">=</span><span class="va">uerra.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">uerra.tasmin</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc"</span>, var <span class="op">=</span> <span class="st">"tasmin"</span>, lonLim <span class="op">=</span> <span class="va">uerra.lon</span>, latLim <span class="op">=</span> <span class="va">uerra.lat</span>, dictionary <span class="op">=</span> <span class="st">"Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">uerra.tasmin</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"tasmin"</span>, backdrop.theme<span class="op">=</span><span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>,<span class="fl">40</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="figures/vign2_load_tsmn_uerra.png" alt=""><p class="caption">UERRA tasmin</p>
+</div>
 </div>
 <div class="tab-pane" id="tas" role="tabpanel" aria-labelledby="tas-tab">
 
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uerra.tas</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"</span>, var <span class="op">=</span> <span class="st">"tas"</span>, lonLim<span class="op">=</span><span class="va">uerra.lon</span>, latLim<span class="op">=</span><span class="va">uerra.lat</span>,  dictionary<span class="op">=</span><span class="st">"Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">uerra.tas</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"</span>, var <span class="op">=</span> <span class="st">"tas"</span>, lonLim <span class="op">=</span> <span class="va">uerra.lon</span>, latLim <span class="op">=</span> <span class="va">uerra.lat</span>, dictionary<span class="op">=</span><span class="st">"Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">uerra.tas</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"tas"</span>, backdrop.theme<span class="op">=</span><span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>,<span class="fl">40</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="figures/vign2_load_ts_uerra.png" alt=""><p class="caption">UERRA tas</p>
+</div>
 </div>
 <div class="tab-pane" id="tasmax" role="tabpanel" aria-labelledby="tasmax-tab">
 
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uerra.tasmax</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmax.nc"</span>, var <span class="op">=</span> <span class="st">"tasmax"</span>, lonLim<span class="op">=</span><span class="va">uerra.lon</span>, latLim<span class="op">=</span><span class="va">uerra.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">uerra.tasmax</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmax.nc"</span>, var <span class="op">=</span> <span class="st">"tasmax"</span>, lonLim <span class="op">=</span> <span class="va">uerra.lon</span>, latLim <span class="op">=</span> <span class="va">uerra.lat</span>, dictionary<span class="op">=</span><span class="st">"Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">uerra.tasmax</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"tasmax"</span>, backdrop.theme<span class="op">=</span><span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">15</span>,<span class="fl">40</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="figures/vign2_load_tsmx_uerra.png" alt=""><p class="caption">UERRA tasmax</p>
+</div>
 </div>
 <div class="tab-pane" id="pr" role="tabpanel" aria-labelledby="pr-tab">
 
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uerra.pr</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/1961-90_total_precipitation.nc"</span>, var <span class="op">=</span> <span class="st">"pr"</span>, lonLim<span class="op">=</span><span class="va">uerra.lon</span>, latLim<span class="op">=</span><span class="va">uerra.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">uerra.pr</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/1961-90_total_precipitation.nc"</span>, var <span class="op">=</span> <span class="st">"pr"</span>, lonLim <span class="op">=</span> <span class="va">uerra.lon</span>, latLim <span class="op">=</span> <span class="va">uerra.lat</span>, dictionary <span class="op">=</span> <span class="st">"Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">uerra.pr</span> <span class="op">&lt;-</span> <span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/upscaleGrid.html" class="external-link">upscaleGrid</a></span><span class="op">(</span><span class="va">uerra.pr</span>, times<span class="op">=</span><span class="fl">2</span>, aggr.fun<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>FUN<span class="op">=</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">uerra.pr</span> <span class="op">&lt;-</span> <span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/upscaleGrid.html" class="external-link">upscaleGrid</a></span><span class="op">(</span><span class="va">uerra.pr</span>, times <span class="op">=</span> <span class="fl">2</span>, aggr.fun <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>FUN <span class="op">=</span> <span class="va">mean</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">uerra.pr</span> <span class="op">&lt;-</span> <span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/interpGrid.html" class="external-link">interpGrid</a></span><span class="op">(</span><span class="va">uerra.pr</span>, new.coordinates<span class="op">=</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/getGrid.html" class="external-link">getGrid</a></span><span class="op">(</span><span class="va">uerra.tas</span><span class="op">)</span>, method<span class="op">=</span><span class="st">"bilinear"</span><span class="op">)</span></span>
+<span><span class="va">uerra.pr</span> <span class="op">&lt;-</span> <span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/interpGrid.html" class="external-link">interpGrid</a></span><span class="op">(</span><span class="va">uerra.pr</span>, new.coordinates <span class="op">=</span> <span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/getGrid.html" class="external-link">getGrid</a></span><span class="op">(</span><span class="va">uerra.tas</span><span class="op">)</span>, method<span class="op">=</span><span class="st">"bilinear"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">uerra.pr</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"pr"</span>, backdrop.theme<span class="op">=</span><span class="st">"countries"</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">400</span>,<span class="fl">25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">uerra.pr</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">"pr"</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span>, at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">400</span>,<span class="fl">25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="figures/vign2_load_pr_uerra.png" alt=""><p class="caption">UERRA pr</p>
+</div>
 </div>
 <div class="tab-pane" id="hurs" role="tabpanel" aria-labelledby="hurs-tab">
 
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uerra.hurs</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc"</span>, var <span class="op">=</span> <span class="st">"hurs"</span>, lonLim<span class="op">=</span><span class="va">uerra.lon</span>, latLim<span class="op">=</span><span class="va">uerra.lat</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">uerra.hurs</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc"</span>, var <span class="op">=</span> <span class="st">"hurs"</span>, lonLim <span class="op">=</span> <span class="va">uerra.lon</span>, latLim <span class="op">=</span> <span class="va">uerra.lat</span>, dictionary <span class="op">=</span> <span class="st">"../../Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">uerra.hurs</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"hurs"</span>, backdrop.theme<span class="op">=</span><span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="figures/vign2_load_rhum_uerra.png" alt=""><p class="caption">UERRA rhum</p>
+</div>
+</div>
+<div class="tab-pane" id="ps-1" role="tabpanel" aria-labelledby="ps-1-tab">
+
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">uerra.ps</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/surface_pressure/latlon/1961-90_surface_pressure.nc"</span>, var <span class="op">=</span> <span class="st">"ps"</span>, lonLim <span class="op">=</span> <span class="va">uerra.lon</span>, latLim <span class="op">=</span> <span class="va">uerra.lat</span>, dictionary <span class="op">=</span> <span class="st">"Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">uerra.ps</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"ps"</span>, backdrop.theme<span class="op">=</span><span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="figures/vign2_load_ps_uerra.png" alt=""><p class="caption">UERRA ps</p>
+</div>
 </div>
 <div class="tab-pane" id="cld" role="tabpanel" aria-labelledby="cld-tab">
 
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uerra.cld</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc"</span>, var <span class="op">=</span> <span class="st">"cld"</span>, lonLim<span class="op">=</span><span class="va">uerra.lon</span>, latLim<span class="op">=</span><span class="va">uerra.lat</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">uerra.cld</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc"</span>, var <span class="op">=</span> <span class="st">"cld"</span>, lonLim <span class="op">=</span> <span class="va">uerra.lon</span>, latLim <span class="op">=</span> <span class="va">uerra.lat</span>, dictionary <span class="op">=</span> <span class="st">"../../Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">uerra.cld</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"cld"</span>, backdrop.theme<span class="op">=</span><span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="figures/vign2_load_cld_uerra.png" alt=""><p class="caption">UERRA cld</p>
+</div>
 </div>
 <div class="tab-pane" id="wss-1" role="tabpanel" aria-labelledby="wss-1-tab">
 
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">uerra.wss</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc"</span>, var <span class="op">=</span> <span class="st">"wss"</span>, lonLim<span class="op">=</span><span class="va">uerra.lon</span>, latLim<span class="op">=</span><span class="va">uerra.lat</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">uerra.wss</span> <span class="op">&lt;-</span> <span class="fu">loadeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></span><span class="op">(</span><span class="st">"../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc"</span>, var <span class="op">=</span> <span class="st">"wss"</span>, lonLim <span class="op">=</span> <span class="va">uerra.lon</span>, latLim <span class="op">=</span> <span class="va">uerra.lat</span>, dictionary <span class="op">=</span> <span class="st">"../../Data/UERRA/UERRA_dictionary.dic"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">uerra.wss</span><span class="op">)</span>, main<span class="op">=</span><span class="st">"wss"</span>, backdrop.theme<span class="op">=</span><span class="st">"countries"</span>, rev.colors<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="figures/vign2_load_wss_uerra.png" alt=""><p class="caption">UERRA wss</p>
+</div>
 </div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="fix-dates">Fix dates<a class="anchor" aria-label="anchor" href="#fix-dates"></a>
 </h3>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uerra.tasmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modifyDates.html">modifyDates</a></span><span class="op">(</span><span class="va">uerra.tasmax</span><span class="op">)</span></span>
 <span><span class="va">uerra.tasmin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modifyDates.html">modifyDates</a></span><span class="op">(</span><span class="va">uerra.tasmin</span><span class="op">)</span></span>
 <span><span class="va">uerra.tas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modifyDates.html">modifyDates</a></span><span class="op">(</span><span class="va">uerra.tas</span><span class="op">)</span></span>
