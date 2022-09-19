@@ -1,11 +1,11 @@
 ---
-title: "2. Load specific data" 
+title: "2. Load source data" 
 output: rmarkdown::html_vignette
 description: >
   Learn how to load climate data from the three sources
   (i.e. TraCE21ka, UERRA, and CMIP5) to R in climate4r format
 vignette: >
-  %\VignetteIndexEntry{2. Load specific data}
+  %\VignetteIndexEntry{2. Load source data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
