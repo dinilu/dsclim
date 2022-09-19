@@ -80,7 +80,7 @@ loadCMIP <- function(var_list, var_new_list, indir, rcp, mod, lonLim = NULL, lat
 #' @export
 #'
 #' @examples #TBW
-downscaleCMIP5 <- function(uerra, var_list, var_new_list, rcp, mod, lonLim = cmip5.lon, latLim = cmip5.lat, dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"), indir, outdir = "Output/CMIP5/", local.var, spatial.pars = cmip5.spatial.pars, method = "GLM", family.link = family.link, global.nc.attributes = global.nc.attributes){
+downscaleCMIP5 <- function(uerra, var_list, var_new_list, rcp, mod, lonLim = c(-11.25, 12.50), latLim = c(27, 45), dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"), indir, outdir = "Output/CMIP5/", local.var, spatial.pars = NULL, method = "GLM", family.link = family.link, global.nc.attributes = global.nc.attributes){
 
   # uerra <- uerra
   # var_list <- cmip5.vars
@@ -106,13 +106,13 @@ downscaleCMIP5 <- function(uerra, var_list, var_new_list, rcp, mod, lonLim = cmi
   if(local.var == "pr"){
     uerra.bin <- transformeR::binaryGrid(uerra, condition = "GE", threshold = 1)
 
-    data.bin <- downscaleR::prepareData(hist.cmip5, uerra.bin, spatial.predictors = cmip5.spatial.pars)
-    data <- downscaleR::prepareData(hist.cmip5, uerra, spatial.predictors = cmip5.spatial.pars)
+    data.bin <- downscaleR::prepareData(hist.cmip5, uerra.bin, spatial.predictors = spatial.pars)
+    data <- downscaleR::prepareData(hist.cmip5, uerra, spatial.predictors = spatial.pars)
 
     model.bin <- downscaleR::downscaleTrain(data.bin, method = "GLM", family = stats::binomial(link="logit"), predict = TRUE)
     model <- downscaleR::downscaleTrain(data, method = "GLM", family = family.link, predict = TRUE, condition = "GE", threshold = 1)
   } else {
-    data <- downscaleR::prepareData(hist.cmip5, uerra, spatial.predictors = cmip5.spatial.pars)
+    data <- downscaleR::prepareData(hist.cmip5, uerra, spatial.predictors = spatial.pars)
     model <- downscaleR::downscaleTrain(data, method = method, family = family.link, predict = TRUE)
   }
 

@@ -1,5 +1,5 @@
 ---
-title: "2. Load data"
+title: "2. Load specific data" 
 output: rmarkdown::html_vignette
 description: >
   Learn how to load climate data from the three sources
@@ -218,7 +218,7 @@ visualizeR::spatialPlot(transformeR::climatology(uerra.pr), main = "pr", backdro
 #### HURS
 
 ```{r load_hurs_uerra} 
-uerra.hurs <- loadeR::loadGridData("../../Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc", var = "hurs", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "../../Data/UERRA/UERRA_dictionary.dic")
+uerra.hurs <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/2m_relative_humidity/latlon/1961-90_2m_relative_humidity.nc", var = "hurs", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "Data/UERRA/UERRA_dictionary.dic")
 
 visualizeR::spatialPlot(transformeR::climatology(uerra.hurs), main="hurs", backdrop.theme="countries", rev.colors=TRUE)
 ```
@@ -239,7 +239,7 @@ visualizeR::spatialPlot(transformeR::climatology(uerra.ps), main="ps", backdrop.
 #### CLD
 
 ```{r load_cld_uerra} 
-uerra.cld <- loadeR::loadGridData("../../Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc", var = "cld", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "../../Data/UERRA/UERRA_dictionary.dic")
+uerra.cld <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/total_cloud_cover/latlon/1961-90_total_cloud_cover.nc", var = "cld", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "Data/UERRA/UERRA_dictionary.dic")
 
 visualizeR::spatialPlot(transformeR::climatology(uerra.cld), main="cld", backdrop.theme="countries", rev.colors=TRUE)
 ```
@@ -250,7 +250,7 @@ visualizeR::spatialPlot(transformeR::climatology(uerra.cld), main="cld", backdro
 #### WSS
 
 ```{r load_wss_uerra} 
-uerra.wss <- loadeR::loadGridData("../../Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc", var = "wss", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "../../Data/UERRA/UERRA_dictionary.dic")
+uerra.wss <- loadeR::loadGridData("Data/UERRA/UERRA-HARMONIE/10m_wind_speed/latlon/1961-90_10m_wind_speed.nc", var = "wss", lonLim = uerra.lon, latLim = uerra.lat, dictionary = "Data/UERRA/UERRA_dictionary.dic")
 
 visualizeR::spatialPlot(transformeR::climatology(uerra.wss), main="wss", backdrop.theme="countries", rev.colors=TRUE)
 ```
@@ -258,6 +258,8 @@ visualizeR::spatialPlot(transformeR::climatology(uerra.wss), main="wss", backdro
 ![UERRA wss](figures/vign2_load_wss_uerra.png) 
 
 ### Fix dates 
+
+Dates from the UERRA files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. The `modifyDates` function from the `dsclim` package modify the dates and fix this small issue.
 
 ```{r correct_uerra_dates}
 uerra.tasmax <- modifyDates(uerra.tasmax)
@@ -267,4 +269,113 @@ uerra.pr <- modifyDates(uerra.pr)
 uerra.hurs <- modifyDates(uerra.hurs)
 uerra.cld <- modifyDates(uerra.cld)
 uerra.wss <- modifyDates(uerra.wss)
+```
+
+
+## CMIP future data
+
+We are going to use the same extent than for TraCE21ka data-set. For this example, we are going to use the data set from the rcp2.6 and CESM1-CAM5 combination of representative concentration pathways and general circulation model from the CMIP5 data set.
+
+### Loading CMIP5 data {.tabset} 
+
+Select a variable 
+
+#### TASMIN
+
+```{r load_tasmin_cmip} 
+cmip.tasmin <- loadeR::loadGridData("Data/CMIP5/rcp2.6/CESM1-CAM5_RCP_2_6/tasmin_Amon_CESM1-CAM5_rcp26_r1i1p1_200601-210012.nc", var = "tasmin", lonLim = trace.lon, latLim = trace.lat, dictionary = "Data/CMIP5/dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(cmip.tasmin), main="tasmin", backdrop.theme="countries", rev.colors=TRUE, at=seq(-15,40,1))
+```
+
+![CMIP5 tasmin](figures/vign2_load_tsmn_cmip5.png)
+
+#### TAS
+
+```{r load_tas_cmip} 
+cmip.tas <- loadeR::loadGridData("Data/CMIP5/rcp2.6/CESM1-CAM5_RCP_2_6/tasmax_Amon_CESM1-CAM5_rcp26_r1i1p1_200601-210012.nc", var = "tas", lonLim = trace.lon, latLim = trace.lat, dictionary="Data/CMIP5/dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(cmip.tas), main="tas", backdrop.theme="countries", rev.colors=TRUE, at=seq(-15,40,1))
+```
+![CMIP5 tas](figures/vign2_load_ts_cmip5.png)
+
+#### TASMAX
+
+```{r load_tasmax_cmip} 
+cmip.tasmax <- loadeR::loadGridData("Data/CMIP5/rcp2.6/CESM1-CAM5_RCP_2_6/tasmax_Amon_CESM1-CAM5_rcp26_r1i1p1_200601-210012.nc", var = "tasmax", lonLim = trace.lon, latLim = trace.lat, dictionary="Data/CMIP5/dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(cmip.tasmax), main="tasmax", backdrop.theme="countries", rev.colors=TRUE, at=seq(-15,40,1))
+```
+
+![CMIP5 tasmax](figures/vign2_load_tsmx_cmip5.png)
+
+
+#### PR
+
+```{r load_pr_cmip} 
+cmip.pr <- loadeR::loadGridData("Data/CMIP5/rcp2.6/CESM1-CAM5_RCP_2_6/pr_Amon_CESM1-CAM5_rcp26_r1i1p1_200601-210012.nc", var = "pr", lonLim = trace.lon, latLim = trace.lat, dictionary = "Data/CMIP5/dictionary.dic")
+
+cmip.pr <- transformeR::upscaleGrid(cmip.pr, times = 2, aggr.fun = list(FUN = mean))
+
+cmip.pr <- transformeR::interpGrid(cmip.pr, new.coordinates = transformeR::getGrid(cmip.tas), method="bilinear")
+
+visualizeR::spatialPlot(transformeR::climatology(cmip.pr), main = "pr", backdrop.theme = "countries", at = seq(0,400,25))
+```
+
+![CMIP5 pr](figures/vign2_load_pr_cmip5.png) 
+
+#### HURS
+
+```{r load_hurs_cmip} 
+cmip.hurs <- loadeR::loadGridData("Data/CMIP5/rcp2.6/CESM1-CAM5_RCP_2_6/hurs_Amon_CESM1-CAM5_rcp26_r1i1p1_200601-210012.nc", var = "hurs", lonLim = trace.lon, latLim = trace.lat, dictionary = "Data/CMIP5/dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(cmip.hurs), main="hurs", backdrop.theme="countries", rev.colors=TRUE)
+```
+
+![CMIP5 rhum](figures/vign2_load_rhum_cmip5.png) 
+
+
+#### PS
+
+```{r load_ps_cmip} 
+cmip.ps <- loadeR::loadGridData("Data/CMIP5/rcp2.6/CESM1-CAM5_RCP_2_6/ps_Amon_CESM1-CAM5_rcp26_r1i1p1_200601-210012.nc", var = "ps", lonLim = trace.lon, latLim = trace.lat, dictionary = "Data/CMIP5/dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(cmip.ps), main="ps", backdrop.theme="countries", rev.colors=TRUE)
+```
+
+![CMIP5 ps](figures/vign2_load_ps_cmip5.png) 
+
+#### CLD
+
+```{r load_cld_cmip} 
+cmip.cld <- loadeR::loadGridData("Data/CMIP5/rcp2.6/CESM1-CAM5_RCP_2_6/clt_Amon_CESM1-CAM5_rcp26_r1i1p1_200601-210012.nc", var = "cld", lonLim = trace.lon, latLim = trace.lat, dictionary = "Data/CMIP5/dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(cmip.cld), main="cld", backdrop.theme="countries", rev.colors=TRUE)
+```
+
+![CMIP5 cld](figures/vign2_load_cld_cmip5.png) 
+
+
+#### WSS
+
+```{r load_wss_cmip} 
+cmip.wss <- loadeR::loadGridData("Data/CMIP5/rcp2.6/CESM1-CAM5_RCP_2_6/sfcWind_Amon_CESM1-CAM5_rcp26_r1i1p1_200601-210012.nc", var = "wss", lonLim = trace.lon, latLim = trace.lat, dictionary = "Data/CMIP5/dictionary.dic")
+
+visualizeR::spatialPlot(transformeR::climatology(cmip.wss), main="wss", backdrop.theme="countries", rev.colors=TRUE)
+```
+
+![CMIP5 wss](figures/vign2_load_wss_cmip5.png) 
+
+### Fix dates 
+
+Dates from the CMIP5 files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. The `modifyDates` function from the `dsclim` package modify the dates and fix this small issue.
+
+```{r correct_cmip_dates}
+cmip.tasmax <- modifyDates(cmip.tasmax)
+cmip.tasmin <- modifyDates(cmip.tasmin)
+cmip.tas <- modifyDates(cmip.tas)
+cmip.pr <- modifyDates(cmip.pr)
+cmip.hurs <- modifyDates(cmip.hurs)
+cmip.cld <- modifyDates(cmip.cld)
+cmip.wss <- modifyDates(cmip.wss)
 ```
