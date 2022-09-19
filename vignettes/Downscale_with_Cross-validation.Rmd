@@ -1,16 +1,16 @@
 ---
-title: "Downscaling Trace-21ka paleoclimate simulation."
+title: "3. Downscaling with crossvalidation"
 
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Downscaling Trace-21ka paleoclimate simulation.}
+  %\VignetteIndexEntry{3. Downscaling with crossvalidation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r global_options, include=FALSE}
 library(knitr)
-opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
+opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = TRUE)
 ```
 
 This file is to document the downscaling process of Trace-21ka paleoclimate data using the most updated and finer resolution "historical" climate data for the Western Mediterranean region and the methods and tools implemented in the `climate4R` framework.
@@ -45,6 +45,13 @@ local.pars.M24 <- list(n = 4, vars = "tasmin")
 local.pars.M31 <- list(n = 1, vars = vars)
 
 local.pars.M34 <- list(n = 4, vars = vars)
+
+```
+
+## Data loading
+
+```{r load_source_data}
+
 
 ```
 
