@@ -4,10 +4,10 @@ pkgdown_sha: ~
 articles:
   Data_downloading_and_preprocessing: Data_downloading_and_preprocessing.html
   Downscale_with_Cross-validation: Downscale_with_Cross-validation.html
-  Load_data: Load_data.html
+  Load_specific_data: Load_specific_data.html
   Model_calibration_and_cross_validation: Model_calibration_and_cross_validation.html
   Summary_cross-validation: Summary_cross-validation.html
-last_built: 2022-09-15T22:06Z
+last_built: 2022-09-19T18:29Z
 urls:
   reference: http://dnietolugilde.com/dsclim/reference
   article: http://dnietolugilde.com/dsclim/articles
