@@ -1,11 +1,11 @@
 
-#' Title
+#' Return names of TraCE21ka data files
 #'
-#' @param indir TBW
-#' @param files_n TBW
-#' @param vars TBW
+#' @param indir String with the relative path to the TraCE21ka data folder
+#' @param files_n Integer indicating the number of the desired file. Default to 36, which is the file with the data incorporating the most recent (historical) period.
+#' @param vars String vector with the name of the vars to include in the output. Default is null, which return tas, tasmin, tasmax, pr, ps, hurs, cld, and wss.
 #'
-#' @return TBW
+#' @return This function return a string vector with the filenames for all variables of the desired file number in TraCE21ka dataset.
 #' @export
 #'
 #' @examples
@@ -23,18 +23,20 @@ traceFileNames <- function(indir, files_n = 36, vars = NULL){
   return(file.names)
 }
 
-#' Title
+
+
+#' Load TraCE21ka data file for a single variable.
 #'
-#' @param file TBW
-#' @param var  TBW
-#' @param lonLim  TBW
-#' @param latLim  TBW
-#' @param start_date  TBW
-#' @param end_date  TBW
-#' @param years  TBW
-#' @param dictionary TBW
+#' @param file String with the name of the file (including relative path if not in the working directory).
+#' @param var String indicating the name of the variable that should be loaded.
+#' @param lonLim Vector with two integers, indicating the longitudinal extent of the desired study area.
+#' @param latLim  Vector with two integers, indicating the latitudinal extent of the desired study area.
+#' @param start_date String with a date in the format aaaa-mm-dd, indicating the starting date as stored in the TraCE21ka datafile.
+#' @param end_date String with a date in the format aaaa-mm-dd, indicating the ending date as stored in the TraCE21ka datafile.
+#' @param years Integer vector indicating the years that should be loaded.
+#' @param dictionary String indicating the path to a dictionary for the TraCE21ka dataset. Default is a predefined dictionary.
 #'
-#' @return TBW
+#' @return List object with the structure defined in the loadeR package.
 #' @import loadeR
 #' @export
 #'
@@ -47,7 +49,7 @@ loadHistoricalTraceGrid <- function(file, var=NULL, lonLim=c(-25, 25), latLim=c(
     stop("Argument var not defined. Please define a variable to be loaded.")
   }
 
-  utils::assignInNamespace("getVerticalLevelPars", getVerticalLevelPars, ns="loadeR")
+  utils::assignInNamespace("getVerticalLevelPars", getVerticalLevelPars, ns = "loadeR")
 
   data <- loadGridData(dataset = file,
                                var = var,

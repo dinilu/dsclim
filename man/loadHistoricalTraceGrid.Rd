@@ -2,7 +2,7 @@
 % Please edit documentation in R/TraCE21ka_functions.R
 \name{loadHistoricalTraceGrid}
 \alias{loadHistoricalTraceGrid}
-\title{Title}
+\title{Load TraCE21ka data file for a single variable.}
 \usage{
 loadHistoricalTraceGrid(
   file,
@@ -16,27 +16,27 @@ loadHistoricalTraceGrid(
 )
 }
 \arguments{
-\item{file}{TBW}
+\item{file}{String with the name of the file (including relative path if not in the working directory).}
 
-\item{var}{TBW}
+\item{var}{String indicating the name of the variable that should be loaded.}
 
-\item{lonLim}{TBW}
+\item{lonLim}{Vector with two integers, indicating the longitudinal extent of the desired study area.}
 
-\item{latLim}{TBW}
+\item{latLim}{Vector with two integers, indicating the latitudinal extent of the desired study area.}
 
-\item{start_date}{TBW}
+\item{start_date}{String with a date in the format aaaa-mm-dd, indicating the starting date as stored in the TraCE21ka datafile.}
 
-\item{end_date}{TBW}
+\item{end_date}{String with a date in the format aaaa-mm-dd, indicating the ending date as stored in the TraCE21ka datafile.}
 
-\item{years}{TBW}
+\item{years}{Integer vector indicating the years that should be loaded.}
 
-\item{dictionary}{TBW}
+\item{dictionary}{String indicating the path to a dictionary for the TraCE21ka dataset. Default is a predefined dictionary.}
 }
 \value{
-TBW
+List object with the structure defined in the loadeR package.
 }
 \description{
-Title
+Load TraCE21ka data file for a single variable.
 }
 \examples{
 # tas <- loadHistoricalTraceGrid(
