@@ -7,19 +7,13 @@
     <loc>http://dnietolugilde.com/dsclim/LICENSE.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/Data_downloading_and_preprocessing.html</loc>
+    <loc>http://dnietolugilde.com/dsclim/articles/a1_Data_downloading_and_preprocessing.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/Downscale_with_Cross-validation.html</loc>
+    <loc>http://dnietolugilde.com/dsclim/articles/a2_Load_source_data.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/Load_source_data.html</loc>
-  </url>
-  <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/Model_calibration_and_cross_validation.html</loc>
-  </url>
-  <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/Summary_cross-validation.html</loc>
+    <loc>http://dnietolugilde.com/dsclim/articles/a3_Downscale_with_Cross-validation.html</loc>
   </url>
   <url>
     <loc>http://dnietolugilde.com/dsclim/articles/index.html</loc>

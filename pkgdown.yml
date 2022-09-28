@@ -2,12 +2,10 @@ pandoc: 2.7.3
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
-  Data_downloading_and_preprocessing: Data_downloading_and_preprocessing.html
-  Downscale_with_Cross-validation: Downscale_with_Cross-validation.html
-  Load_source_data: Load_source_data.html
-  Model_calibration_and_cross_validation: Model_calibration_and_cross_validation.html
-  Summary_cross-validation: Summary_cross-validation.html
-last_built: 2022-09-27T16:35Z
+  a1_Data_downloading_and_preprocessing: a1_Data_downloading_and_preprocessing.html
+  a2_Load_source_data: a2_Load_source_data.html
+  a3_Downscale_with_Cross-validation: a3_Downscale_with_Cross-validation.html
+last_built: 2022-09-28T10:35Z
 urls:
   reference: http://dnietolugilde.com/dsclim/reference
   article: http://dnietolugilde.com/dsclim/articles
