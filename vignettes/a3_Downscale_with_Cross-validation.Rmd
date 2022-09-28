@@ -19,8 +19,10 @@ This file is to document the downscaling process of Trace-21ka paleoclimate data
 
 ## Defining variables and folds for crossvalidation
 ```{r defining_predictos_and_folds}
-vars <- c("tas", "tasmax", "tasmin", "solin", "ps",
-          "precc", "lhflx")
+library(dsclim)
+
+vars <- c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps",
+          "pr", "cld", "wss")
 
 folds <- list(1961:1965, 1966:1970, 1971:1975, 1976:1980, 1981:1985, 1986:1990)
 ```
@@ -50,28 +52,26 @@ local.pars.M34 <- list(n = 4, vars = vars)
 
 ## Data loading
 
-```{r load_source_data}
-dsclim::loadHistoricalTraceGrids("../../Data/TraCE21ka/")
+```{r load_trace_data}
+trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
+hist.trace <- dsclim::loadHistoricalTraceGrids(trace.file.names)
+hist.trace$Variable$varName
+head(hist.trace$Dates[[1]]$start)
+tail(hist.trace$Dates[[1]]$start)
+head(hist.trace$Dates[[1]]$end)
+tail(hist.trace$Dates[[1]]$end)
+```
 
+```{r load_uerra_data} 
+uerra.tasmin = loadUerra("../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", "tasmin")
+uerra.tasmin$Variable$varName
+head(uerra.tasmin$Dates$start)
+head(uerra.tasmin$Dates$end)
+tail(uerra.tasmin$Dates$end)
+tail(uerra.tasmin$Dates$end)
 ```
 
 ## Downscaling
-
-```{r fit_M1cv}
-# Downscale with cross-validation 
-# M1cv <- downscaleR::downscaleCV(x = hist.trace,
-#                     y = uerra.tasmin,
-#                     method = "GLM",
-#                     family = gaussian(link="identity"),
-#                     folds = folds,
-#                     prepareData.args = list(
-#                       global.vars = NULL,
-#                       local.predictors = NULL,
-#                       spatial.predictors = NULL,
-#                       combined.only = TRUE))
-# 
-# visualizeR::spatialPlot(transformeR::climatology(M1cv))
-```
 
 
 ```{r fit_GLM.1.sp}
@@ -231,4 +231,107 @@ ANN.34.sp <- downscaleR::downscaleCV(x = hist.trace,
                       spatial.predictors = spatial.pars))
 
 visualizeR::spatialPlot(transformeR::climatology(ANN.34.sp))
+```
+
+
+### Create function to extract info
+
+```{r function_for_accuracy_metrics, eval=FALSE}
+ds_validation <- function(models=ds.methods, obs=uerra.tasmin, measure.code = "bias", index.code) {
+  l <- lapply(1:length(models),
+                          function(i) {
+                suppressMessages(
+                  climate4R.value::valueMeasure(
+                    obs,
+                    x = get(models[i]),
+                    measure.code = measure.code,
+                    index.code = index.code)$Measure)
+              })
+  names(l) <- models
+  return(l)
+}
+```
+
+
+```{r calculate_accuracy_metrics, eval=FALSE}
+ds.methods <- c("GLM.1.sp", "GLM.21", "GLM.21.sp", "GLM.24", "GLM.24.sp", "GLM.31", "GLM.34")
+
+value.indices <- c("Mean", "sd", "Skewness")
+
+library(parallel)
+
+cl <- makeCluster(detectCores())
+
+clusterExport(cl, c("ds_validation", ds.methods, "uerra.tasmin", "value.indices"))
+
+val.results <- parLapply(cl, value.indices,
+                      function(i, j, k, l){ds_validation(models= j,
+                                                         obs=k,
+                                                         measure.code=l,
+                                                         index.code = i)},
+                      ds.methods,
+                      uerra.tasmin, "bias")
+
+stopCluster(cl)
+
+names(val.results) <- value.indices
+```
+
+
+```{r map_biasses, eval=FALSE}
+visualizeR::spatialPlot(val.results[[1]][[1]],
+            backdrop.theme = "countries",
+            main = "GLM.1.sp - bias mean")
+
+visualizeR::spatialPlot(val.results[[1]][[2]],
+            backdrop.theme = "countries",
+            main = "GLM.21 - bias mean")
+
+
+visualizeR::spatialPlot(val.results[[1]][[3]],
+            backdrop.theme = "countries",
+            main = "GLM.21.sp - bias mean")
+visualizeR::spatialPlot(val.results[[1]][[4]],
+            backdrop.theme = "countries",
+            main = "GLM.24 - bias mean")
+visualizeR::spatialPlot(val.results[[1]][[5]],
+            backdrop.theme = "countries",
+            main = "GLM.24.sp - bias mean")
+visualizeR::spatialPlot(val.results[[1]][[6]],
+            backdrop.theme = "countries",
+            main = "GLM.31 - bias mean")
+visualizeR::spatialPlot(val.results[[1]][[7]],
+            backdrop.theme = "countries",
+            main = "GLM.34 - bias mean")
+```
+
+
+```{r plot_results}
+library(reshape2)
+library(ggplot2)
+getGridData <- function(grid)grid$Data
+
+test <- lapply(readd(validation), FUN=function(x)lapply(x, getGridData))
+
+test <- melt(test)
+
+test$mean <- ave(test$value, as.factor(test$L1), as.factor(test$L2), FUN=mean)
+
+test$L2 <- factor(test$L2, levels = ds.methods)
+test$L1 <- factor(test$L1, levels = value.indices)
+
+ggplot(test, aes(x=L2, y=value)) + 
+  geom_violin(aes(fill=mean)) +
+  facet_grid(L1~., scales="free") 
+```
+
+```{r plot_residual_hist}
+par(mfrow=c(3,3))
+hist(scaleGrid(readd(GLM.1.sp), readd(uerra))$Data)
+hist(scaleGrid(readd(GLM.21), readd(uerra))$Data)
+hist(scaleGrid(readd(GLM.21.sp), readd(uerra))$Data)
+hist(scaleGrid(readd(GLM.24), readd(uerra))$Data)
+hist(scaleGrid(readd(GLM.24.sp), readd(uerra))$Data)
+hist(scaleGrid(readd(GLM.31), readd(uerra))$Data)
+hist(scaleGrid(readd(GLM.34), readd(uerra))$Data)
 ```
