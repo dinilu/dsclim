@@ -16,7 +16,7 @@
 #' # uerra.file <- "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"
 #' # local.var <- "tas"
 #' # uerra = loadUerra(uerra.file, local.var)
-loadUerra <- function(file, var, lonLim = NULL, latLim = NULL, dictionary = system.file("extdata", "UERRA_dictionary.csv", package = "dsclim"), aggr.times = NULL, aggr.fun = mean){
+loadUerra <- function(file, var, lonLim = c(-11, 12), latLim = c(28, 44), dictionary = system.file("extdata", "UERRA_dictionary.csv", package = "dsclim"), aggr.times = NULL, aggr.fun = mean){
 
   data <- loadeR::loadGridData(file, var = var, lonLim = lonLim, latLim = latLim, dictionary = dictionary)
 

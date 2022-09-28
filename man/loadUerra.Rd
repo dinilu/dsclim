@@ -7,8 +7,8 @@
 loadUerra(
   file,
   var,
-  lonLim = NULL,
-  latLim = NULL,
+  lonLim = c(-11, 12),
+  latLim = c(28, 44),
   dictionary = system.file("extdata", "UERRA_dictionary.csv", package = "dsclim"),
   aggr.times = NULL,
   aggr.fun = mean
