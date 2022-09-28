@@ -236,7 +236,7 @@ visualizeR::spatialPlot(transformeR::climatology(ANN.34.sp))
 
 ### Create function to extract info
 
-```{r function_for_accuracy_metrics, eval=FALSE}
+```{r function_for_accuracy_metrics}
 ds_validation <- function(models=ds.methods, obs=uerra.tasmin, measure.code = "bias", index.code) {
   l <- lapply(1:length(models),
                           function(i) {
@@ -253,7 +253,7 @@ ds_validation <- function(models=ds.methods, obs=uerra.tasmin, measure.code = "b
 ```
 
 
-```{r calculate_accuracy_metrics, eval=FALSE}
+```{r calculate_accuracy_metrics}
 ds.methods <- c("GLM.1.sp", "GLM.21", "GLM.21.sp", "GLM.24", "GLM.24.sp", "GLM.31", "GLM.34")
 
 value.indices <- c("Mean", "sd", "Skewness")
@@ -278,7 +278,7 @@ names(val.results) <- value.indices
 ```
 
 
-```{r map_biasses, eval=FALSE}
+```{r map_biasses}
 visualizeR::spatialPlot(val.results[[1]][[1]],
             backdrop.theme = "countries",
             main = "GLM.1.sp - bias mean")

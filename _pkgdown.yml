@@ -37,8 +37,7 @@ articles:
 - title: Articles
   navbar: ~
   contents:
-  - Data_downloading_and_preprocessing
-  - Load_source_data
-  - Downscale_with_Cross-validation
-  - Model_calibration_and_cross_validation
-  - Summary_cross-validation
+  - a1_Data_downloading_and_preprocessing
+  - a2_Load_source_data
+  - a3_Downscale_with_Cross-validation
+
