@@ -16,7 +16,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' dsclim::loadCMIP("tas",
+#' dsclim::loadCMIP5("tas",
 #'                  "tas",
 #'                  "data/",
 #'                  "rcp2.6",
@@ -25,7 +25,7 @@
 #'                  c(27, 45),
 #'                  2006:2100)
 #' }
-loadCMIP <- function(var_list, var_new_list, indir, rcp, mod, lonLim = NULL, latLim = NULL, years = NULL, dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim")){
+loadCMIP5 <- function(var_list, var_new_list, indir, rcp, mod, lonLim = NULL, latLim = NULL, years = NULL, dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim")){
   if(rcp != "historical"){
     rcp_folder <- paste0("RCP_", substr(rcp, 4, 4), "_", substr(rcp, 6, 6))
     rcp_file <- paste0("rcp", substr(rcp, 4, 4), substr(rcp, 6, 6))
