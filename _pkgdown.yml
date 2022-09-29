@@ -7,12 +7,12 @@ reference:
 - title: "Loading data"
   desc: "Functions for loading climate data from different sources."
   contents: 
-  - loadCMIP
+  - loadUerra
+  - loadCMIP5
   - loadHistoricalTraceGrid
   - loadHistoricalTraceGrids
   - loadTraceGrid
   - loadTraceGrids
-  - loadUerra
 - title: "Downscaling data"
   desc: "Functions for downscaling climate data."
   contents:

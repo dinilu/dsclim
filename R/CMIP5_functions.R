@@ -101,7 +101,7 @@ downscaleCMIP5 <- function(uerra, var_list, var_new_list, rcp, mod, lonLim = c(-
     dir.create(paste0(outdir, rcp, "/", mod, "/", local.var, "/dat"), recursive = TRUE)
   }
 
-  hist.cmip5 <- loadCMIP(var_list = var_list, var_new_list = var_new_list, indir = indir, rcp = "historical", mod = mod, years=1961:1990)
+  hist.cmip5 <- loadCMIP5(var_list = var_list, var_new_list = var_new_list, indir = indir, rcp = "historical", mod = mod, years=1961:1990)
 
   if(local.var == "pr"){
     uerra.bin <- transformeR::binaryGrid(uerra, condition = "GE", threshold = 1)
@@ -116,8 +116,8 @@ downscaleCMIP5 <- function(uerra, var_list, var_new_list, rcp, mod, lonLim = c(-
     model <- downscaleR::downscaleTrain(data, method = method, family = family.link, predict = TRUE)
   }
 
-  rcp.cmip5.1 <- loadCMIP(var_list = var_list, var_new_list = var_new_list, indir = indir, rcp = "historical", mod = mod, years=1991:2005)
-  rcp.cmip5.2 <- loadCMIP(var_list = var_list, var_new_list = var_new_list, indir = indir, rcp = rcp, mod = mod, years = 2006:2100)
+  rcp.cmip5.1 <- loadCMIP5(var_list = var_list, var_new_list = var_new_list, indir = indir, rcp = "historical", mod = mod, years=1991:2005)
+  rcp.cmip5.2 <- loadCMIP5(var_list = var_list, var_new_list = var_new_list, indir = indir, rcp = rcp, mod = mod, years = 2006:2100)
 
   rcp.cmip5 <- transformeR::bindGrid(rcp.cmip5.1, rcp.cmip5.2, dimension = "time")
 
