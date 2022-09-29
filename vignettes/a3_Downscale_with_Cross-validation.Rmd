@@ -71,9 +71,11 @@ tail(uerra.tasmin$Dates$end)
 tail(uerra.tasmin$Dates$end)
 ```
 
-### Downscaling
+### Downscaling {.tabset .tabset-pills} 
 
+Select a model
 
+#### GLM.1.sp 
 ```{r fit_GLM.1.sp}
 GLM.1.sp <- downscaleR::downscaleCV(x = hist.trace,
                                    y = uerra.tasmin,
@@ -92,6 +94,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.1.sp))
 ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.1.sp downscaling specifications.](figures/a3/a3_cv_glm1sp_tasmin.png)
 
 
+#### GLM.21 
 ```{r fit_GLM.21}
 GLM.21 <- downscaleR::downscaleCV(x = hist.trace,
                     y = uerra.tasmin,
@@ -109,6 +112,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.21))
 ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.21 downscaling specifications.](figures/a3/a3_cv_glm21_tasmin.png)
 
 
+#### GLM.21.sp 
 ```{r fit_GLM.21.sp}
 GLM.21.sp <- downscaleR::downscaleCV(x = hist.trace,
                                     y = uerra.tasmin,
@@ -126,6 +130,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.21.sp))
 
 ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.21.sp downscaling specifications.](figures/a3/a3_cv_glm21sp_tasmin.png)
 
+#### GLM.24 
 ```{r fit_GLM.24}
 GLM.24 <- downscaleR::downscaleCV(x = hist.trace,
                     y = uerra.tasmin,
@@ -143,6 +148,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.24))
 ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.24 downscaling specifications.](figures/a3/a3_cv_glm24_tasmin.png) 
 
 
+#### GLM.24.sp 
 ```{r fit_GLM.24.sp}
 GLM.24.sp <- downscaleR::downscaleCV(x = hist.trace,
                     y = uerra.tasmin,
@@ -158,8 +164,9 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.24.sp))
 ```
 
 
-<!-- ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.24.sp downscaling specifications.](figures/a3/a3_cv_glm24sp_tasmin.png) -->
+![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.24.sp downscaling specifications.](figures/a3/a3_cv_glm24sp_tasmin.png)
 
+#### GLM.31 
 ```{r fit_GLM.31}
 GLM.31 <- downscaleR::downscaleCV(x = hist.trace,
                     y = uerra.tasmin,
@@ -178,6 +185,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.31))
 
 
 
+#### GLM.34 
 ```{r fit_GLM.34}
 GLM.34 <- downscaleR::downscaleCV(x = hist.trace,
                     y = uerra.tasmin,
@@ -192,7 +200,7 @@ GLM.34 <- downscaleR::downscaleCV(x = hist.trace,
 visualizeR::spatialPlot(transformeR::climatology(GLM.34))
 ```
 
-<!-- ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.34 downscaling specifications.](figures/a3/a3_cv_glm34_tasmin.png) -->
+![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.34 downscaling specifications.](figures/a3/a3_cv_glm34_tasmin.png)
 
 ## Evaluate downscaling performance
 
@@ -243,34 +251,73 @@ names(val.results) <- value.indices
 
 ## Plot evaluations' results
 
-### Error (or bias) maps
+### Error (or bias) maps {.tabset  .tabset-pills} 
 
-```{r map_biasses}
+Select a model
+
+#### GLM.1.sp
+```{r map_biasses_glm1sp}
 visualizeR::spatialPlot(val.results[[1]][[1]],
             backdrop.theme = "countries",
             main = "GLM.1.sp - bias mean")
+```
 
+![Bias map from GLM.1.sp downscaled model](figures/a3/a3_bias_glm1sp_tasmin.png)
+
+
+#### GLM.21
+```{r map_biasses_glm21}
 visualizeR::spatialPlot(val.results[[1]][[2]],
             backdrop.theme = "countries",
             main = "GLM.21 - bias mean")
+```
 
+![Bias map from GLM.21 downscaled model](figures/a3/a3_bias_glm21_tasmin.png)
 
+#### GLM.21.sp
+```{r map_biasses_glm21sp}
 visualizeR::spatialPlot(val.results[[1]][[3]],
             backdrop.theme = "countries",
             main = "GLM.21.sp - bias mean")
+```
+![Bias map from GLM.21.sp downscaled model](figures/a3/a3_bias_glm21sp_tasmin.png)
+
+
+#### GLM.24
+```{r map_biasses_glm24}
 visualizeR::spatialPlot(val.results[[1]][[4]],
             backdrop.theme = "countries",
             main = "GLM.24 - bias mean")
+```
+
+![Bias map from GLM.24 downscaled model](figures/a3/a3_bias_glm24_tasmin.png)
+
+#### GLM.24.sp
+```{r map_biasses_glm24sp}
 visualizeR::spatialPlot(val.results[[1]][[5]],
             backdrop.theme = "countries",
             main = "GLM.24.sp - bias mean")
+```
+
+![Bias map from GLM.24.sp downscaled model](figures/a3/a3_bias_glm24sp_tasmin.png)
+
+#### GLM.31
+```{r map_biasses_glm31}
 visualizeR::spatialPlot(val.results[[1]][[6]],
             backdrop.theme = "countries",
             main = "GLM.31 - bias mean")
+```
+![Bias map from GLM.31 downscaled model](figures/a3/a3_bias_glm31_tasmin.png)
+
+
+#### GLM.34
+```{r map_biasses_glm34}
 visualizeR::spatialPlot(val.results[[1]][[7]],
             backdrop.theme = "countries",
             main = "GLM.34 - bias mean")
 ```
+
+![Bias map from GLM.34 downscaled model](figures/a3/a3_bias_glm34_tasmin.png)
 
 
 ### Violin plots sumarizing results
@@ -280,7 +327,7 @@ library(reshape2)
 library(ggplot2)
 getGridData <- function(grid)grid$Data
 
-test <- lapply(readd(validation), FUN=function(x)lapply(x, getGridData))
+test <- lapply(val.results, FUN=function(x)lapply(x, getGridData))
 
 test <- melt(test)
 
@@ -293,17 +340,18 @@ ggplot(test, aes(x=L2, y=value)) +
   geom_violin(aes(fill=mean)) +
   facet_grid(L1~., scales="free") 
 ```
-
+![Bias summary](figures/a3/a3_val_summary_violin.png)
 
 ### Error or bias histograms  
 
 ```{r plot_residual_hist}
 par(mfrow=c(3,3))
-hist(scaleGrid(readd(GLM.1.sp), readd(uerra))$Data)
-hist(scaleGrid(readd(GLM.21), readd(uerra))$Data)
-hist(scaleGrid(readd(GLM.21.sp), readd(uerra))$Data)
-hist(scaleGrid(readd(GLM.24), readd(uerra))$Data)
-hist(scaleGrid(readd(GLM.24.sp), readd(uerra))$Data)
-hist(scaleGrid(readd(GLM.31), readd(uerra))$Data)
-hist(scaleGrid(readd(GLM.34), readd(uerra))$Data)
+hist(scaleGrid(GLM.1.sp, uerra.tasmin)$Data)
+hist(scaleGrid(GLM.21, uerra.tasmin)$Data)
+hist(scaleGrid(GLM.21.sp, uerra.tasmin)$Data)
+hist(scaleGrid(GLM.24, uerra.tasmin)$Data)
+hist(scaleGrid(GLM.24.sp, uerra.tasmin)$Data)
+hist(scaleGrid(GLM.31, uerra.tasmin)$Data)
+hist(scaleGrid(GLM.34, uerra.tasmin)$Data)
 ```
+![Bias summary histograms](figures/a3/a3_val_summary_histograms.png)
