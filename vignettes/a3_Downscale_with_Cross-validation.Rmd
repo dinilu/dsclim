@@ -141,7 +141,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.24))
 ```
 
 
-![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.24 downscaling specifications.](figures/a3/a3_cv_glm24_tasmin.png)
+<!-- ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.24 downscaling specifications.](figures/a3/a3_cv_glm24_tasmin.png) -->
 
 
 ```{r fit_GLM.24.sp}
@@ -159,7 +159,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.24.sp))
 ```
 
 
-![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.24.sp downscaling specifications.](figures/a3/a3_cv_glm24sp_tasmin.png)
+<!-- ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.24.sp downscaling specifications.](figures/a3/a3_cv_glm24sp_tasmin.png) -->
 
 ```{r fit_GLM.31}
 GLM.31 <- downscaleR::downscaleCV(x = hist.trace,
@@ -176,7 +176,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.31))
 ```
 
 
-![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.31 downscaling specifications.](figures/a3/a3_cv_glm31_tasmin.png)
+<!-- ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.31 downscaling specifications.](figures/a3/a3_cv_glm31_tasmin.png) -->
 
 
 ```{r fit_GLM.34}
@@ -193,7 +193,7 @@ GLM.34 <- downscaleR::downscaleCV(x = hist.trace,
 visualizeR::spatialPlot(transformeR::climatology(GLM.34))
 ```
 
-![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.34 downscaling specifications.](figures/a3/a3_cv_glm34_tasmin.png)
+<!-- ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.34 downscaling specifications.](figures/a3/a3_cv_glm34_tasmin.png) -->
 
 ## Evaluate downscaling performance
 
