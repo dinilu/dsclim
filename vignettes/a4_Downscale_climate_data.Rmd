@@ -3,7 +3,7 @@ title: "4. Downscaling climate data"
 
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{4. Downscaling climate data
+  %\VignetteIndexEntry{4. Downscaling climate data} 
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
