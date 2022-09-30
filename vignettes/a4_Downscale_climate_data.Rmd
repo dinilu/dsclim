@@ -1,0 +1,46 @@
+---
+title: "4. Downscaling climate data"
+
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{4. Downscaling climate data
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r global_options, include=FALSE}
+library(knitr)
+opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
+```
+
+This file is to document the downscaling process of Trace-21ka paleoclimate data using the most updated and finer resolution "historical" climate data for the Western Mediterranean region and the methods and tools implemented in the `climate4R` framework.
+
+## Downscaling
+
+### Defining variables and folds for crossvalidation
+```{r all_code}
+  hist.trace = loadTrace(trace.file.names, trace.var.names)
+
+  uerra = loadUerra(local.file, local.var)
+  
+  data = prepareData(hist.trace, uerra, local.predictors = local.pars.M21, spatial.predictors = spatial.pars)
+
+  model = downscaleTrain(data, method = "GLM", family = family.link, predict = TRUE)
+
+  new.pred = target(
+    downscaleTrace(i, new.trace.file.names, trace.var.names, years.y1, years.y2, trace.lon, trace.lat, hist.trace, data, model, local.var, trace.model.var.names, global.nc.attributes),
+    transform = map(
+      i = !!(1:36)
+    )
+  )
+
+new.cmip5.pred = target(
+  downscaleCMIP5(uerra, cmip5.vars, cmip5.new.vars, rcp = rcp, mod = mod, cmip5.lon, cmip5.lat, "../../Data/CMIP5/dictionary.dic", "../../Data/CMIP5/", "../../Output/CMIP5/", local.var, cmip5.spatial.pars, method = "GLM", family.link, global.nc.attributes),
+  transform = cross(
+    rcp = !!cmip5.rcps,
+    mod = !!cmip5.mods
+  )
+)
+```
+
+<!-- ![Bias summary histograms](figures/a3/a3_val_summary_histograms.png) -->

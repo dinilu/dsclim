@@ -40,4 +40,5 @@ articles:
   - a1_Data_downloading_and_preprocessing
   - a2_Load_source_data
   - a3_Downscale_with_Cross-validation
+  - a4_Downscale_climate_data
 
