@@ -12,6 +12,8 @@
 #' @param dictionary A data dictionary (as in \code{\link[loadeR]{loadGridData}}) that is going to be used to load the data. By default it uses an internal dictionary that standardize CMIP5, TraCE21ka, and UERRA data to the same format.
 #'
 #' @return A list object with the structure suitable for the climate4R suite. More specifically the data are as returned from the \code{\link[loadeR]{loadGridData}} function.
+#'
+#' @import loadeR transformeR
 #' @export
 #'
 #' @examples
@@ -77,6 +79,8 @@ loadCMIP5 <- function(var_list, var_new_list, indir, rcp, mod, lonLim = NULL, la
 #' @param global.nc.attributes TBW
 #'
 #' @return TBW
+#'
+#' @import transformeR downscaleR loadeR.2nc utils
 #' @export
 #'
 #' @examples #TBW

@@ -37,7 +37,7 @@ traceFileNames <- function(indir, files_n = 36, vars = NULL){
 #' @param dictionary String indicating the path to a dictionary for the TraCE21ka dataset. Default is a predefined dictionary.
 #'
 #' @return List object with the structure defined in the loadeR package.
-#' @import loadeR
+#' @import loadeR transformeR
 #' @export
 #'
 #' @examples
@@ -76,8 +76,8 @@ loadHistoricalTraceGrid <- function(file, var=NULL, lonLim=c(-25, 25), latLim=c(
 #' @param dictionary TBW
 #' @param selection_vars TBW
 #' @param compute_wss TBW
-#'
 #' @return TBW
+#' @import transformeR
 #' @export
 #'
 #' @examples
@@ -116,7 +116,8 @@ loadHistoricalTraceGrids <- function(files, vars = NULL, lonLim=c(-25, 25), latL
 #' @param dictionary TBW
 #'
 #' @return TBW
-#' @import loadeR
+#'
+#' @import loadeR ncdf4 loadeR.java transformeR
 #' @export
 #'
 #' @examples
@@ -233,6 +234,8 @@ loadTraceGrid <- function(file, var, lonLim = c(-25, 25), latLim = c(25, 50), di
 #' @param compute_wss TBW
 #'
 #' @return TBW
+#'
+#' @import transformeR
 #' @export
 #'
 #' @examples
@@ -280,6 +283,8 @@ loadTraceGrids <- function(files, vars = NULL, lonLim = c(-25, 25), latLim = c(2
 #' @param global_nc_attributes TBW
 #'
 #' @return TBW
+#'
+#' @import downscaleR loadeR.2nc transformeR
 #' @export
 #'
 #' @examples #TBW
@@ -374,6 +379,8 @@ downscaleTrace <- function(files_n, outdir, trace_dir, vars = NULL, lonLim = c(-
 #' @param global.nc.attributes TBW
 #'
 #' @return TBW
+#'
+#' @import transformeR downscaleR loadeR.2nc utils
 #' @export
 #'
 #' @examples #TBW

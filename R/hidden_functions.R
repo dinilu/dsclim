@@ -17,6 +17,7 @@
 #' @param freq TBW
 #' @param frac TBW
 #'
+#' @import zoo
 #' @return TBW
 #'
 #' @examples # TBW
@@ -27,3 +28,4 @@
   return(result)
 }
 
+# loadeR.java::javaString2rChar(Sys.Date())

@@ -10,6 +10,8 @@
 #' @param aggr.fun An optional function specifying the function to be used in aggregation if aggr.times was specified.
 #'
 #' @return TBW
+#'
+#' @import loadeR transformeR
 #' @export
 #'
 #' @examples

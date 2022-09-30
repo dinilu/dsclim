@@ -6,6 +6,8 @@
 #' @return List object with two vectors inside:
 #' * level: the level searched.
 #' * zRange: the position for the level.
+#'
+#' @import loadeR
 #' @export
 #'
 #' @examples
@@ -55,6 +57,8 @@ getVerticalLevelPars <- function (grid, level) {
 #'
 #' @return TBW
 #'
+#' @import utils
+#'
 #' @examples
 #' # TBW
 dictionaryLookup <- utils::getFromNamespace("dictionaryLookup", "loadeR")
@@ -65,6 +69,7 @@ dictionaryLookup <- utils::getFromNamespace("dictionaryLookup", "loadeR")
 #' @param y A grid object from which to extract the coordinates info.
 #'
 #' @return The x grid object with the coordinates info from the y grid object.
+#'
 #' @export
 #'
 #' @examples #TBW
@@ -113,6 +118,8 @@ recalcGridResolution <- function(grid){
 #' @param output.dir TBW
 #'
 #' @return TBW
+#'
+#' @import transformeR
 #' @export
 #'
 #' @examples #TBW
@@ -133,6 +140,8 @@ nc2sp_df <- function(grid, output.dir){
 #' @param v TBW
 #'
 #' @return TBW
+#'
+#' @import transformeR
 #' @export
 #'
 #' @examples #TBW
