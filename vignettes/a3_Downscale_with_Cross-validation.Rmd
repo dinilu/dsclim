@@ -237,13 +237,16 @@ cl <- makeCluster(detectCores())
 
 clusterExport(cl, c("ds_validation", ds.methods, "uerra.tasmin", "value.indices"))
 
-val.results <- parLapply(cl, value.indices,
-                      function(i, j, k, l){ds_validation(models= j,
-                                                         obs=k,
-                                                         measure.code=l,
-                                                         index.code = i)},
-                      ds.methods,
-                      uerra.tasmin, "bias")
+val.results <- parLapply(cl,
+                         value.indices,
+                         function(i, j, k, l){
+                           ds_validation(models = j,
+                                         obs = k,
+                                         measure.code = l, 
+                                         index.code = i)},
+                         ds.methods,
+                         uerra.tasmin,
+                         "bias")
 
 stopCluster(cl)
 
