@@ -2,21 +2,23 @@
 title: "3. Downscaling with crossvalidation"
 output: rmarkdown::html_vignette
 description: >
-  Run downscaling with crossvalidation to evaluate performance.
+  Run downscaling with crossvalidation to evaluate model
+  performance.
 vignette: >
   %\VignetteIndexEntry{3. Downscaling with crossvalidation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r global_options, include=FALSE}
-library(knitr)
-opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 ```
 
 This file is to document the downscaling process of Trace-21ka paleoclimate data using the most updated and finer resolution "historical" climate data for the Western Mediterranean region and the methods and tools implemented in the `climate4R` framework.
 
+
 ## Downscaling
+
 
 ### Defining variables and folds for crossvalidation
 ```{r defining_predictos_and_folds}
@@ -51,6 +53,7 @@ local.pars.M34 <- list(n = 4, vars = vars)
 
 ```
 
+
 ### Data loading
 
 ```{r load_trace_data}
@@ -63,6 +66,7 @@ head(hist.trace$Dates[[1]]$end)
 tail(hist.trace$Dates[[1]]$end)
 ```
 
+
 ```{r load_uerra_data} 
 uerra.tasmin = loadUerra("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", "tasmin")
 uerra.tasmin$Variable$varName
@@ -72,9 +76,11 @@ tail(uerra.tasmin$Dates$end)
 tail(uerra.tasmin$Dates$end)
 ```
 
+
 ### Downscaling {.tabset .tabset-pills} 
 
 Select a model
+
 
 #### GLM.1.sp 
 ```{r fit_GLM.1.sp}
@@ -131,6 +137,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.21.sp))
 
 ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.21.sp downscaling specifications.](figures/a3/a3_cv_glm21sp_tasmin.png)
 
+
 #### GLM.24 
 ```{r fit_GLM.24}
 GLM.24 <- downscaleR::downscaleCV(x = hist.trace,
@@ -164,8 +171,8 @@ GLM.24.sp <- downscaleR::downscaleCV(x = hist.trace,
 visualizeR::spatialPlot(transformeR::climatology(GLM.24.sp))
 ```
 
-
 ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.24.sp downscaling specifications.](figures/a3/a3_cv_glm24sp_tasmin.png)
+
 
 #### GLM.31 
 ```{r fit_GLM.31}
@@ -185,7 +192,6 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.31))
 ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.31 downscaling specifications.](figures/a3/a3_cv_glm31_tasmin.png)
 
 
-
 #### GLM.34 
 ```{r fit_GLM.34}
 GLM.34 <- downscaleR::downscaleCV(x = hist.trace,
@@ -203,7 +209,9 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.34))
 
 ![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.34 downscaling specifications.](figures/a3/a3_cv_glm34_tasmin.png)
 
+
 ## Evaluate downscaling performance
+
 
 ### Create function to extract info
 
@@ -224,7 +232,7 @@ ds_validation <- function(models, obs, measure.code = "bias", index.code) {
 ```
 
 
-## Run evaluation
+### Run evaluation
 
 ```{r calculate_accuracy_metrics}
 ds.methods <- c("GLM.1.sp", "GLM.21", "GLM.21.sp", "GLM.24", "GLM.24.sp", "GLM.31", "GLM.34")
@@ -253,11 +261,14 @@ stopCluster(cl)
 names(val.results) <- value.indices
 ```
 
+
 ## Plot evaluations' results
+
 
 ### Error (or bias) maps {.tabset  .tabset-pills} 
 
 Select a model
+
 
 #### GLM.1.sp
 ```{r map_biasses_glm1sp}
@@ -278,16 +289,20 @@ visualizeR::spatialPlot(val.results[[1]][[2]],
 
 ![Bias map from GLM.21 downscaled model](figures/a3/a3_bias_glm21_tasmin.png)
 
+
 #### GLM.21.sp
+
 ```{r map_biasses_glm21sp}
 visualizeR::spatialPlot(val.results[[1]][[3]],
             backdrop.theme = "countries",
             main = "GLM.21.sp - bias mean")
 ```
+
 ![Bias map from GLM.21.sp downscaled model](figures/a3/a3_bias_glm21sp_tasmin.png)
 
 
 #### GLM.24
+
 ```{r map_biasses_glm24}
 visualizeR::spatialPlot(val.results[[1]][[4]],
             backdrop.theme = "countries",
@@ -296,7 +311,9 @@ visualizeR::spatialPlot(val.results[[1]][[4]],
 
 ![Bias map from GLM.24 downscaled model](figures/a3/a3_bias_glm24_tasmin.png)
 
+
 #### GLM.24.sp
+
 ```{r map_biasses_glm24sp}
 visualizeR::spatialPlot(val.results[[1]][[5]],
             backdrop.theme = "countries",
@@ -305,16 +322,20 @@ visualizeR::spatialPlot(val.results[[1]][[5]],
 
 ![Bias map from GLM.24.sp downscaled model](figures/a3/a3_bias_glm24sp_tasmin.png)
 
+
 #### GLM.31
+
 ```{r map_biasses_glm31}
 visualizeR::spatialPlot(val.results[[1]][[6]],
             backdrop.theme = "countries",
             main = "GLM.31 - bias mean")
 ```
+
 ![Bias map from GLM.31 downscaled model](figures/a3/a3_bias_glm31_tasmin.png)
 
 
 #### GLM.34
+
 ```{r map_biasses_glm34}
 visualizeR::spatialPlot(val.results[[1]][[7]],
             backdrop.theme = "countries",
@@ -344,7 +365,9 @@ ggplot(test, aes(x=L2, y=value)) +
   geom_violin(aes(fill=mean)) +
   facet_grid(L1~., scales="free") 
 ```
+
 ![Bias summary](figures/a3/a3_val_summary_violin.png)
+
 
 ### Error or bias histograms  
 
@@ -358,4 +381,6 @@ hist(scaleGrid(GLM.24.sp, uerra.tasmin)$Data)
 hist(scaleGrid(GLM.31, uerra.tasmin)$Data)
 hist(scaleGrid(GLM.34, uerra.tasmin)$Data)
 ```
+
 ![Bias summary histograms](figures/a3/a3_val_summary_histograms.png)
+
