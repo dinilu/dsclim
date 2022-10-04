@@ -17,9 +17,9 @@ opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 #                          v.exp = .95,
 #                          rot = FALSE)
 #  
-#  scaling.pars <- list(type = "standardize",
-#                       spatial.frame = "field")
-#  
+#  # scaling.pars <- list(type = "standardize",
+#  #                      spatial.frame = "field")
+#  #
 #  local.pars.M21 <- list(n = 1, vars = "tasmin")
 #  
 #  local.pars.M24 <- list(n = 4, vars = "tasmin")
@@ -30,7 +30,7 @@ opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 #  
 
 ## ----load_trace_data----------------------------------------------------------
-#  trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
+#  trace.file.names <- traceFileNames("Data/TraCE21ka/")
 #  hist.trace <- dsclim::loadHistoricalTraceGrids(trace.file.names)
 #  hist.trace$Variable$varName
 #  head(hist.trace$Dates[[1]]$start)
@@ -39,7 +39,7 @@ opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 #  tail(hist.trace$Dates[[1]]$end)
 
 ## ----load_uerra_data----------------------------------------------------------
-#  uerra.tasmin = loadUerra("../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", "tasmin")
+#  uerra.tasmin = loadUerra("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", "tasmin")
 #  uerra.tasmin$Variable$varName
 #  head(uerra.tasmin$Dates$start)
 #  head(uerra.tasmin$Dates$end)
@@ -59,20 +59,6 @@ opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 #                                       combined.only = TRUE))
 #  
 #  visualizeR::spatialPlot(transformeR::climatology(GLM.1.sp))
-
-## ----fit_ANN.1.sp-------------------------------------------------------------
-#  ANN.1.sp <- downscaleR::downscaleCV(x = hist.trace,
-#                                     y = uerra.tasmin,
-#                                     method = "NN",
-#                                     output = "linear",
-#                                     folds = folds,
-#                                     prepareData.args = list(
-#                                       global.vars = NULL,
-#                                       local.predictors = NULL,
-#                                       spatial.predictors = spatial.pars,
-#                                       combined.only = TRUE))
-#  
-#  visualizeR::spatialPlot(transformeR::climatology(ANN.1.sp))
 
 ## ----fit_GLM.21---------------------------------------------------------------
 #  GLM.21 <- downscaleR::downscaleCV(x = hist.trace,
@@ -140,19 +126,6 @@ opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 #  
 #  visualizeR::spatialPlot(transformeR::climatology(GLM.31))
 
-## ----fit_GLM.31.sp------------------------------------------------------------
-#  GLM.31.sp <- downscaleR::downscaleCV(x = hist.trace,
-#                      y = uerra.tasmin,
-#                      method = "GLM",
-#                      family = gaussian(link="identity"),
-#                      folds = folds,
-#                      prepareData.args = list(
-#                        global.vars = NULL,
-#                        local.predictors = local.pars.M31,
-#                        spatial.predictors = spatial.pars))
-#  
-#  visualizeR::spatialPlot(transformeR::climatology(GLM.31.sp))
-
 ## ----fit_GLM.34---------------------------------------------------------------
 #  GLM.34 <- downscaleR::downscaleCV(x = hist.trace,
 #                      y = uerra.tasmin,
@@ -166,34 +139,8 @@ opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 #  
 #  visualizeR::spatialPlot(transformeR::climatology(GLM.34))
 
-## ----fit_GLM.34.sp------------------------------------------------------------
-#  GLM.34.sp <- downscaleR::downscaleCV(x = hist.trace,
-#                      y = uerra.tasmin,
-#                      method = "GLM",
-#                      family = gaussian(link="identity"),
-#                      folds = folds,
-#                      prepareData.args = list(
-#                        global.vars = NULL,
-#                        local.predictors = local.pars.M34,
-#                        spatial.predictors = spatial.pars))
-#  
-#  visualizeR::spatialPlot(transformeR::climatology(GLM.34.sp))
-
-## ----fit_ANN.34.sp------------------------------------------------------------
-#  ANN.34.sp <- downscaleR::downscaleCV(x = hist.trace,
-#                      y = uerra.tasmin,
-#                      method = "NN",
-#                      output = "linear",
-#                      folds = folds,
-#                      prepareData.args = list(
-#                        global.vars = NULL,
-#                        local.predictors = local.pars.M34,
-#                        spatial.predictors = spatial.pars))
-#  
-#  visualizeR::spatialPlot(transformeR::climatology(ANN.34.sp))
-
 ## ----function_for_accuracy_metrics--------------------------------------------
-#  ds_validation <- function(models=ds.methods, obs=uerra.tasmin, measure.code = "bias", index.code) {
+#  ds_validation <- function(models, obs, measure.code = "bias", index.code) {
 #    l <- lapply(1:length(models),
 #                            function(i) {
 #                  suppressMessages(
@@ -230,28 +177,37 @@ opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 #  
 #  names(val.results) <- value.indices
 
-## ----map_biasses--------------------------------------------------------------
+## ----map_biasses_glm1sp-------------------------------------------------------
 #  visualizeR::spatialPlot(val.results[[1]][[1]],
 #              backdrop.theme = "countries",
 #              main = "GLM.1.sp - bias mean")
-#  
+
+## ----map_biasses_glm21--------------------------------------------------------
 #  visualizeR::spatialPlot(val.results[[1]][[2]],
 #              backdrop.theme = "countries",
 #              main = "GLM.21 - bias mean")
-#  
-#  
+
+## ----map_biasses_glm21sp------------------------------------------------------
 #  visualizeR::spatialPlot(val.results[[1]][[3]],
 #              backdrop.theme = "countries",
 #              main = "GLM.21.sp - bias mean")
+
+## ----map_biasses_glm24--------------------------------------------------------
 #  visualizeR::spatialPlot(val.results[[1]][[4]],
 #              backdrop.theme = "countries",
 #              main = "GLM.24 - bias mean")
+
+## ----map_biasses_glm24sp------------------------------------------------------
 #  visualizeR::spatialPlot(val.results[[1]][[5]],
 #              backdrop.theme = "countries",
 #              main = "GLM.24.sp - bias mean")
+
+## ----map_biasses_glm31--------------------------------------------------------
 #  visualizeR::spatialPlot(val.results[[1]][[6]],
 #              backdrop.theme = "countries",
 #              main = "GLM.31 - bias mean")
+
+## ----map_biasses_glm34--------------------------------------------------------
 #  visualizeR::spatialPlot(val.results[[1]][[7]],
 #              backdrop.theme = "countries",
 #              main = "GLM.34 - bias mean")
@@ -261,7 +217,7 @@ opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 #  library(ggplot2)
 #  getGridData <- function(grid)grid$Data
 #  
-#  test <- lapply(readd(validation), FUN=function(x)lapply(x, getGridData))
+#  test <- lapply(val.results, FUN=function(x)lapply(x, getGridData))
 #  
 #  test <- melt(test)
 #  
@@ -276,11 +232,11 @@ opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 
 ## ----plot_residual_hist-------------------------------------------------------
 #  par(mfrow=c(3,3))
-#  hist(scaleGrid(readd(GLM.1.sp), readd(uerra))$Data)
-#  hist(scaleGrid(readd(GLM.21), readd(uerra))$Data)
-#  hist(scaleGrid(readd(GLM.21.sp), readd(uerra))$Data)
-#  hist(scaleGrid(readd(GLM.24), readd(uerra))$Data)
-#  hist(scaleGrid(readd(GLM.24.sp), readd(uerra))$Data)
-#  hist(scaleGrid(readd(GLM.31), readd(uerra))$Data)
-#  hist(scaleGrid(readd(GLM.34), readd(uerra))$Data)
+#  hist(scaleGrid(GLM.1.sp, uerra.tasmin)$Data)
+#  hist(scaleGrid(GLM.21, uerra.tasmin)$Data)
+#  hist(scaleGrid(GLM.21.sp, uerra.tasmin)$Data)
+#  hist(scaleGrid(GLM.24, uerra.tasmin)$Data)
+#  hist(scaleGrid(GLM.24.sp, uerra.tasmin)$Data)
+#  hist(scaleGrid(GLM.31, uerra.tasmin)$Data)
+#  hist(scaleGrid(GLM.34, uerra.tasmin)$Data)
 
