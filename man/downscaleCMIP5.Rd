@@ -6,32 +6,38 @@
 \usage{
 downscaleCMIP5(
   uerra,
-  var_list,
-  var_new_list,
+  local_var,
   rcp,
   mod,
+  indir,
+  outdir,
+  var_list = NULL,
+  var_new_list = NULL,
   lonLim = c(-11.25, 12.5),
   latLim = c(27, 45),
   dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"),
-  indir,
-  outdir = "Output/CMIP5/",
-  local.var,
-  spatial.pars = NULL,
+  spatial_pars = NULL,
   method = "GLM",
-  family.link = family.link,
-  global.nc.attributes = global.nc.attributes
+  family_link = stats::gaussian(link = "identity"),
+  global_nc_attributes = NULL
 )
 }
 \arguments{
 \item{uerra}{TBW}
 
-\item{var_list}{TBW}
-
-\item{var_new_list}{TBW}
+\item{local_var}{TBW}
 
 \item{rcp}{TBW}
 
 \item{mod}{TBW}
+
+\item{indir}{TBW}
+
+\item{outdir}{TBW}
+
+\item{var_list}{TBW}
+
+\item{var_new_list}{TBW}
 
 \item{lonLim}{TBW}
 
@@ -39,19 +45,13 @@ downscaleCMIP5(
 
 \item{dictionary}{TBW}
 
-\item{indir}{TBW}
-
-\item{outdir}{TBW}
-
-\item{local.var}{TBW}
-
-\item{spatial.pars}{TBW}
+\item{spatial_pars}{TBW}
 
 \item{method}{TBW}
 
-\item{family.link}{TBW}
+\item{family_link}{TBW}
 
-\item{global.nc.attributes}{TBW}
+\item{global_nc_attributes}{TBW}
 }
 \value{
 TBW

@@ -5,27 +5,27 @@
 \title{Load CMIP5 data into climate4R grid format}
 \usage{
 loadCMIP5(
-  var_list,
-  var_new_list,
   indir,
   rcp,
   mod,
+  var_list = NULL,
+  var_new_list = NULL,
   lonLim = NULL,
   latLim = NULL,
-  years = NULL,
+  years = 1961:1990,
   dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim")
 )
 }
 \arguments{
-\item{var_list}{A character vector with names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).}
-
-\item{var_new_list}{A character vector with names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).}
-
 \item{indir}{A character string with the directory path for CMIP5 data. This directory should have a folder with the name of the RCP that is going to be loaded. The RCP folder should have in turn a folder with the name of the General Circulation Model that is goint to be loaded.}
 
 \item{rcp}{A character vector with the name of the RCP that is going to be loaded.}
 
 \item{mod}{A character vector with the name of the GCM that is going to be loaded.}
+
+\item{var_list}{A character vector with names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).}
+
+\item{var_new_list}{A character vector with names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).}
 
 \item{lonLim}{A numeric vector (length = 2) with the longitudinal extent that is going to be loaded.}
 
