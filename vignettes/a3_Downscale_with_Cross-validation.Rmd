@@ -1,7 +1,8 @@
 ---
 title: "3. Downscaling with crossvalidation"
-
 output: rmarkdown::html_vignette
+description: >
+  Run downscaling with crossvalidation to evaluate performance.
 vignette: >
   %\VignetteIndexEntry{3. Downscaling with crossvalidation}
   %\VignetteEngine{knitr::rmarkdown}
@@ -37,9 +38,9 @@ spatial.pars <- list(which.combine = vars,
                         v.exp = .95,
                         rot = FALSE)
 
-# scaling.pars <- list(type = "standardize",
-#                      spatial.frame = "field")
-# 
+scaling.pars <- list(type = "standardize",
+                     spatial.frame = "field")
+
 local.pars.M21 <- list(n = 1, vars = "tasmin")
 
 local.pars.M24 <- list(n = 4, vars = "tasmin")
