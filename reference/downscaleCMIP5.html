@@ -62,20 +62,20 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">downscaleCMIP5</span><span class="op">(</span></span>
 <span>  <span class="va">uerra</span>,</span>
-<span>  <span class="va">var_list</span>,</span>
-<span>  <span class="va">var_new_list</span>,</span>
+<span>  <span class="va">local_var</span>,</span>
 <span>  <span class="va">rcp</span>,</span>
 <span>  <span class="va">mod</span>,</span>
+<span>  <span class="va">indir</span>,</span>
+<span>  <span class="va">outdir</span>,</span>
+<span>  var_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  var_new_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lonLim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11.25</span>, <span class="fl">12.5</span><span class="op">)</span>,</span>
 <span>  latLim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">45</span><span class="op">)</span>,</span>
 <span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CMIP5_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"dsclim"</span><span class="op">)</span>,</span>
-<span>  <span class="va">indir</span>,</span>
-<span>  outdir <span class="op">=</span> <span class="st">"Output/CMIP5/"</span>,</span>
-<span>  <span class="va">local.var</span>,</span>
-<span>  spatial.pars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  spatial_pars <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"GLM"</span>,</span>
-<span>  family.link <span class="op">=</span> <span class="va">family.link</span>,</span>
-<span>  global.nc.attributes <span class="op">=</span> <span class="va">global.nc.attributes</span></span>
+<span>  family_link <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span>,</span>
+<span>  global_nc_attributes <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -85,11 +85,7 @@
 <dd><p>TBW</p></dd>
 
 
-<dt>var_list</dt>
-<dd><p>TBW</p></dd>
-
-
-<dt>var_new_list</dt>
+<dt>local_var</dt>
 <dd><p>TBW</p></dd>
 
 
@@ -98,6 +94,22 @@
 
 
 <dt>mod</dt>
+<dd><p>TBW</p></dd>
+
+
+<dt>indir</dt>
+<dd><p>TBW</p></dd>
+
+
+<dt>outdir</dt>
+<dd><p>TBW</p></dd>
+
+
+<dt>var_list</dt>
+<dd><p>TBW</p></dd>
+
+
+<dt>var_new_list</dt>
 <dd><p>TBW</p></dd>
 
 
@@ -113,19 +125,7 @@
 <dd><p>TBW</p></dd>
 
 
-<dt>indir</dt>
-<dd><p>TBW</p></dd>
-
-
-<dt>outdir</dt>
-<dd><p>TBW</p></dd>
-
-
-<dt>local.var</dt>
-<dd><p>TBW</p></dd>
-
-
-<dt>spatial.pars</dt>
+<dt>spatial_pars</dt>
 <dd><p>TBW</p></dd>
 
 
@@ -133,11 +133,11 @@
 <dd><p>TBW</p></dd>
 
 
-<dt>family.link</dt>
+<dt>family_link</dt>
 <dd><p>TBW</p></dd>
 
 
-<dt>global.nc.attributes</dt>
+<dt>global_nc_attributes</dt>
 <dd><p>TBW</p></dd>
 
 </dl></div>
