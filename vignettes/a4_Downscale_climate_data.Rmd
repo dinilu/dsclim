@@ -18,24 +18,52 @@ This file is to document the downscaling process of Trace-21ka paleoclimate data
 ## Downscaling
 
 ### Defining variables and folds for crossvalidation
-```{r all_code}
-  hist.trace = loadTrace(trace.file.names, trace.var.names)
+```{r load_packages_and_parameters`}
+library(dsclim)
+library(downscaleR)
+vars <- c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps",
+          "pr", "cld", "wss")
 
-  uerra = loadUerra(local.file, local.var)
-  
-  data = prepareData(hist.trace, uerra, local.predictors = local.pars.M21, spatial.predictors = spatial.pars)
+spatial.pars <- list(which.combine = vars,
+                        v.exp = .95,
+                        rot = FALSE)
 
-  model = downscaleTrain(data, method = "GLM", family = family.link, predict = TRUE)
+family.link <- gaussian(link="identity")
 
-  new.pred = target(
-    downscaleTrace(i, new.trace.file.names, trace.var.names, years.y1, years.y2, trace.lon, trace.lat, hist.trace, data, model, local.var, trace.model.var.names, global.nc.attributes),
-    transform = map(
-      i = !!(1:36)
-    )
-  )
+global.nc.attributes = list("author" = "Diego Nieto Lugilde & Daniel Romera Romera", "institution" = "Universidad de Cordoba", "email" = "bv2nilud@uco.es")
+```
+
+```{r load_data}
+trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
+hist.trace <- dsclim::loadHistoricalTraceGrids(trace.file.names)
+
+uerra.tasmin = loadUerra("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", "tasmin")
+
+```
+
+```{r prepare_data}
+data = prepareData(hist.trace, uerra.tasmin, spatial.predictors = spatial.pars)
+```
+
+```{r calibrate_model}
+model = downscaleTrain(data, method = "GLM", family = family.link, predict = TRUE)
+```
+
+```{r downscale_trace_files}
+lapply(1:36, downscaleTrace, "prueba/", "../../Data/TraCE21ka/", hist_trace = hist.trace, mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
+```
+
+```{r downscale_cmip5_files}
+cmip5.rcps <- c("rcp2.6", "rcp4.5", "rcp6.0", "rcp8.5")
+cmip5.mods <- c("CESM1-CAM5", "CSIRO-Mk3-6-0", "IPSL-CM5A-MR")
+spatial.pars <- list(which.combine = c("tas", "tasmax", "tasmin", "hurs", "ps", "pr", "cld", "wss"),
+                     v.exp = .7,
+                     rot = FALSE)
+
+dowscaleCMIP5(uerra.tasmin, cmip5.rcps[[1]], cmip5.mods[[1]], indir = "../../Data/CMIP5/", outdir = "prueba/CMIP5/", local.var, spatial.pars = spatial.pars, method = "GLM", family.link, global.nc.attributes)
 
 new.cmip5.pred = target(
-  downscaleCMIP5(uerra, cmip5.vars, cmip5.new.vars, rcp = rcp, mod = mod, cmip5.lon, cmip5.lat, "../../Data/CMIP5/dictionary.dic", "../../Data/CMIP5/", "../../Output/CMIP5/", local.var, cmip5.spatial.pars, method = "GLM", family.link, global.nc.attributes),
+  downscaleCMIP5(uerra, cmip5.vars, cmip5.new.vars, rcp = rcp, mod = mod, cmip5.lon, cmip5.lat, "../../Data/CMIP5/dictionary.dic", "../../Data/CMIP5/", "../../Output/CMIP5/", local.var = "tasmin", spatial.pars = , method = "GLM", family.link, global.nc.attributes),
   transform = cross(
     rcp = !!cmip5.rcps,
     mod = !!cmip5.mods
