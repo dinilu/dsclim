@@ -11,7 +11,8 @@
 #'
 #' @return TBW
 #'
-#' @import loadeR transformeR
+#' @import loadeR loadeR.java
+#'
 #' @export
 #'
 #' @examples

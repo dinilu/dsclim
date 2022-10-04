@@ -8,6 +8,7 @@
 #' * zRange: the position for the level.
 #'
 #' @import loadeR
+#'
 #' @export
 #'
 #' @examples
@@ -86,6 +87,7 @@ copyXYCoords <- function(x, y){
 #' @param end_date TBW
 #'
 #' @return TBW
+#'
 #' @export
 #'
 #' @examples #TBW
@@ -102,6 +104,7 @@ modifyDates <- function(x, start_date="1961-01-01", end_date="1990-12-31") {
 #' @param grid TBW
 #'
 #' @return TBW
+#'
 #' @export
 #'
 #' @examples #TBW
@@ -119,7 +122,6 @@ recalcGridResolution <- function(grid){
 #'
 #' @return TBW
 #'
-#' @import transformeR
 #' @export
 #'
 #' @examples #TBW
@@ -141,7 +143,6 @@ nc2sp_df <- function(grid, output.dir){
 #'
 #' @return TBW
 #'
-#' @import transformeR
 #' @export
 #'
 #' @examples #TBW

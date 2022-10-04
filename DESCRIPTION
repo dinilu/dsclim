@@ -16,7 +16,6 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 LazyData: true
 Imports: 
-    loadeR,
     loadeR.2nc,
     loadeR.java,
     climate4R.UDG,
@@ -27,6 +26,7 @@ Imports:
     utils,
     zoo
 Depends: 
+    loadeR,
     R (>= 2.10)
 Suggests: 
     knitr,

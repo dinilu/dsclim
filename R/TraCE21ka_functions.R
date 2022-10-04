@@ -6,6 +6,7 @@
 #' @param vars String vector with the name of the vars to include in the output. Default is null, which return tas, tasmin, tasmax, pr, ps, hurs, cld, and wss.
 #'
 #' @return This function return a string vector with the filenames for all variables of the desired file number in TraCE21ka dataset.
+#'
 #' @export
 #'
 #' @examples
@@ -37,7 +38,9 @@ traceFileNames <- function(indir, files_n = 36, vars = NULL){
 #' @param dictionary String indicating the path to a dictionary for the TraCE21ka dataset. Default is a predefined dictionary.
 #'
 #' @return List object with the structure defined in the loadeR package.
-#' @import loadeR transformeR
+#'
+#' @import loadeR
+#'
 #' @export
 #'
 #' @examples
@@ -76,8 +79,9 @@ loadHistoricalTraceGrid <- function(file, var=NULL, lonLim=c(-25, 25), latLim=c(
 #' @param dictionary TBW
 #' @param selection_vars TBW
 #' @param compute_wss TBW
+#'
 #' @return TBW
-#' @import transformeR
+#'
 #' @export
 #'
 #' @examples
@@ -117,7 +121,8 @@ loadHistoricalTraceGrids <- function(files, vars = NULL, lonLim=c(-25, 25), latL
 #'
 #' @return TBW
 #'
-#' @import loadeR ncdf4 loadeR.java transformeR
+#' @import loadeR loadeR.java
+#'
 #' @export
 #'
 #' @examples
@@ -235,7 +240,6 @@ loadTraceGrid <- function(file, var, lonLim = c(-25, 25), latLim = c(25, 50), di
 #'
 #' @return TBW
 #'
-#' @import transformeR
 #' @export
 #'
 #' @examples
@@ -284,7 +288,8 @@ loadTraceGrids <- function(files, vars = NULL, lonLim = c(-25, 25), latLim = c(2
 #'
 #' @return TBW
 #'
-#' @import downscaleR loadeR.2nc transformeR
+#' @import loadeR loadeR.java
+#'
 #' @export
 #'
 #' @examples #TBW
@@ -380,7 +385,8 @@ downscaleTrace <- function(files_n, outdir, trace_dir, vars = NULL, lonLim = c(-
 #'
 #' @return TBW
 #'
-#' @import transformeR downscaleR loadeR.2nc utils
+#' @import loadeR loadeR.java
+#'
 #' @export
 #'
 #' @examples #TBW

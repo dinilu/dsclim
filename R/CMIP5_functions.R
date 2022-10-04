@@ -13,7 +13,8 @@
 #'
 #' @return A list object with the structure suitable for the climate4R suite. More specifically the data are as returned from the \code{\link[loadeR]{loadGridData}} function.
 #'
-#' @import loadeR transformeR
+#' @import loadeR
+#'
 #' @export
 #'
 #' @examples
@@ -83,7 +84,6 @@ loadCMIP5 <- function(indir, rcp, mod, var_list = NULL, var_new_list = NULL, lon
 #'
 #' @return TBW
 #'
-#' @import transformeR downscaleR loadeR.2nc utils
 #' @export
 #'
 #' @examples #TBW
