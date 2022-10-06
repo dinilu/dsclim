@@ -21,7 +21,7 @@ This file is to document the downscaling process of Trace-21ka paleoclimate data
 ```{r load_packages_and_parameters`}
 library(dsclim)
 library(downscaleR)
-vars <- c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps",
+vars <- c("tas", "tasmin", "tasmax", "hurs@992.5561", "ps",
           "pr", "cld", "wss")
 
 spatial.pars <- list(which.combine = vars,
@@ -37,19 +37,25 @@ global.nc.attributes = list("author" = "Diego Nieto Lugilde & Daniel Romera Rome
 trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
 hist.trace <- dsclim::loadHistoricalTraceGrids(trace.file.names)
 
-uerra.tasmin = loadUerra("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", "tasmin")
-
+uerra = loadUerra("../../Data/UERRA/MESCAN-SURFEX/total_precipitation/latlon/1961-90_total_precipitation.nc", "pr")
+uerra_bin = transformeR::binaryGrid(uerra, condition = "GE", threshold = 1)
 ```
 
 ```{r prepare_data}
-data = prepareData(hist.trace, uerra.tasmin, spatial.predictors = spatial.pars)
+data = prepareData(hist.trace, uerra, spatial.predictors = spatial.pars)
+data_bin = prepareData(hist.trace, uerra_bin, spatial.predictors = spatial.pars)
 ```
 
 ```{r calibrate_model}
+model_bin = downscaleTrain(data_bin, method = "GLM", family = binomial(link="logit"), predict = TRUE)
 model = downscaleTrain(data, method = "GLM", family = family.link, predict = TRUE)
 ```
 
-```{r downscale_trace_files}
+```{r downscale_single_trace_file}
+downscaleTrace(1 , "output/", "../../Data/TraCE21ka/", mod_data = data, model = model, model_bin = model_bin, global_nc_attributes = global.nc.attributes)
+```
+
+```{r downscale_all_trace_files} 
 lapply(1:36, downscaleTrace, "prueba/", "../../Data/TraCE21ka/", hist_trace = hist.trace, mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
 ```
 
@@ -60,7 +66,7 @@ spatial.pars <- list(which.combine = c("tas", "tasmax", "tasmin", "hurs", "ps", 
                      v.exp = .7,
                      rot = FALSE)
 
-dowscaleCMIP5(uerra.tasmin, cmip5.rcps[[1]], cmip5.mods[[1]], indir = "../../Data/CMIP5/", outdir = "prueba/CMIP5/", local.var, spatial.pars = spatial.pars, method = "GLM", family.link, global.nc.attributes)
+dowscaleCMIP5(uerra, cmip5.rcps[[1]], cmip5.mods[[1]], indir = "../../Data/CMIP5/", outdir = "prueba/CMIP5/", local.var, spatial.pars = spatial.pars, method = "GLM", family.link, global.nc.attributes)
 
 new.cmip5.pred = target(
   downscaleCMIP5(uerra, cmip5.vars, cmip5.new.vars, rcp = rcp, mod = mod, cmip5.lon, cmip5.lat, "../../Data/CMIP5/dictionary.dic", "../../Data/CMIP5/", "../../Output/CMIP5/", local.var = "tasmin", spatial.pars = , method = "GLM", family.link, global.nc.attributes),
