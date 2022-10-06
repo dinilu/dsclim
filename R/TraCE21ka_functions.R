@@ -203,12 +203,8 @@ loadTraceGrid <- function(file, var, lonLim = c(-25, 25), latLim = c(25, 50), di
     n.years <- length(trace.y1:trace.y2)
   }
   trace.c4r[[4]] <- list()
-  trace.c4r[[4]]$start <- paste(.DateSeq("4000-01-01", paste0(3999+n.years, "-12-31"), 12, 0), "00:00:00 GMT", sep = " ")
-  trace.c4r[[4]]$end <- paste(.DateSeq("4000-01-01", paste0(3999+n.years, "-12-31"), 12, 1), "00:00:00 GMT", sep = " ")
-  # y1 <- lubridate::ymd("1950-01-01") - lubridate::years(trace.y1)
-  # y2 <- lubridate::ymd("1950-01-01") - lubridate::years(trace.y2)
-  # trace.c4r[[4]]$start <- format(add_with_rollback(y1, months(x = seq.int(from = 0, to = (n.years * 12) - 1, by = 1))), "%Y-%m-%d %H:%M:%S %Z")
-  # trace.c4r[[4]]$end <- format(add_with_rollback(y1 + days(30), months(x = seq.int(from = 0, to = (n.years * 12) - 1, by = 1))), "%Y-%m-%d %H:%M:%S %Z")
+  trace.c4r[[4]]$start <- paste(.DateSeq("4000-01-01", paste0(3999 + n.years, "-12-31"), 12, 0), "00:00:00 GMT", sep = " ")
+  trace.c4r[[4]]$end <- paste(.DateSeq("4000-01-01", paste0(3999 + n.years, "-12-31"), 12, 1), "00:00:00 GMT", sep = " ")
   attr(trace.c4r[[4]], "subset") <- "subsetYears"
   attr(trace.c4r[[4]], "season") <- 1:12
 
@@ -275,14 +271,14 @@ loadTraceGrids <- function(files, vars = NULL, lonLim = c(-25, 25), latLim = c(2
 #' Title
 #'
 #' @param files_n TBW
-#' @param outdir TBW
 #' @param trace_dir TBW
+#' @param outdir TBW
+#' @param mod_data TBW
+#' @param model TBW
+#' @param model_bin TBW
 #' @param vars TBW
 #' @param lonLim TBW
 #' @param latLim TBW
-#' @param hist_trace TBW
-#' @param mod_data TBW
-#' @param model TBW
 #' @param selection_vars TBW
 #' @param global_nc_attributes TBW
 #'
@@ -293,16 +289,15 @@ loadTraceGrids <- function(files, vars = NULL, lonLim = c(-25, 25), latLim = c(2
 #' @export
 #'
 #' @examples #TBW
-downscaleTrace <- function(files_n, outdir, trace_dir, vars = NULL, lonLim = c(-25, 25), latLim = c(25, 50), hist_trace, mod_data, model, selection_vars = NULL, global_nc_attributes = NULL){
+downscaleTrace <- function(files_n, trace_dir, outdir, mod_data, model, model_bin = NULL, vars = NULL, lonLim = c(-25, 25), latLim = c(25, 50), selection_vars = NULL, global_nc_attributes = NULL){
   # files_n <- 1
   # outdir <- "Output/Trace21ka/"
   # trace_dir <- "Data/TraCE21ka/"
+  # mod_data <- data
+  # model <- model
   # vars <- NULL
   # lonLim <- c(-25, 25)
   # latLim <- c(25, 50)
-  # hist_trace <- hist.trace
-  # mod_data <- data
-  # model <- model
   # selection_vars <- NULL
   # global_nc_attributes <- global.nc.attributes
 
@@ -320,7 +315,7 @@ downscaleTrace <- function(files_n, outdir, trace_dir, vars = NULL, lonLim = c(-
 
   new.trace <- loadTraceGrids(new.data, vars, lonLim, latLim, selection_vars = selection_vars)
 
-  new.trace.xy <- copyXYCoords(new.trace, hist_trace)
+  new.trace.xy <- copyXYCoords(new.trace, mod_data)
 
   y1 <- trace.years.y1[[files_n]]
   y2 <- trace.years.y2[[files_n]]
@@ -342,16 +337,25 @@ downscaleTrace <- function(files_n, outdir, trace_dir, vars = NULL, lonLim = c(-
 
     new.data <- downscaleR::prepareNewData(new.trace.sub, mod_data)
 
-    pred <- downscaleR::downscalePredict(new.data, model)
+    if(!is.null(model_bin)){
+      pred.bin <- downscaleR::downscalePredict(new.data, model_bin)
+      pred.cont <- downscaleR::downscalePredict(new.data, model)
 
-    pred$Data <- round(pred$Data, 2)
+      pred <- transformeR::gridArithmetics(pred.bin, pred.cont, operator = "*")
+    } else {
+      pred <- downscaleR::downscalePredict(new.data, model)
+    }
+
+        pred$Data <- round(pred$Data, 2)
 
     loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, y.var, "/", y.var, real.years[j], "_tmp.nc"), missval = -9999, globalAttributes = global_nc_attributes)
 
     infile <- paste0(outdir, y.var, "/", y.var, real.years[j],  "_tmp.nc")
     outfile <- paste0(outdir, y.var, "/", y.var, real.years[j], ".nc")
 
-    # system(paste0("cdo -r setreftime,1950-01-01,00:00:00,hours -shifttime,", ydiff, "y ", infile, " ", outfile)) #not working
+    message("New year: ", fake.years[[j]] + ydiff)
+
+    # system(paste0("cdo -r setreftime,1950-01-01,00:00:00,hours -shifttime,", ydiff, "y ", infile, " ", outfile)) #do not work
     system2("cdo", c("-r", "setreftime,1950-01-01,00:00:00,1mon", "-setcalendar,standard", paste0("-shifttime,", ydiff, "y"), infile, outfile))
     file.remove(infile)
 
@@ -365,108 +369,101 @@ downscaleTrace <- function(files_n, outdir, trace_dir, vars = NULL, lonLim = c(-
 }
 
 
-#' Title
-#'
-#' @param i TBW
-#' @param new.data.list TBW
-#' @param vars TBW
-#' @param y1.list TBW
-#' @param y2.list TBW
-#' @param lonLim TBW
-#' @param latLim TBW
-#' @param hist.trace TBW
-#' @param data TBW
-#' @param model TBW
-#' @param data.bin TBW
-#' @param model.bin TBW
-#' @param local.var TBW
-#' @param trace_dir TBW
-#' @param global.nc.attributes TBW
-#'
-#' @return TBW
-#'
-#' @import loadeR loadeR.java
-#'
-#' @export
-#'
-#' @examples #TBW
-downscaleTraceBimodel <- function (i, new.data.list, vars, y1.list, y2.list, lonLim, latLim, hist.trace, data, model, data.bin, model.bin, local.var, trace_dir, global.nc.attributes){
-
-  # i <- 36
-  # new.data.list <- new.trace.file.names
-  # vars <- dsclim:::trace.standard.var.names
-  # y1.list <- trace.years.y1
-  # y2.list <- trace.years.y2
-  # lonLim <- trace.lon
-  # latLim <- trace.lat
-  # hist.trace <- hist.trace
-  # data <- data
-  # model <- model
-  # data.bin <- data_bin
-  # model.bin <- model_bin
-  # local.var <- local.var
-  # trace_dir <- dsclim:::trace.final.var.names
-  # global.nc.attributes <- global.nc.attributes
-
-  if(!dir.exists(paste0("Output/Trace21ka/", local.var, "/dat"))){
-    dir.create(paste0("Output/Trace21ka/", local.var, "/dat"))
-  }
-
-  new.data <- new.data.list[[i]]
-  y1 <- y1.list[[i]]
-  y2 <- y2.list[[i]]
-
-  new.trace <- loadTraceGrids(new.data, vars, y1, y2, lonLim, latLim, selection_vars = trace_dir)
-
-  new.trace.xy <- copyXYCoords(new.trace, hist.trace)
-
-  if(y1 == 400){
-    real.years <- c(-y1:-1,1:-y2)
-  }else{
-    real.years <- -y1:-y2
-  }
-
-  fake.years <- seq(4000, length=length(real.years))
-
-  for(j in 1:length(fake.years)){
-
-    if(real.years[j] > 0){
-      ydiff <- -y1 - 4000
-    }else{
-      ydiff <- -y1 - 3999
-    }
-
-    message("Calculating year: ", real.years[j], "...")
-
-    new.trace.sub <- transformeR::subsetGrid(new.trace.xy, years = fake.years[j])
-
-    new.data <- downscaleR::prepareNewData(new.trace.sub, data)
-
-    pred.bin <- downscaleR::downscalePredict(new.data, model.bin)
-    pred.cont <- downscaleR::downscalePredict(new.data, model)
-
-    pred <- transformeR::gridArithmetics(pred.bin, pred.cont, operator = "*")
-
-    pred$Data <- round(pred$Data, 2)
-
-    loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0("Output/Trace21ka/", local.var, "/", local.var, real.years[j], "_tmp.nc"), missval = -9999, globalAttributes = global.nc.attributes)
-
-    infile <- paste0("Output/Trace21ka/", local.var, "/", local.var, real.years[j],  "_tmp.nc")
-    outfile <- paste0("Output/Trace21ka/", local.var, "/", local.var, real.years[j], ".nc")
-
-    message("New year: ", fake.years[[j]] + ydiff)
-
-    # system(paste0("cdo -r setreftime,1950-01-01,00:00:00,hours -shifttime,", ydiff, "y ", infile, " ", outfile))
-    system2("cdo", c("-r", "setreftime,1950-01-01,00:00:00,1mon", "-setcalendar,standard", paste0("-shifttime,", ydiff, "y"), infile, outfile))
-    file.remove(infile)
-
-    pred.df <- nc2sp_df(pred)
-
-    utils::write.table(pred.df, file=paste0("Output/Trace21ka/", local.var, "/dat/", local.var, real.years[j], ".dat"), sep="\t")
-
-    message("   ...done")
-  }
-  return("Done")
-}
-
+# #'  Title
+# #'
+# #' @param files_n TBW
+# #' @param outdir TBW
+# #' @param trace_dir TBW
+# #' @param mod_data TBW
+# #' @param model TBW
+# #' @param model_bin TBW
+# #' @param vars TBW
+# #' @param lonLim TBW
+# #' @param latLim TBW
+# #' @param selection_vars TBW
+# #' @param global.nc.attributes TBW
+# #'
+# #' @return TBW
+# #'
+# #' @import loadeR loadeR.java
+# #'
+# #' @export
+# #'
+# #' @examples #TBW
+# downscaleTraceBimodel <- function (files_n, trace_dir, outdir, mod_data, model, model_bin, vars = NULL, lonLim = c(-25, 25), latLim = c(25, 50), selection_vars = NULL, global.nc.attributes = NULL){
+#
+#   # files_n <- 36
+#   # trace_dir <- dsclim:::trace.final.var.names
+#   # outdir
+#   # data <- data
+#   # model <- model
+#   # model_bin <- model_bin
+#   # vars <- dsclim:::trace.standard.var.names
+#   # lonLim <- trace.lon
+#   # latLim <- trace.lat
+#   # global.nc.attributes <- global.nc.attributes
+#
+#   y.var <- mod_data$y$Variable$varName
+#
+#   if(!dir.exists(paste0(outdir, y.var, "/dat"))){
+#     dir.create(paste0(outdir, y.var, "/dat"), recursive = TRUE)
+#   }
+#
+#   if(is.null(selection_vars)){
+#     selection_vars <- c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps", "pr", "cld", "wss")
+#   }
+#
+#   y1 <- trace.years.y1[[files_n]]
+#   y2 <- trace.years.y2[[files_n]]
+#   if(y1 == 400){
+#     real.years <- c(-y1:-1,1:-y2)
+#   }else{
+#     real.years <- -y1:-y2
+#   }
+#
+#   fake.years <- seq(4000, length=length(real.years))
+#
+#   ydiff <- -y1 - 3999
+#
+#   new.data <- traceFileNames(trace_dir, files_n)
+#
+#   new.trace <- loadTraceGrids(new.data, vars, y1, y2, lonLim, latLim, selection_vars = selection_vars)
+#
+#   new.trace.xy <- copyXYCoords(new.trace, mod_data)
+#
+#   for(j in 1:length(fake.years)){
+#
+#     message("Calculating year: ", real.years[j], "...")
+#
+#     new.trace.sub <- transformeR::subsetGrid(new.trace.xy, years = fake.years[j])
+#
+#     new.data <- downscaleR::prepareNewData(new.trace.sub, mod_data)
+#
+#     pred.bin <- downscaleR::downscalePredict(new.data, model_bin)
+#     pred.cont <- downscaleR::downscalePredict(new.data, model)
+#
+#     pred <- transformeR::gridArithmetics(pred.bin, pred.cont, operator = "*")
+#
+#     pred$Data <- round(pred$Data, 2)
+#
+#     loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, y.var, "/", y.var, real.years[j], "_tmp.nc"), missval = -9999, globalAttributes = global.nc.attributes)
+#
+#     infile <- paste0(outdir, y.var, "/", y.var, real.years[j],  "_tmp.nc")
+#     outfile <- paste0(outdir, y.var, "/", y.var, real.years[j], ".nc")
+#
+#     message("New year: ", fake.years[[j]] + ydiff)
+#
+#     # system(paste0("cdo -r setreftime,1950-01-01,00:00:00,hours -shifttime,", ydiff, "y ", infile, " ", outfile))
+#     system2("cdo", c("-r", "setreftime,1950-01-01,00:00:00,1mon", "-setcalendar,standard", paste0("-shifttime,", ydiff, "y"), infile, outfile))
+#     file.remove(infile)
+#
+#     pred.df <- nc2sp_df(pred)
+#
+#     utils::write.table(pred.df, file=paste0(outdir, y.var, "/dat/", y.var, real.years[j], ".dat"), sep="\t")
+#
+#     message("   ...done")
+#   }
+#   return("Done")
+# }
+#
 

@@ -6,14 +6,14 @@
 \usage{
 downscaleTrace(
   files_n,
-  outdir,
   trace_dir,
+  outdir,
+  mod_data,
+  model,
+  model_bin = NULL,
   vars = NULL,
   lonLim = c(-25, 25),
   latLim = c(25, 50),
-  hist_trace,
-  mod_data,
-  model,
   selection_vars = NULL,
   global_nc_attributes = NULL
 )
@@ -21,21 +21,21 @@ downscaleTrace(
 \arguments{
 \item{files_n}{TBW}
 
+\item{trace_dir}{TBW}
+
 \item{outdir}{TBW}
 
-\item{trace_dir}{TBW}
+\item{mod_data}{TBW}
+
+\item{model}{TBW}
+
+\item{model_bin}{TBW}
 
 \item{vars}{TBW}
 
 \item{lonLim}{TBW}
 
 \item{latLim}{TBW}
-
-\item{hist_trace}{TBW}
-
-\item{mod_data}{TBW}
-
-\item{model}{TBW}
 
 \item{selection_vars}{TBW}
 
