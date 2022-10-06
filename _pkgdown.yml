@@ -1,12 +1,12 @@
 url: http://dnietolugilde.com/dsclim/
 template:
   bootstrap: 5
-  
-  
+
+
 reference:
 - title: "Loading data"
   desc: "Functions for loading climate data from different sources."
-  contents: 
+  contents:
   - loadUerra
   - loadCMIP5
   - loadHistoricalTraceGrid
@@ -18,7 +18,6 @@ reference:
   contents:
   - downscaleCMIP5
   - downscaleTrace
-  - downscaleTraceBimodel
 - title: "Other functions"
   desc: "Several functions for modifying climate data object and or helpers to other functions."
   contents:
@@ -32,7 +31,7 @@ reference:
   - nc2sp_df
   - recalcGridResolution
   - traceFileNames
-  
+
 articles:
 - title: Articles
   navbar: ~
