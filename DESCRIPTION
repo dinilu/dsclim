@@ -17,7 +17,6 @@ RoxygenNote: 7.2.1
 LazyData: true
 Imports: 
     loadeR.2nc,
-    loadeR.java,
     climate4R.UDG,
     transformeR,
     downscaleR,
@@ -27,6 +26,7 @@ Imports:
     zoo
 Depends: 
     loadeR,
+    loadeR.java,
     R (>= 2.10)
 Suggests: 
     knitr,
