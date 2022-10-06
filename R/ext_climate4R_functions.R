@@ -64,6 +64,8 @@ getVerticalLevelPars <- function (grid, level) {
 #' # TBW
 dictionaryLookup <- utils::getFromNamespace("dictionaryLookup", "loadeR")
 
+
+
 #' Copy coordinates info from one grid to another
 #'
 #' @param x A grid object (see loadeR package) to be modified.
@@ -75,7 +77,15 @@ dictionaryLookup <- utils::getFromNamespace("dictionaryLookup", "loadeR")
 #'
 #' @examples #TBW
 copyXYCoords <- function(x, y){
-  x$xyCoords <- y$xyCoords
+  if(!exists("xyCoords", where = y) && !exists("xyCoords", where = attributes(y))){
+    stop("y object do not have xy coordinates. Please provide a `y` object with spatial info. See loadTrace, loadCMIP5, or loadUerra for more info.")
+  }
+  if(exists("xyCoords", where = y)){
+    x$xyCoords <- y$xyCoords
+  }
+  if(exists("xyCoords", where = attributes(y))){
+    x$xyCoords <- attributes(y)$xyCoords
+  }
   return(x)
 }
 
