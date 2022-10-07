@@ -24,7 +24,10 @@ library(downscaleR)
 vars <- c("tas", "tasmin", "tasmax", "hurs@992.5561", "ps",
           "pr", "cld", "wss")
 
+local.pars <- list(vars = "pr", n = 1)
+
 spatial.pars <- list(which.combine = vars,
+# spatial.pars <- list(which.combine = NULL,
                         v.exp = .95,
                         rot = FALSE)
 
@@ -42,17 +45,17 @@ uerra_bin = transformeR::binaryGrid(uerra, condition = "GE", threshold = 1)
 ```
 
 ```{r prepare_data}
-data = prepareData(hist.trace, uerra, spatial.predictors = spatial.pars)
+data = prepareData(hist.trace, uerra, local.predictors = local.pars, spatial.predictors = spatial.pars)
 data_bin = prepareData(hist.trace, uerra_bin, spatial.predictors = spatial.pars)
 ```
 
 ```{r calibrate_model}
-model_bin = downscaleTrain(data_bin, method = "GLM", family = binomial(link="logit"), predict = TRUE)
+# model_bin = downscaleTrain(data_bin, method = "GLM", family = binomial(link="logit"), predict = TRUE)
 model = downscaleTrain(data, method = "GLM", family = family.link, predict = TRUE)
 ```
 
 ```{r downscale_single_trace_file}
-downscaleTrace(1 , "output/", "../../Data/TraCE21ka/", mod_data = data, model = model, model_bin = model_bin, global_nc_attributes = global.nc.attributes)
+downscaleTrace(1 , "output/", "../../Data/TraCE21ka/", mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
 ```
 
 ```{r downscale_all_trace_files} 
