@@ -10,9 +10,8 @@ reference:
   - loadUerra
   - loadCMIP5
   - loadHistoricalTraceGrid
-  - loadHistoricalTraceGrids
   - loadTraceGrid
-  - loadTraceGrids
+  - loadTrace
 - title: "Downscaling data"
   desc: "Functions for downscaling climate data."
   contents:
@@ -21,7 +20,7 @@ reference:
 - title: "Other functions"
   desc: "Several functions for modifying climate data object and or helpers to other functions."
   contents:
-  -  compute_wind_speed
+  - compute_wind_speed
   - copyXYCoords
   - dictionaryLookup
   - .DateSeq
@@ -40,4 +39,3 @@ articles:
   - a2_Load_source_data
   - a3_Downscale_with_Cross-validation
   - a4_Downscale_climate_data
-
