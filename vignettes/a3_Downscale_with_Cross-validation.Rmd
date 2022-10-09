@@ -16,6 +16,8 @@ knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
 
 This file is to document the downscaling process of Trace-21ka paleoclimate data using the most updated and finer resolution "historical" climate data for the Western Mediterranean region and the methods and tools implemented in the `climate4R` framework.
 
+More information can be found [here](https://github.com/SantanderMetGroup/notebooks/blob/master/2019_downscaleR_GMD.pdf), [here](https://github.com/SantanderMetGroup/notebooks), and [here](https://github.com/SantanderMetGroup/downscaleR/wiki).
+
 
 ## Downscaling
 
@@ -27,7 +29,11 @@ library(dsclim)
 vars <- c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps",
           "pr", "cld", "wss")
 
+local.var <- "tasmin"
+
 folds <- list(1961:1965, 1966:1970, 1971:1975, 1976:1980, 1981:1985, 1986:1990)
+
+trace.dir <- "../../Data/TraCE21ka/"
 ```
 
 
@@ -40,12 +46,9 @@ spatial.pars <- list(which.combine = vars,
                         v.exp = .95,
                         rot = FALSE)
 
-scaling.pars <- list(type = "standardize",
-                     spatial.frame = "field")
+local.pars.M21 <- list(n = 1, vars = local.var)
 
-local.pars.M21 <- list(n = 1, vars = "tasmin")
-
-local.pars.M24 <- list(n = 4, vars = "tasmin")
+local.pars.M24 <- list(n = 4, vars = local.var)
 
 local.pars.M31 <- list(n = 1, vars = vars)
 
@@ -57,8 +60,8 @@ local.pars.M34 <- list(n = 4, vars = vars)
 ### Data loading
 
 ```{r load_trace_data}
-trace.file.names <- traceFileNames("Data/TraCE21ka/")
-hist.trace <- dsclim::loadHistoricalTraceGrids(trace.file.names)
+trace.file.names <- traceFileNames(trace.dir)
+hist.trace <- dsclim::loadTrace(trace.file.names, years = 1961:1990)
 hist.trace$Variable$varName
 head(hist.trace$Dates[[1]]$start)
 tail(hist.trace$Dates[[1]]$start)
@@ -68,12 +71,12 @@ tail(hist.trace$Dates[[1]]$end)
 
 
 ```{r load_uerra_data} 
-uerra.tasmin = loadUerra("Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", "tasmin")
-uerra.tasmin$Variable$varName
-head(uerra.tasmin$Dates$start)
-head(uerra.tasmin$Dates$end)
-tail(uerra.tasmin$Dates$end)
-tail(uerra.tasmin$Dates$end)
+uerra.data = loadUerra("../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc", local.var)
+uerra.data$Variable$varName
+head(uerra.data$Dates$start)
+head(uerra.data$Dates$end)
+tail(uerra.data$Dates$end)
+tail(uerra.data$Dates$end)
 ```
 
 
@@ -85,7 +88,7 @@ Select a model
 #### GLM.1.sp 
 ```{r fit_GLM.1.sp}
 GLM.1.sp <- downscaleR::downscaleCV(x = hist.trace,
-                                   y = uerra.tasmin,
+                                   y = uerra.data,
                                    method = "GLM",
                                    family = gaussian(link="identity"),
                                    folds = folds,
@@ -104,7 +107,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.1.sp))
 #### GLM.21 
 ```{r fit_GLM.21}
 GLM.21 <- downscaleR::downscaleCV(x = hist.trace,
-                    y = uerra.tasmin,
+                    y = uerra.data,
                     method = "GLM",
                     family = gaussian(link="identity"),
                     folds = folds,
@@ -122,7 +125,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.21))
 #### GLM.21.sp 
 ```{r fit_GLM.21.sp}
 GLM.21.sp <- downscaleR::downscaleCV(x = hist.trace,
-                                    y = uerra.tasmin,
+                                    y = uerra.data,
                                     method = "GLM",
                                     family = gaussian(link="identity"),
                                     folds = folds,
@@ -141,7 +144,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.21.sp))
 #### GLM.24 
 ```{r fit_GLM.24}
 GLM.24 <- downscaleR::downscaleCV(x = hist.trace,
-                    y = uerra.tasmin,
+                    y = uerra.data,
                     method = "GLM",
                     family = gaussian(link="identity"),
                     folds = folds,
@@ -159,7 +162,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.24))
 #### GLM.24.sp 
 ```{r fit_GLM.24.sp}
 GLM.24.sp <- downscaleR::downscaleCV(x = hist.trace,
-                    y = uerra.tasmin,
+                    y = uerra.data,
                     method = "GLM",
                     family = gaussian(link="identity"),
                     folds = folds,
@@ -177,7 +180,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.24.sp))
 #### GLM.31 
 ```{r fit_GLM.31}
 GLM.31 <- downscaleR::downscaleCV(x = hist.trace,
-                    y = uerra.tasmin,
+                    y = uerra.data,
                     method = "GLM",
                     family = gaussian(link="identity"),
                     folds = folds,
@@ -195,7 +198,7 @@ visualizeR::spatialPlot(transformeR::climatology(GLM.31))
 #### GLM.34 
 ```{r fit_GLM.34}
 GLM.34 <- downscaleR::downscaleCV(x = hist.trace,
-                    y = uerra.tasmin,
+                    y = uerra.data,
                     method = "GLM",
                     family = gaussian(link="identity"),
                     folds = folds,
@@ -207,7 +210,7 @@ GLM.34 <- downscaleR::downscaleCV(x = hist.trace,
 visualizeR::spatialPlot(transformeR::climatology(GLM.34))
 ```
 
-![Downscaled minimum temperature from TraCE21ka for the period 1960-90 using UERRA for the same period and GLM.34 downscaling specifications.](figures/a3/a3_cv_glm34_tasmin.png)
+![Downscaled minimum temperature from TraCE21ka for the period 1961-90 using UERRA for the same period and GLM.34 downscaling specifications.](figures/a3/a3_cv_glm34_tasmin.png)
 
 
 ## Evaluate downscaling performance
@@ -243,17 +246,17 @@ library(parallel)
 
 cl <- makeCluster(detectCores())
 
-clusterExport(cl, c("ds_validation", ds.methods, "uerra.tasmin", "value.indices"))
+clusterExport(cl, c("ds_validation", ds.methods, "uerra.data", "value.indices"))
 
 val.results <- parLapply(cl,
                          value.indices,
                          function(i, j, k, l){
                            ds_validation(models = j,
                                          obs = k,
-                                         measure.code = l, 
+                                         measure.code = l,
                                          index.code = i)},
                          ds.methods,
-                         uerra.tasmin,
+                         uerra.data,
                          "bias")
 
 stopCluster(cl)
@@ -265,7 +268,7 @@ names(val.results) <- value.indices
 ## Plot evaluations' results
 
 
-### Error (or bias) maps {.tabset  .tabset-pills} 
+### Error (or bias) maps {.tabset  .tabset-pills}
 
 Select a model
 
@@ -361,25 +364,26 @@ test$mean <- ave(test$value, as.factor(test$L1), as.factor(test$L2), FUN=mean)
 test$L2 <- factor(test$L2, levels = ds.methods)
 test$L1 <- factor(test$L1, levels = value.indices)
 
-ggplot(test, aes(x=L2, y=value)) + 
+ggplot(test, aes(x=L2, y=value)) +
   geom_violin(aes(fill=mean)) +
-  facet_grid(L1~., scales="free") 
+  facet_grid(L1~., scales="free")
 ```
 
 ![Bias summary](figures/a3/a3_val_summary_violin.png)
 
 
-### Error or bias histograms  
+### Error or bias histograms
 
 ```{r plot_residual_hist}
+library(transformeR)
 par(mfrow=c(3,3))
-hist(scaleGrid(GLM.1.sp, uerra.tasmin)$Data)
-hist(scaleGrid(GLM.21, uerra.tasmin)$Data)
-hist(scaleGrid(GLM.21.sp, uerra.tasmin)$Data)
-hist(scaleGrid(GLM.24, uerra.tasmin)$Data)
-hist(scaleGrid(GLM.24.sp, uerra.tasmin)$Data)
-hist(scaleGrid(GLM.31, uerra.tasmin)$Data)
-hist(scaleGrid(GLM.34, uerra.tasmin)$Data)
+hist(scaleGrid(GLM.1.sp, uerra.data)$Data)
+hist(scaleGrid(GLM.21, uerra.data)$Data)
+hist(scaleGrid(GLM.21.sp, uerra.data)$Data)
+hist(scaleGrid(GLM.24, uerra.data)$Data)
+hist(scaleGrid(GLM.24.sp, uerra.data)$Data)
+hist(scaleGrid(GLM.31, uerra.data)$Data)
+hist(scaleGrid(GLM.34, uerra.data)$Data)
 ```
 
 ![Bias summary histograms](figures/a3/a3_val_summary_histograms.png)
