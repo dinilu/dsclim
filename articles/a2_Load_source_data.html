@@ -219,7 +219,7 @@ This vignettes require climate data from three different sources: TraCE21ka, UER
 <div class="tab-pane" id="wss" role="tabpanel" aria-labelledby="wss-tab">
 
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">trace.wss</span> <span class="op">&lt;-</span> <span class="fu">dsclim</span><span class="fu">::</span><span class="fu"><a href="../reference/compute_wind_speed.html">compute_wind_speed</a></span><span class="op">(</span><span class="va">trace.u</span>, <span class="va">trace.v</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">trace.wss</span> <span class="op">&lt;-</span> <span class="fu">dsclim</span><span class="fu">::</span><span class="fu">compute_wind_speed</span><span class="op">(</span><span class="va">trace.u</span>, <span class="va">trace.v</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">visualizeR</span><span class="fu">::</span><span class="fu">spatialPlot</span><span class="op">(</span><span class="fu">transformeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/transformeR/man/climatology.html" class="external-link">climatology</a></span><span class="op">(</span><span class="va">trace.wss</span><span class="op">)</span>, backdrop.theme <span class="op">=</span> <span class="st">"countries"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">

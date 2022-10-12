@@ -63,11 +63,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">loadUerra</span><span class="op">(</span></span>
 <span>  <span class="va">file</span>,</span>
 <span>  <span class="va">var</span>,</span>
-<span>  lonLim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span>,</span>
-<span>  latLim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span>,</span>
+<span>  lon_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span>,</span>
+<span>  lat_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span>,</span>
 <span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"UERRA_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"dsclim"</span><span class="op">)</span>,</span>
-<span>  aggr.times <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  aggr.fun <span class="op">=</span> <span class="va">mean</span></span>
+<span>  aggr_times <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  aggr_fun <span class="op">=</span> <span class="va">mean</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -81,11 +81,11 @@
 <dd><p>A string with the variable name from the file to be loaded.</p></dd>
 
 
-<dt>lonLim</dt>
+<dt>lon_lim</dt>
 <dd><p>An optional vector with two values specifying the longitudinal limits (min and max) to be loaded.</p></dd>
 
 
-<dt>latLim</dt>
+<dt>lat_lim</dt>
 <dd><p>An optional vector with two values specifying the latitudinal limits (min and max) to be loaded.</p></dd>
 
 
@@ -93,11 +93,11 @@
 <dd><p>An optional string with the filename with the dictionary for the UERRA data. By default it loads an internal dictionary from the package.</p></dd>
 
 
-<dt>aggr.times</dt>
+<dt>aggr_times</dt>
 <dd><p>An optional numeric specifying the number of cells to be aggregated.</p></dd>
 
 
-<dt>aggr.fun</dt>
+<dt>aggr_fun</dt>
 <dd><p>An optional function specifying the function to be used in aggregation if aggr.times was specified.</p></dd>
 
 </dl></div>
@@ -110,8 +110,8 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># uerra.file &lt;- "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"</span></span></span>
-<span class="r-in"><span><span class="co"># local.var &lt;- "tas"</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># file &lt;- "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"</span></span></span>
+<span class="r-in"><span><span class="co"># var &lt;- "tas"</span></span></span>
 <span class="r-in"><span><span class="co"># uerra = loadUerra(uerra.file, local.var)</span></span></span>
 <span class="r-in"></span>
 </code></pre></div>

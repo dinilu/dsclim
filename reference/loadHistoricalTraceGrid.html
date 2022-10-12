@@ -63,8 +63,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">loadHistoricalTraceGrid</span><span class="op">(</span></span>
 <span>  <span class="va">file</span>,</span>
 <span>  var <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lonLim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">25</span>, <span class="fl">25</span><span class="op">)</span>,</span>
-<span>  latLim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span><span class="op">)</span>,</span>
+<span>  lon_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">25</span>, <span class="fl">25</span><span class="op">)</span>,</span>
+<span>  lat_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span><span class="op">)</span>,</span>
 <span>  years <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"TraCE21ka_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"dsclim"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -80,11 +80,11 @@
 <dd><p>String indicating the name of the variable that should be loaded.</p></dd>
 
 
-<dt>lonLim</dt>
+<dt>lon_lim</dt>
 <dd><p>Vector with two integers, indicating the longitudinal extent of the desired study area.</p></dd>
 
 
-<dt>latLim</dt>
+<dt>lat_lim</dt>
 <dd><p>Vector with two integers, indicating the latitudinal extent of the desired study area.</p></dd>
 
 

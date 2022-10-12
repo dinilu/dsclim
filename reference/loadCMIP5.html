@@ -64,10 +64,10 @@
 <span>  <span class="va">indir</span>,</span>
 <span>  <span class="va">rcp</span>,</span>
 <span>  <span class="va">mod</span>,</span>
-<span>  var_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  var_new_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lonLim <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  latLim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cmip5_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lon_lim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lat_lim <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  years <span class="op">=</span> <span class="fl">1961</span><span class="op">:</span><span class="fl">1990</span>,</span>
 <span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CMIP5_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"dsclim"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -87,19 +87,19 @@
 <dd><p>A character vector with the name of the GCM that is going to be loaded.</p></dd>
 
 
-<dt>var_list</dt>
-<dd><p>A character vector with names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).</p></dd>
-
-
-<dt>var_new_list</dt>
+<dt>vars</dt>
 <dd><p>A character vector with names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).</p></dd>
 
 
-<dt>lonLim</dt>
+<dt>cmip5_vars</dt>
+<dd><p>A character vector with names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).</p></dd>
+
+
+<dt>lon_lim</dt>
 <dd><p>A numeric vector (length = 2) with the longitudinal extent that is going to be loaded.</p></dd>
 
 
-<dt>latLim</dt>
+<dt>lat_lim</dt>
 <dd><p>A numeric vector (length = 2) with the latitudinal extent that is going to be loaded.</p></dd>
 
 

@@ -31,19 +31,19 @@
     <loc>http://dnietolugilde.com/dsclim/news/index.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/compute_wind_speed.html</loc>
-  </url>
-  <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/copyXYCoords.html</loc>
-  </url>
-  <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/dictionaryLookup.html</loc>
+    <loc>http://dnietolugilde.com/dsclim/reference/computeWindSpeed.html</loc>
   </url>
   <url>
     <loc>http://dnietolugilde.com/dsclim/reference/dot-DateSeq.html</loc>
   </url>
   <url>
+    <loc>http://dnietolugilde.com/dsclim/reference/dot-copyXYCoords.html</loc>
+  </url>
+  <url>
     <loc>http://dnietolugilde.com/dsclim/reference/dot-elementwise.all.equal.html</loc>
+  </url>
+  <url>
+    <loc>http://dnietolugilde.com/dsclim/reference/dot-recalcGridResolution.html</loc>
   </url>
   <url>
     <loc>http://dnietolugilde.com/dsclim/reference/downscaleCMIP5.html</loc>
@@ -76,10 +76,7 @@
     <loc>http://dnietolugilde.com/dsclim/reference/modifyDates.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/nc2sp_df.html</loc>
-  </url>
-  <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/recalcGridResolution.html</loc>
+    <loc>http://dnietolugilde.com/dsclim/reference/nc2spatialdf.html</loc>
   </url>
   <url>
     <loc>http://dnietolugilde.com/dsclim/reference/traceFileNames.html</loc>

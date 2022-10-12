@@ -62,19 +62,21 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">downscaleCMIP5</span><span class="op">(</span></span>
 <span>  <span class="va">uerra</span>,</span>
-<span>  <span class="va">local_var</span>,</span>
 <span>  <span class="va">rcp</span>,</span>
 <span>  <span class="va">mod</span>,</span>
 <span>  <span class="va">indir</span>,</span>
 <span>  <span class="va">outdir</span>,</span>
-<span>  var_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  var_new_list <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lonLim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11.25</span>, <span class="fl">12.5</span><span class="op">)</span>,</span>
-<span>  latLim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">45</span><span class="op">)</span>,</span>
+<span>  vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  cmip5_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lon_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11.25</span>, <span class="fl">12.5</span><span class="op">)</span>,</span>
+<span>  lat_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">45</span><span class="op">)</span>,</span>
+<span>  years <span class="op">=</span> <span class="fl">1991</span><span class="op">:</span><span class="fl">2100</span>,</span>
 <span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CMIP5_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"dsclim"</span><span class="op">)</span>,</span>
-<span>  spatial_pars <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"GLM"</span>,</span>
 <span>  family_link <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span>,</span>
+<span>  local_pars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  global_pars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  spatial_pars <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  global_nc_attributes <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -82,10 +84,6 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>uerra</dt>
-<dd><p>TBW</p></dd>
-
-
-<dt>local_var</dt>
 <dd><p>TBW</p></dd>
 
 
@@ -105,27 +103,27 @@
 <dd><p>TBW</p></dd>
 
 
-<dt>var_list</dt>
+<dt>vars</dt>
 <dd><p>TBW</p></dd>
 
 
-<dt>var_new_list</dt>
+<dt>cmip5_vars</dt>
 <dd><p>TBW</p></dd>
 
 
-<dt>lonLim</dt>
+<dt>lon_lim</dt>
 <dd><p>TBW</p></dd>
 
 
-<dt>latLim</dt>
+<dt>lat_lim</dt>
+<dd><p>TBW</p></dd>
+
+
+<dt>years</dt>
 <dd><p>TBW</p></dd>
 
 
 <dt>dictionary</dt>
-<dd><p>TBW</p></dd>
-
-
-<dt>spatial_pars</dt>
 <dd><p>TBW</p></dd>
 
 
@@ -134,6 +132,18 @@
 
 
 <dt>family_link</dt>
+<dd><p>TBW</p></dd>
+
+
+<dt>local_pars</dt>
+<dd><p>TBW</p></dd>
+
+
+<dt>global_pars</dt>
+<dd><p>TBW</p></dd>
+
+
+<dt>spatial_pars</dt>
 <dd><p>TBW</p></dd>
 
 
