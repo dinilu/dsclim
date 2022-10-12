@@ -48,13 +48,13 @@ utils::assignInNamespace("getVerticalLevelPars", getVerticalLevelPars, ns="loade
 
 
 
-#' Searches variable string in the dictionary
-#'
-#' @inherit loadeR::dictionaryLookup
-#'
-dictionaryLookup <- utils::getFromNamespace("dictionaryLookup", "loadeR")
-
-
+# #' Searches variable string in the dictionary
+# #'
+# #' @inherit loadeR::dictionaryLookup
+# #'
+# dictionaryLookup <- utils::getFromNamespace("dictionaryLookup", "loadeR")
+#
+#
 
 
 #' Title
