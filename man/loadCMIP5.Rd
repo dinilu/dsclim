@@ -10,9 +10,9 @@ loadCMIP5(
   mod,
   vars = NULL,
   cmip5_vars = NULL,
-  lon_lim = NULL,
-  lat_lim = NULL,
-  years = 1961:1990,
+  lon_lim = c(-11, 12),
+  lat_lim = c(28, 44),
+  years = 1991:2100,
   dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim")
 )
 }
@@ -43,13 +43,11 @@ Load CMIP5 data into climate4R grid format
 }
 \examples{
 \dontrun{
-dsclim::loadCMIP5("tas",
-                 "tas",
-                 "data/",
+dsclim::loadCMIP5("../../Data/CMIP5/",
                  "rcp2.6",
                  "CESM1-CAM5",
-                 c(-11.25, 12.50),
-                 c(27, 45),
-                 2006:2100)
+                 lon_lim = c(-11, 12),
+                 lat_lim = c(28, 44),
+                 years = 2006:2100)
 }
 }

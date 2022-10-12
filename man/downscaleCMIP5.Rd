@@ -5,15 +5,15 @@
 \title{Downscale CMIP5 grid data}
 \usage{
 downscaleCMIP5(
-  uerra,
   rcp,
   mod,
   indir,
+  uerra,
   outdir,
   vars = NULL,
   cmip5_vars = NULL,
-  lon_lim = c(-11.25, 12.5),
-  lat_lim = c(27, 45),
+  lon_lim = c(-11, 12),
+  lat_lim = c(28, 44),
   years = 1991:2100,
   dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"),
   method = "GLM",
@@ -25,13 +25,13 @@ downscaleCMIP5(
 )
 }
 \arguments{
-\item{uerra}{TBW}
-
 \item{rcp}{TBW}
 
 \item{mod}{TBW}
 
 \item{indir}{TBW}
+
+\item{uerra}{TBW}
 
 \item{outdir}{TBW}
 
