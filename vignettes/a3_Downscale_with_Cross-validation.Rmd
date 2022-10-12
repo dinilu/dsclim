@@ -374,7 +374,7 @@ ggplot(test, aes(x=L2, y=value)) +
 
 ### Error or bias histograms
 
-```{r plot_residual_hist}
+```{r plot_residual_hist, out.width=500}
 library(transformeR)
 par(mfrow=c(3,3))
 hist(scaleGrid(GLM.1.sp, uerra.data)$Data)
@@ -386,5 +386,6 @@ hist(scaleGrid(GLM.31, uerra.data)$Data)
 hist(scaleGrid(GLM.34, uerra.data)$Data)
 ```
 
-![Bias summary histograms](figures/a3/a3_val_summary_histograms.png)
+![Bias summary histograms](figures/a3/a3_val_summary_histograms.png){height=500 width=500} 
+
 
