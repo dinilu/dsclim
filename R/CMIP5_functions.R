@@ -133,7 +133,7 @@ downscaleCMIP5 <- function(uerra, rcp, mod, indir, outdir, vars = NULL, cmip5_va
     model <- downscaleR::downscaleTrain(data, method = method, family = family_link, predict = TRUE)
   }
 
-  if( years[ 1 ] <= 2005 && years[ length(years) ] > 2005) {
+  if( years[1] <= 2005 && years[length(years)] > 2005) {
     rcp_cmip5_1 <- loadCMIP5(indir = indir, rcp = "historical", mod = mod, vars = vars, cmip5_vars = cmip5_vars, lon_lim = lon_lim, lat_lim = lat_lim, years = years[1]:2005, dictionary = dictionary)
     rcp_cmip5_2 <- loadCMIP5(indir = indir, rcp = rcp, mod = mod, vars = vars, cmip5_vars = cmip5_vars, lon_lim = lon_lim, lat_lim = lat_lim, years = 2006:years[ length(years) ], dictionary = dictionary)
 

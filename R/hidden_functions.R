@@ -1,5 +1,3 @@
-
-
 #' Title
 #'
 #' @param x TBW
@@ -11,6 +9,7 @@
 #'
 # .elementwise.all.equal <- function(x, y){Vectorize(function(x, y) {isTRUE(all.equal(x, y))})} #Modified for documenting
 .elementwise.all.equal <- Vectorize(function(x, y) {isTRUE(all.equal(x, y))}) #Working version
+
 
 
 #' Title
@@ -54,6 +53,7 @@
   }
   return(x)
 }
+
 
 
 #' Title

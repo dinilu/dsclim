@@ -218,7 +218,7 @@ loadTrace <- function(files, vars = NULL, lon_lim = c(-25, 25), lat_lim = c(25, 
   names(data) <- vars
 
   if(compute_wss == TRUE){
-    data$wss <- compute_wind_speed(data$'u@992.5561', data$'v@992.5561')
+    data$wss <- computeWindSpeed(data$'u@992.5561', data$'v@992.5561')
   }
 
   data <- transformeR::makeMultiGrid(data)

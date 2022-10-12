@@ -20,15 +20,9 @@ reference:
 - title: "Other functions"
   desc: "Several functions for modifying climate data object and or helpers to other functions."
   contents:
-  - compute_wind_speed
-  - copyXYCoords
-  - dictionaryLookup
-  - .DateSeq
-  - .elementwise.all.equal
-  - getVerticalLevelPars
+  - computeWindSpeed
   - modifyDates
-  - nc2sp_df
-  - recalcGridResolution
+  - nc2spatialdf
   - traceFileNames
 
 articles:

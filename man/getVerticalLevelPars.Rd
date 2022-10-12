@@ -7,7 +7,9 @@
 getVerticalLevelPars(grid, level)
 }
 \arguments{
-\item{level}{Vertical level. Passed by \code{loadGridDataset}, obtained via \code{findVerticalLevel}}
+\item{grid}{A grid object as returned from loadGridData.}
+
+\item{level}{Vertical level. Passed by loadGridDataset, obtained via findVerticalLevel}
 }
 \value{
 A list with the level value and either a java Range or a java null reference

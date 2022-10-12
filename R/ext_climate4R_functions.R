@@ -1,6 +1,10 @@
 #' Definition of vertical dimension slices
 #'
-#' @inherit loadeR::getVerticalLevelPars
+#' @inherit loadeR::getVerticalLevelPars title description details return   author
+#'
+#' @param grid A grid object as returned from loadGridData.
+#' @param level Vertical level. Passed by loadGridDataset, obtained via findVerticalLevel
+#'
 #'
 getVerticalLevelPars <- function (grid, level) {
   gcs <- grid$getCoordinateSystem()
@@ -9,8 +13,7 @@ getVerticalLevelPars <- function (grid, level) {
     if (is.null(level)) {
       if (length(levels) == 1) {
         level <- levels
-        if (gcs$getVerticalAxis()$findCoordElement(level) <
-            0) {
+        if (gcs$getVerticalAxis()$findCoordElement(level) < 0) {
           levelInd <- gcs$getVerticalAxis()$findCoordElement(0)
         }
       } else {
@@ -65,6 +68,7 @@ dictionaryLookup <- utils::getFromNamespace("dictionaryLookup", "loadeR")
 #' @export
 #'
 #' @examples #TBW
+#'
 modifyDates <- function(x, start_date="1961-01-01", end_date="1990-12-31") {
   x$Dates$start <- paste(.DateSeq(start_date, end_date, 12, 0), "00:00:00 GMT", sep = " ")
   x$Dates$end <- paste(.DateSeq(start_date, end_date, 12, 1), "00:00:00 GMT", sep = " ")
@@ -103,7 +107,8 @@ nc2spatialdf <- function(grid){
 #' @export
 #'
 #' @examples #TBW
-compute_wind_speed <- function(u, v) {
+#'
+computeWindSpeed <- function(u, v) {
   message("[", Sys.time(), "] Computing wind speed (wss) from its horizontal (u) and vertical (v) components")
   u <- transformeR::gridArithmetics(u, u, operator="*")
   v <- transformeR::gridArithmetics(v, v, operator="*")
