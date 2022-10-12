@@ -19,16 +19,14 @@
 #'
 #' @examples
 #' \dontrun{
-#' dsclim::loadCMIP5("tas",
-#'                  "tas",
-#'                  "data/",
+#' dsclim::loadCMIP5("../../Data/CMIP5/",
 #'                  "rcp2.6",
 #'                  "CESM1-CAM5",
-#'                  c(-11.25, 12.50),
-#'                  c(27, 45),
-#'                  2006:2100)
+#'                  lon_lim = c(-11, 12),
+#'                  lat_lim = c(28, 44),
+#'                  years = 2006:2100)
 #' }
-loadCMIP5 <- function(indir, rcp, mod, vars = NULL, cmip5_vars = NULL, lon_lim = NULL, lat_lim = NULL, years = 1961:1990, dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim")){
+loadCMIP5 <- function(indir, rcp, mod, vars = NULL, cmip5_vars = NULL, lon_lim = c(-11, 12), lat_lim = c(28, 44), years = 1991:2100, dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim")){
 
   if(is.null(cmip5_vars)){cmip5_vars <- cmip5.vars}
 
@@ -66,10 +64,10 @@ loadCMIP5 <- function(indir, rcp, mod, vars = NULL, cmip5_vars = NULL, lon_lim =
 
 #' Downscale CMIP5 grid data
 #'
-#' @param uerra TBW
 #' @param rcp TBW
 #' @param mod TBW
 #' @param indir TBW
+#' @param uerra TBW
 #' @param outdir TBW
 #' @param vars TBW
 #' @param cmip5_vars TBW
@@ -89,7 +87,7 @@ loadCMIP5 <- function(indir, rcp, mod, vars = NULL, cmip5_vars = NULL, lon_lim =
 #' @export
 #'
 #' @examples #TBW
-downscaleCMIP5 <- function(uerra, rcp, mod, indir, outdir, vars = NULL, cmip5_vars = NULL, lon_lim = c(-11.25, 12.50), lat_lim = c(27, 45), years = 1991:2100, dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"), method = "GLM", family_link = stats::gaussian(link = "identity"), local_pars = NULL, global_pars = NULL, spatial_pars = NULL, global_nc_attributes = NULL){
+downscaleCMIP5 <- function(rcp, mod, indir, uerra, outdir, vars = NULL, cmip5_vars = NULL, lon_lim = c(-11, 12), lat_lim = c(28, 44), years = 1991:2100, dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"), method = "GLM", family_link = stats::gaussian(link = "identity"), local_pars = NULL, global_pars = NULL, spatial_pars = NULL, global_nc_attributes = NULL){
 
   # uerra <- uerra
   # rcp <- "rcp6.0"
@@ -107,7 +105,7 @@ downscaleCMIP5 <- function(uerra, rcp, mod, indir, outdir, vars = NULL, cmip5_va
   # spatial_pars = cmip5.spatial.pars
   # global_nc_attributes <- global.nc.attributes
 
-  y.var <- uerra$y$Variable$varName
+  y.var <- uerra$Variable$varName
 
   if(!dir.exists(paste0(outdir, rcp, "/", mod, "/", y.var, "/dat"))){
     dir.create(paste0(outdir, rcp, "/", mod, "/", y.var, "/dat"), recursive = TRUE)
@@ -118,48 +116,62 @@ downscaleCMIP5 <- function(uerra, rcp, mod, indir, outdir, vars = NULL, cmip5_va
 
   uerra_years <- sort(unique(lubridate::year(uerra$Dates$start)))
 
-  hist_cmip5 <- loadCMIP5(indir = indir, rcp = "historical", mod = mod, vars = vars, cmip5_vars = cmip5_vars, lon_lim = lon_lim, lat_lim = lat_lim, years=uerra_years, dictionary = dictionary)
+  message("LOADING HISTORICAL CMIP5 DATA...")
+  hist_cmip5 <- loadCMIP5(indir = indir, rcp = "historical", mod = mod, vars = vars, cmip5_vars = cmip5_vars, lon_lim = lon_lim, lat_lim = lat_lim, years = uerra_years, dictionary = dictionary)
 
-  if(y.var == "pr"){
-    uerra_bin <- transformeR::binaryGrid(uerra, condition = "GE", threshold = 1)
 
-    data_bin <- downscaleR::prepareData(hist_cmip5, uerra_bin, spatial.predictors = spatial_pars, local.predictors = local_pars, global.predictors = global_pars)
-    data <- downscaleR::prepareData(hist_cmip5, uerra, spatial.predictors = spatial_pars, local.predictors = local_pars, global.predictors = global_pars)
-
-    model_bin <- downscaleR::downscaleTrain(data_bin, method = method, family = stats::binomial(link="logit"), predict = TRUE)
-    model <- downscaleR::downscaleTrain(data, method = method, family = family_link, predict = TRUE, condition = "GE", threshold = 1)
-  } else {
-    data <- downscaleR::prepareData(hist_cmip5, uerra, spatial.predictors = spatial_pars, local.predictors = local_pars, global.predictors = global_pars)
-    model <- downscaleR::downscaleTrain(data, method = method, family = family_link, predict = TRUE)
-  }
-
-  if( years[1] <= 2005 && years[length(years)] > 2005) {
+  message("LOADING FUTURE CMIP5 DATA...")
+  if(years[1] <= 2005 && years[length(years)] > 2005) {
     rcp_cmip5_1 <- loadCMIP5(indir = indir, rcp = "historical", mod = mod, vars = vars, cmip5_vars = cmip5_vars, lon_lim = lon_lim, lat_lim = lat_lim, years = years[1]:2005, dictionary = dictionary)
     rcp_cmip5_2 <- loadCMIP5(indir = indir, rcp = rcp, mod = mod, vars = vars, cmip5_vars = cmip5_vars, lon_lim = lon_lim, lat_lim = lat_lim, years = 2006:years[ length(years) ], dictionary = dictionary)
 
     rcp_cmip5 <- transformeR::bindGrid(rcp_cmip5_1, rcp_cmip5_2, dimension = "time")
-  } else {
+  }
+  if(years[1] <= 2005 && years[length(years)] <= 2005){
+    rcp_cmip5 <- loadCMIP5(indir = indir, rcp = "historical", mod = mod, vars = vars, cmip5_vars = cmip5_vars, lon_lim = lon_lim, lat_lim = lat_lim, years = years, dictionary = dictionary)
+  }
+  if(years[1] > 2005 && years[length(years)] > 2005){
     rcp_cmip5 <- loadCMIP5(indir = indir, rcp = rcp, mod = mod, vars = vars, cmip5_vars = cmip5_vars, lon_lim = lon_lim, lat_lim = lat_lim, years = years, dictionary = dictionary)
   }
 
-  new_data <- downscaleR::prepareNewData(rcp_cmip5, data)
+  if(y.var == "pr"){
+    uerra_bin <- transformeR::binaryGrid(uerra, condition = "GE", threshold = 1)
 
-  if( y.var == "pr"){
+    data_bin <- downscaleR::prepareData(hist_cmip5, uerra_bin, spatial.predictors = spatial_pars, local.predictors = local_pars, global.vars = global_pars)
+    data <- downscaleR::prepareData(hist_cmip5, uerra, spatial.predictors = spatial_pars, local.predictors = local_pars, global.vars = global_pars)
+
+    model_bin <- downscaleR::downscaleTrain(data_bin, method = method, family = stats::binomial(link="logit"), predict = TRUE)
+    model <- downscaleR::downscaleTrain(data, method = method, family = family_link, predict = TRUE, condition = "GE", threshold = 1)
+
+    new_data <- downscaleR::prepareNewData(rcp_cmip5, data)
+
+    message("DOWNSCALING CMIP5 DATA...")
     pred_bin <- downscaleR::downscalePredict(new_data, model_bin)
     pred_cont <- downscaleR::downscalePredict(new_data, model)
     pred <- transformeR::gridArithmetics(pred_bin, pred_cont, operator = "*")
+
   } else {
+    data <- downscaleR::prepareData(hist_cmip5, uerra, spatial.predictors = spatial_pars, local.predictors = local_pars, global.vars = global_pars)
+    model <- downscaleR::downscaleTrain(data, method = method, family = family_link, predict = TRUE)
+
+    new_data <- downscaleR::prepareNewData(rcp_cmip5, data)
+
+    message("DOWNSCALING CMIP5 DATA...")
     pred <- downscaleR::downscalePredict(new_data, model)
+
   }
 
   pred$Data <- round(pred$Data, 2)
 
-  loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, rcp, "/", mod, "/", y.var, "/", y.var, "1991-2100.nc"), missval = -9999, globalAttributes = global_nc_attributes)
+  # loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, rcp, "/", mod, "/", y.var, "/", y.var, "1991-2100.nc"), missval = -9999, globalAttributes = global_nc_attributes)
 
-  for(i in 1:110){
-    y <- c(1991:2100)[i]
-    yBP <- c(41:151)[i]
-    pred_i <- transformeR::subsetGrid(pred, years=y)
+  for(i in 1:length(years)){
+    message("SAVING YEAR: ", years[i])
+    y <- years[i]
+    yBP <- (years - 1950)[i]
+    pred_i <- transformeR::subsetGrid(pred, years = y)
+
+    loadeR.2nc::grid2nc(pred_i, NetCDFOutFile = paste0(outdir, rcp, "/", mod, "/", y.var, "/", y.var, yBP, ".nc"), missval = -9999, globalAttributes = global_nc_attributes)
 
     pred_df <- nc2spatialdf(pred_i)
 
