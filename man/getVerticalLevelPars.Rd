@@ -2,25 +2,24 @@
 % Please edit documentation in R/ext_climate4R_functions.R
 \name{getVerticalLevelPars}
 \alias{getVerticalLevelPars}
-\title{Get vertical levels in a grid.}
+\title{Definition of vertical dimension slices}
 \usage{
 getVerticalLevelPars(grid, level)
 }
 \arguments{
-\item{grid}{Grid object (see loadeR package) from which to get the levels}
-
-\item{level}{Level to be found within the levels in the grid object}
+\item{level}{Vertical level. Passed by \code{loadGridDataset}, obtained via \code{findVerticalLevel}}
 }
 \value{
-List object with two vectors inside:
-\itemize{
-\item level: the level searched.
-\item zRange: the position for the level.
-}
+A list with the level value and either a java Range or a java null reference
+defining the index of the vertical axis (null if no vertical levels exist)
 }
 \description{
-Get vertical levels in a grid.
+Returns the selected level value (if any) and a suitable java structure. This is a subroutine
+of \code{loadGridDataset}, whose output is passed to \code{makeSubset}.
 }
-\examples{
-# TBW
+\details{
+The function opens the grid and checks all possible level values.
+}
+\author{
+J. Bedia
 }

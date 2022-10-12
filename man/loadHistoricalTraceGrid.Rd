@@ -7,8 +7,8 @@
 loadHistoricalTraceGrid(
   file,
   var = NULL,
-  lonLim = c(-25, 25),
-  latLim = c(25, 50),
+  lon_lim = c(-25, 25),
+  lat_lim = c(25, 50),
   years = NULL,
   dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")
 )
@@ -18,9 +18,9 @@ loadHistoricalTraceGrid(
 
 \item{var}{String indicating the name of the variable that should be loaded.}
 
-\item{lonLim}{Vector with two integers, indicating the longitudinal extent of the desired study area.}
+\item{lon_lim}{Vector with two integers, indicating the longitudinal extent of the desired study area.}
 
-\item{latLim}{Vector with two integers, indicating the latitudinal extent of the desired study area.}
+\item{lat_lim}{Vector with two integers, indicating the latitudinal extent of the desired study area.}
 
 \item{years}{Integer vector indicating the years that should be loaded.}
 

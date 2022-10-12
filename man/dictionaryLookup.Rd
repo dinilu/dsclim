@@ -2,23 +2,28 @@
 % Please edit documentation in R/ext_climate4R_functions.R
 \name{dictionaryLookup}
 \alias{dictionaryLookup}
-\title{TBW}
+\title{Searches variable string in the dictionary}
 \usage{
 dictionaryLookup(dicPath, var, time)
 }
 \arguments{
-\item{dicPath}{TBW}
+\item{dicPath}{Full path to the dictionary file (a csv file with extension \sQuote{.dic}).}
 
-\item{var}{TBW}
+\item{var}{Character string with the (standard) name of the variable}
 
-\item{time}{TBW}
+\item{time}{Time specification.}
 }
 \value{
-TBW
+A data.frame of 1 row with the mapping information
 }
 \description{
-TBW
+Searches variable string provided in the dictionary to map it in the vocabulary, in order to get
+all the necessary information for variable homogenization. It also includes a new column specifying the
+aggregation function to be applied (if any).
 }
-\examples{
-# TBW
+\references{
+\url{http://meteo.unican.es/trac/wiki/udg/ecoms/RPackage/homogeneization}
+}
+\author{
+J. Bedia, S. Herrera
 }

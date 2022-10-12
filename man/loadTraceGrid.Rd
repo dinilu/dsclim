@@ -7,8 +7,8 @@
 loadTraceGrid(
   file,
   var,
-  lonLim = c(-25, 25),
-  latLim = c(25, 50),
+  lon_lim = c(-25, 25),
+  lat_lim = c(25, 50),
   dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")
 )
 }
@@ -17,9 +17,9 @@ loadTraceGrid(
 
 \item{var}{TBW}
 
-\item{lonLim}{TBW}
+\item{lon_lim}{TBW}
 
-\item{latLim}{TBW}
+\item{lat_lim}{TBW}
 
 \item{dictionary}{TBW}
 }
@@ -32,5 +32,5 @@ Title
 \examples{
 # tas <- loadTraceGrid(
 #            "Data/TraCE21ka/TS/trace.01.22000-20001BP.cam2.h0.TS.0000101-0200012.nc",
-#            "tas", 1, lonLim = NULL, latLim=NULL)
+#            "tas", 1, lon_lim = NULL, lat_lim=NULL)
 }

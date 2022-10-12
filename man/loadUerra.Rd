@@ -7,11 +7,11 @@
 loadUerra(
   file,
   var,
-  lonLim = c(-11, 12),
-  latLim = c(28, 44),
+  lon_lim = c(-11, 12),
+  lat_lim = c(28, 44),
   dictionary = system.file("extdata", "UERRA_dictionary.csv", package = "dsclim"),
-  aggr.times = NULL,
-  aggr.fun = mean
+  aggr_times = NULL,
+  aggr_fun = mean
 )
 }
 \arguments{
@@ -19,15 +19,15 @@ loadUerra(
 
 \item{var}{A string with the variable name from the file to be loaded.}
 
-\item{lonLim}{An optional vector with two values specifying the longitudinal limits (min and max) to be loaded.}
+\item{lon_lim}{An optional vector with two values specifying the longitudinal limits (min and max) to be loaded.}
 
-\item{latLim}{An optional vector with two values specifying the latitudinal limits (min and max) to be loaded.}
+\item{lat_lim}{An optional vector with two values specifying the latitudinal limits (min and max) to be loaded.}
 
 \item{dictionary}{An optional string with the filename with the dictionary for the UERRA data. By default it loads an internal dictionary from the package.}
 
-\item{aggr.times}{An optional numeric specifying the number of cells to be aggregated.}
+\item{aggr_times}{An optional numeric specifying the number of cells to be aggregated.}
 
-\item{aggr.fun}{An optional function specifying the function to be used in aggregation if aggr.times was specified.}
+\item{aggr_fun}{An optional function specifying the function to be used in aggregation if aggr.times was specified.}
 }
 \value{
 TBW
@@ -36,7 +36,7 @@ TBW
 Load UERRA data into climate4R grid format
 }
 \examples{
-# uerra.file <- "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"
-# local.var <- "tas"
+# file <- "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"
+# var <- "tas"
 # uerra = loadUerra(uerra.file, local.var)
 }

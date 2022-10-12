@@ -6,26 +6,26 @@
 \usage{
 downscaleCMIP5(
   uerra,
-  local_var,
   rcp,
   mod,
   indir,
   outdir,
-  var_list = NULL,
-  var_new_list = NULL,
-  lonLim = c(-11.25, 12.5),
-  latLim = c(27, 45),
+  vars = NULL,
+  cmip5_vars = NULL,
+  lon_lim = c(-11.25, 12.5),
+  lat_lim = c(27, 45),
+  years = 1991:2100,
   dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"),
-  spatial_pars = NULL,
   method = "GLM",
   family_link = stats::gaussian(link = "identity"),
+  local_pars = NULL,
+  global_pars = NULL,
+  spatial_pars = NULL,
   global_nc_attributes = NULL
 )
 }
 \arguments{
 \item{uerra}{TBW}
-
-\item{local_var}{TBW}
 
 \item{rcp}{TBW}
 
@@ -35,21 +35,27 @@ downscaleCMIP5(
 
 \item{outdir}{TBW}
 
-\item{var_list}{TBW}
+\item{vars}{TBW}
 
-\item{var_new_list}{TBW}
+\item{cmip5_vars}{TBW}
 
-\item{lonLim}{TBW}
+\item{lon_lim}{TBW}
 
-\item{latLim}{TBW}
+\item{lat_lim}{TBW}
+
+\item{years}{TBW}
 
 \item{dictionary}{TBW}
-
-\item{spatial_pars}{TBW}
 
 \item{method}{TBW}
 
 \item{family_link}{TBW}
+
+\item{local_pars}{TBW}
+
+\item{global_pars}{TBW}
+
+\item{spatial_pars}{TBW}
 
 \item{global_nc_attributes}{TBW}
 }

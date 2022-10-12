@@ -21,6 +21,4 @@ TBW
 \description{
 Title
 }
-\examples{
-# TBW
-}
+\keyword{internal}

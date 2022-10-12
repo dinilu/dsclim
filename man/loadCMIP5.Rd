@@ -8,10 +8,10 @@ loadCMIP5(
   indir,
   rcp,
   mod,
-  var_list = NULL,
-  var_new_list = NULL,
-  lonLim = NULL,
-  latLim = NULL,
+  vars = NULL,
+  cmip5_vars = NULL,
+  lon_lim = NULL,
+  lat_lim = NULL,
   years = 1961:1990,
   dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim")
 )
@@ -23,13 +23,13 @@ loadCMIP5(
 
 \item{mod}{A character vector with the name of the GCM that is going to be loaded.}
 
-\item{var_list}{A character vector with names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).}
+\item{vars}{A character vector with names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).}
 
-\item{var_new_list}{A character vector with names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).}
+\item{cmip5_vars}{A character vector with names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).}
 
-\item{lonLim}{A numeric vector (length = 2) with the longitudinal extent that is going to be loaded.}
+\item{lon_lim}{A numeric vector (length = 2) with the longitudinal extent that is going to be loaded.}
 
-\item{latLim}{A numeric vector (length = 2) with the latitudinal extent that is going to be loaded.}
+\item{lat_lim}{A numeric vector (length = 2) with the latitudinal extent that is going to be loaded.}
 
 \item{years}{A numeric vector with the sequence of years that are going to be loaded.}
 

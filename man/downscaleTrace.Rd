@@ -12,8 +12,8 @@ downscaleTrace(
   model,
   model_bin = NULL,
   vars = NULL,
-  lonLim = c(-25, 25),
-  latLim = c(25, 50),
+  lon_lim = c(-25, 25),
+  lat_lim = c(25, 50),
   selection_vars = NULL,
   global_nc_attributes = NULL
 )
@@ -33,9 +33,9 @@ downscaleTrace(
 
 \item{vars}{TBW}
 
-\item{lonLim}{TBW}
+\item{lon_lim}{TBW}
 
-\item{latLim}{TBW}
+\item{lat_lim}{TBW}
 
 \item{selection_vars}{TBW}
 

@@ -1,18 +1,7 @@
-#' Get vertical levels in a grid.
+#' Definition of vertical dimension slices
 #'
-#' @param grid Grid object (see loadeR package) from which to get the levels
-#' @param level Level to be found within the levels in the grid object
+#' @inherit loadeR::getVerticalLevelPars
 #'
-#' @return List object with two vectors inside:
-#' * level: the level searched.
-#' * zRange: the position for the level.
-#'
-#' @import loadeR
-#'
-#' @export
-#'
-#' @examples
-#' # TBW
 getVerticalLevelPars <- function (grid, level) {
   gcs <- grid$getCoordinateSystem()
   if (gcs$hasVerticalAxis()) {
@@ -46,48 +35,23 @@ getVerticalLevelPars <- function (grid, level) {
   return(list(level = level, zRange = zRange))
 }
 
+utils::assignInNamespace("getVerticalLevelPars", getVerticalLevelPars, ns="loadeR")
+
+
+
 # overwriteGetVerticalLevelPars <- function(){
 #   utils::assignInNamespace("getVerticalLevelPars", getVerticalLevelPars, ns="loadeR")
 # }
 
-#' TBW
+
+
+#' Searches variable string in the dictionary
 #'
-#' @param dicPath TBW
-#' @param var TBW
-#' @param time TBW
+#' @inherit loadeR::dictionaryLookup
 #'
-#' @return TBW
-#'
-#' @import utils
-#'
-#' @examples
-#' # TBW
 dictionaryLookup <- utils::getFromNamespace("dictionaryLookup", "loadeR")
 
 
-
-#' Copy coordinates info from one grid to another
-#'
-#' @param x A grid object (see loadeR package) to be modified.
-#' @param y A grid object from which to extract the coordinates info.
-#'
-#' @return The x grid object with the coordinates info from the y grid object.
-#'
-#' @export
-#'
-#' @examples #TBW
-copyXYCoords <- function(x, y){
-  if(!exists("xyCoords", where = y) && !exists("xyCoords", where = attributes(y))){
-    stop("y object do not have xy coordinates. Please provide a `y` object with spatial info. See loadTrace, loadCMIP5, or loadUerra for more info.")
-  }
-  if(exists("xyCoords", where = y)){
-    x$xyCoords <- y$xyCoords
-  }
-  if(exists("xyCoords", where = attributes(y))){
-    x$xyCoords <- attributes(y)$xyCoords
-  }
-  return(x)
-}
 
 
 #' Title
@@ -118,29 +82,12 @@ modifyDates <- function(x, start_date="1961-01-01", end_date="1990-12-31") {
 #' @export
 #'
 #' @examples #TBW
-recalcGridResolution <- function(grid){
-  attr(grid$xyCoords, "resX") <- (max(grid$xyCoords$x) - min(grid$xyCoords$x)) / (length(grid$xyCoords$x) - 1)
-  attr(grid$xyCoords, "resY") <- (max(grid$xyCoords$y) - min(grid$xyCoords$y)) / (length(grid$xyCoords$y) - 1)
-  return(grid)
-}
-
-
-#' Title
-#'
-#' @param grid TBW
-#' @param output.dir TBW
-#'
-#' @return TBW
-#'
-#' @export
-#'
-#' @examples #TBW
-nc2sp_df <- function(grid, output.dir){
+nc2spatialdf <- function(grid){
   sp <- transformeR::grid2sp(grid)
   df <- as.data.frame(sp)
   df <- df[,c(13,14,1:12)]
   colnames(df) <- c("x", "y", 1:12)
-  df
+  return(df)
 }
 
 

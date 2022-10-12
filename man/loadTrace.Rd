@@ -7,8 +7,8 @@
 loadTrace(
   files,
   vars = NULL,
-  lonLim = c(-25, 25),
-  latLim = c(25, 50),
+  lon_lim = c(-25, 25),
+  lat_lim = c(25, 50),
   years = NULL,
   compute_wss = TRUE,
   selection_vars = c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps", "pr", "cld",
@@ -21,9 +21,9 @@ loadTrace(
 
 \item{vars}{TBW}
 
-\item{lonLim}{TBW}
+\item{lon_lim}{TBW}
 
-\item{latLim}{TBW}
+\item{lat_lim}{TBW}
 
 \item{years}{TBW}
 
