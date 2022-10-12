@@ -97,7 +97,7 @@ loadTraceGrid <- function(file, var, lon_lim = c(-25, 25), lat_lim = c(25, 50), 
 
   var <- loadeR::findVerticalLevel(var)
 
-  dic <- loadeR:::dictionaryLookup(dictionary, var$var, "none")
+  dic <- dictionaryLookup(dictionary, var$var, "none")
   vocabulary <- climate4R.UDG::C4R.vocabulary()
 
   trace.nc <- ncdf4::nc_open(file)
