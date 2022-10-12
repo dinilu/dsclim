@@ -24,8 +24,6 @@ library(downscaleR)
 vars <- c("tas", "tasmin", "tasmax", "hurs@992.5561", "ps",
           "pr", "cld", "wss")
 
-local.pars <- list(vars = "pr", n = 1)
-
 spatial.pars <- list(which.combine = vars,
                         v.exp = .95,
                         rot = FALSE)
@@ -43,7 +41,7 @@ uerra <- loadUerra("../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-9
 ```
 
 ```{r prepare_data}
-data <- downscaleR::prepareData(hist.trace, uerra, local.predictors = local.pars, spatial.predictors = spatial.pars)
+data <- downscaleR::prepareData(hist.trace, uerra, spatial.predictors = spatial.pars)
 ```
 
 ```{r calibrate_model}
@@ -51,31 +49,31 @@ model <- downscaleR::downscaleTrain(data, method = "GLM", family = family.link, 
 ```
 
 ```{r downscale_single_trace_file}
-downscaleTrace(35 , "../../Data/TraCE21ka/", "output/", mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
+downscaleTrace(4 , "../../Data/TraCE21ka/", "prueba/TraCE21ka/", mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
 ```
 
 ```{r downscale_all_trace_files} 
 lapply(1:36, downscaleTrace, "prueba/", "../../Data/TraCE21ka/", hist_trace = hist.trace, mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
 ```
 
-```{r downscale_cmip5_files}
+```{r define_cmip5_arguments}
 cmip5.rcps <- c("rcp2.6", "rcp4.5", "rcp6.0", "rcp8.5")
 cmip5.mods <- c("CESM1-CAM5", "CSIRO-Mk3-6-0", "IPSL-CM5A-MR")
 vars <- c("tas", "tasmax", "tasmin", "hurs", "ps", "pr", "cld", "wss")
 
 spatial.pars <- list(which.combine = vars,
-                     v.exp = .7,
+                     v.exp = .95,
                      rot = FALSE)
+```
 
-dowscaleCMIP5(uerra, cmip5.rcps[[1]], cmip5.mods[[1]], indir = "../../Data/CMIP5/", outdir = "prueba/CMIP5/", method = "GLM", family_link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes)
+```{r downscale_single_rcp_mod_cmip5} 
+downscaleCMIP5(cmip5.rcps[[1]], cmip5.mods[[1]], indir = "../../Data/CMIP5/", uerra, outdir = "prueba/CMIP5/", method = "GLM", family_link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes)
+```
 
-new.cmip5.pred = target(
-  downscaleCMIP5(uerra, cmip5.vars, cmip5.new.vars, rcp = rcp, mod = mod, cmip5.lon, cmip5.lat, "../../Data/CMIP5/dictionary.dic", "../../Data/CMIP5/", "../../Output/CMIP5/", local.var = "tasmin", spatial.pars = , method = "GLM", family.link, global.nc.attributes),
-  transform = cross(
-    rcp = !!cmip5.rcps,
-    mod = !!cmip5.mods
-  )
-)
+```{r downscale_all_rcp_mod_cmip5} 
+
+df <- expand.grid(cmip5.rcps, cmip5.mods)
+mapply(downscaleCMIP5, df[,1], df[,2], MoreArgs = list(indir = "../../Data/CMIP5/", uerra = uerra, outdir = "prueba/CMIP5/", method = "GLM", family.link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes))
 ```
 
 <!-- ![Bias summary histograms](figures/a3/a3_val_summary_histograms.png) -->
