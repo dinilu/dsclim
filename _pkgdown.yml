@@ -21,6 +21,7 @@ reference:
   desc: "Several functions for modifying climate data object and or helpers to other functions."
   contents:
   - computeWindSpeed
+  - getVerticalLevelsPars
   - modifyDates
   - nc2spatialdf
   - traceFileNames
