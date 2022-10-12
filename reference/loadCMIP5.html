@@ -66,9 +66,9 @@
 <span>  <span class="va">mod</span>,</span>
 <span>  vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cmip5_vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lon_lim <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  lat_lim <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  years <span class="op">=</span> <span class="fl">1961</span><span class="op">:</span><span class="fl">1990</span>,</span>
+<span>  lon_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span>,</span>
+<span>  lat_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span>,</span>
+<span>  years <span class="op">=</span> <span class="fl">1991</span><span class="op">:</span><span class="fl">2100</span>,</span>
 <span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CMIP5_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"dsclim"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -121,14 +121,12 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">dsclim</span><span class="fu">::</span><span class="fu">loadCMIP5</span><span class="op">(</span><span class="st">"tas"</span>,</span></span>
-<span class="r-in"><span>                 <span class="st">"tas"</span>,</span></span>
-<span class="r-in"><span>                 <span class="st">"data/"</span>,</span></span>
+<span class="r-in"><span><span class="fu">dsclim</span><span class="fu">::</span><span class="fu">loadCMIP5</span><span class="op">(</span><span class="st">"../../Data/CMIP5/"</span>,</span></span>
 <span class="r-in"><span>                 <span class="st">"rcp2.6"</span>,</span></span>
 <span class="r-in"><span>                 <span class="st">"CESM1-CAM5"</span>,</span></span>
-<span class="r-in"><span>                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11.25</span>, <span class="fl">12.50</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">45</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 <span class="fl">2006</span><span class="op">:</span><span class="fl">2100</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                 lon_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 lat_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                 years <span class="op">=</span> <span class="fl">2006</span><span class="op">:</span><span class="fl">2100</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
