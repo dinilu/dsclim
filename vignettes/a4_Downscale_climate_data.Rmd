@@ -10,14 +10,15 @@ vignette: >
 
 ```{r global_options, include=FALSE}
 library(knitr)
-opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE, eval = FALSE)
+opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, eval = FALSE)
 ```
 
-This file is to document the downscaling process of Trace-21ka paleoclimate data using the most updated and finer resolution "historical" climate data for the Western Mediterranean region and the methods and tools implemented in the `climate4R` framework.
+This file is to document the downscaling process of TraCE21ka paleoclimate and CMIP5 future climate simulations data using the most updated and finer resolution "historical" climate data for the Western Mediterranean region and the methods and tools implemented in the `climate4R` framework.
 
-## Downscaling
+## Defining common parameters 
 
 ### Defining variables and folds for crossvalidation
+
 ```{r load_packages_and_parameters`}
 library(dsclim)
 library(downscaleR)
@@ -33,47 +34,67 @@ family.link <- gaussian(link="identity")
 global.nc.attributes = list("author" = "Diego Nieto Lugilde & Daniel Romera Romera", "institution" = "Universidad de Cordoba", "email" = "bv2nilud@uco.es")
 ```
 
-```{r load_data}
-trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
-hist.trace <- loadTrace(trace.file.names, years = 1961:1990)
+### Loading UERRA data
 
+```{r load_uerra_data} 
 uerra <- loadUerra("../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc", "tas")
 ```
+
+## Downscale TraCE21ka data
+
+### Loading TraCE21ka data
+
+```{r load_trace_data}
+trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
+hist.trace <- loadTrace(trace.file.names, years = 1961:1990)
+```
+
+### Prepare data for downscaling 
 
 ```{r prepare_data}
 data <- downscaleR::prepareData(hist.trace, uerra, spatial.predictors = spatial.pars)
 ```
 
+### Train downscaling model
+
 ```{r calibrate_model}
 model <- downscaleR::downscaleTrain(data, method = "GLM", family = family.link, predict = TRUE)
 ```
+
+### Downscale a single TraCE21ka file
 
 ```{r downscale_single_trace_file}
 downscaleTrace(4 , "../../Data/TraCE21ka/", "prueba/TraCE21ka/", mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
 ```
 
+### Downscale all TraCE21ka files for a single variable
+
 ```{r downscale_all_trace_files} 
 lapply(1:36, downscaleTrace, "prueba/", "../../Data/TraCE21ka/", hist_trace = hist.trace, mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
 ```
+
+## Downscale CMIP5 data
+
+### Defining specific arguments 
 
 ```{r define_cmip5_arguments}
 cmip5.rcps <- c("rcp2.6", "rcp4.5", "rcp6.0", "rcp8.5")
 cmip5.mods <- c("CESM1-CAM5", "CSIRO-Mk3-6-0", "IPSL-CM5A-MR")
 vars <- c("tas", "tasmax", "tasmin", "hurs", "ps", "pr", "cld", "wss")
 
-spatial.pars <- list(which.combine = vars,
-                     v.exp = .95,
-                     rot = FALSE)
+df <- expand.grid(cmip5.rcps, cmip5.mods)
 ```
+
+### Downscaling CMIP5 data for a single combination of RCPs and climate model
 
 ```{r downscale_single_rcp_mod_cmip5} 
 downscaleCMIP5(cmip5.rcps[[1]], cmip5.mods[[1]], indir = "../../Data/CMIP5/", uerra, outdir = "prueba/CMIP5/", method = "GLM", family_link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes)
 ```
 
-```{r downscale_all_rcp_mod_cmip5} 
+### Downscaling CMIP5 data for all combination of RCPs and climate models
 
-df <- expand.grid(cmip5.rcps, cmip5.mods)
-mapply(downscaleCMIP5, df[,1], df[,2], MoreArgs = list(indir = "../../Data/CMIP5/", uerra = uerra, outdir = "prueba/CMIP5/", method = "GLM", family.link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes))
+```{r downscale_all_rcp_mod_cmip5}
+mapply(downscaleCMIP5, df$Var1, df$Var2, MoreArgs = list(indir = "../../Data/CMIP5/", uerra = uerra, outdir = "prueba/CMIP5/", method = "GLM", family_link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes))
 ```
 
 <!-- ![Bias summary histograms](figures/a3/a3_val_summary_histograms.png) -->
