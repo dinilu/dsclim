@@ -30,7 +30,11 @@ TBW
 Title
 }
 \examples{
-# tas <- loadTraceGrid(
-#            "Data/TraCE21ka/TS/trace.01.22000-20001BP.cam2.h0.TS.0000101-0200012.nc",
-#            "tas", 1, lon_lim = NULL, lat_lim=NULL)
+\dontrun{
+tas <- loadTraceGrid(
+  "Data/TraCE21ka/TS/trace.01.22000-20001BP.cam2.h0.TS.0000101-0200012.nc",
+  "tas", 1,
+  lon_lim = NULL, lat_lim = NULL
+)
+}
 }

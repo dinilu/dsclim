@@ -30,13 +30,16 @@ loadUerra(
 \item{aggr_fun}{An optional function specifying the function to be used in aggregation if aggr.times was specified.}
 }
 \value{
-TBW
+A climate4R grid data (see \code{\link[loadeR:loadGridData]{loadeR::loadGridData()}} )
 }
 \description{
 Load UERRA data into climate4R grid format
 }
 \examples{
-# file <- "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"
-# var <- "tas"
-# uerra = loadUerra(uerra.file, local.var)
+\dontrun{
+file <- "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"
+var <- "tas"
+uerra <- loadUerra(uerra.file, local.var)
+}
+
 }

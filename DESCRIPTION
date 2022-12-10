@@ -42,3 +42,4 @@ VignetteBuilder: knitr
 URL: https://github.com/dinilu/dsclim,
     https://dnietolugilde.com/dsclim/
 BugReports: https://github.com/dinilu/dsclim/issues
+Config/testthat/edition: 3

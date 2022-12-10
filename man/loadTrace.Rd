@@ -40,12 +40,20 @@ TBW
 Title
 }
 \examples{
-# LGM.files <- traceFileNames(
-#                         "Data/TraCE21ka/", 1)
-# data <- loadTrace(LGM.files,
-#                                  c("tas", "tasmax", "tasmin", "hurs@992.5561",
-#                                  "ps", "pr", "cld", "u@992.5561", "v@992.5561"), 1,
-#                                  selection_vars = c("tas", "tasmax", "tasmin",
-#                                                  "hurs@992.5561", "ps", "pr",
-#                                                  "cld", "wss"))
+\dontrun{
+LGM.files <- traceFileNames(
+  "Data/TraCE21ka/", 1
+)
+data <- loadTrace(LGM.files,
+  c(
+    "tas", "tasmax", "tasmin", "hurs@992.5561",
+    "ps", "pr", "cld", "u@992.5561", "v@992.5561"
+  ), 1,
+  selection_vars = c(
+    "tas", "tasmax", "tasmin",
+    "hurs@992.5561", "ps", "pr",
+    "cld", "wss"
+  )
+)
+}
 }

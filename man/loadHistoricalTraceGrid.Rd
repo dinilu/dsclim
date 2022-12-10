@@ -33,7 +33,10 @@ List object with the structure defined in the loadeR package.
 Load TraCE21ka data file for a single variable.
 }
 \examples{
-# tas <- loadHistoricalTraceGrid(
-#            "Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc",
-#            "tas")
+\dontrun{
+tas <- loadHistoricalTraceGrid(
+  "Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc",
+  "tas"
+)
+}
 }

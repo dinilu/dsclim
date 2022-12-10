@@ -7,17 +7,28 @@
 computeWindSpeed(u, v)
 }
 \arguments{
-\item{u}{A grid object (see loadeR package)}
+\item{u}{A climate4R grid object with east-west wind component (see \link[loadeR:loadGridData]{loadeR::loadGridData}).}
 
-\item{v}{TBW}
+\item{v}{A climate4R grid object with north-south wind component (see \link[loadeR:loadGridData]{loadeR::loadGridData}).}
 }
 \value{
-TBW
+A climate4R grid object with the total wind speed.
 }
 \description{
 Compute wind speed from their horizontal (u) and vertical (v) components.
 }
 \examples{
-#TBW
+\dontrun{
+trace.u <- dsclim::loadHistoricalTraceGrid(
+  "Data/TraCE21ka/U/trace.36.400BP-1990CE.cam2.h0.U.2160101-2204012.nc",
+  var = "u@992.5561"
+)
+trace.v <- dsclim::loadHistoricalTraceGrid(
+  "Data/TraCE21ka/V/trace.36.400BP-1990CE.cam2.h0.V.2160101-2204012.nc",
+  var = "v@992.5561"
+)
+
+trace.wss <- dsclim::compute_wind_speed(trace.u, trace.v)
+}
 
 }

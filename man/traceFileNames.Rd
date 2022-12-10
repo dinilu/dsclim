@@ -20,6 +20,8 @@ This function return a string vector with the filenames for all variables of the
 Return names of TraCE21ka data files
 }
 \examples{
-# historical.files <- traceFileNames("Data/TraCE21ka/", 36)
-# LGM.files <- traceFileNames("Data/TraCE21ka/", 1)
+\dontrun{
+historical.files <- traceFileNames("Data/TraCE21ka/", 36)
+LGM.files <- traceFileNames("Data/TraCE21ka/", 1)
+}
 }

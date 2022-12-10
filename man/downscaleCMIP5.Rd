@@ -18,53 +18,104 @@ downscaleCMIP5(
   dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"),
   method = "GLM",
   family_link = stats::gaussian(link = "identity"),
-  local_pars = NULL,
-  global_pars = NULL,
-  spatial_pars = NULL,
-  global_nc_attributes = NULL
+  local.predictors = NULL,
+  global.vars = NULL,
+  spatial.predictors = NULL,
+  extended.predictors = NULL,
+  combined.only = TRUE,
+  globalAttributes = NULL
 )
 }
 \arguments{
-\item{rcp}{TBW}
+\item{rcp}{A character string indicating the Historical or the Representative Concentration Pathway (RCP) that is going to be downscaled. Possible values are c("historical", "rcp2.6", "rcp4.5", "rcp6.0", "rcp8.5").}
 
-\item{mod}{TBW}
+\item{mod}{A character string indicating the General Circulation Model that is going to be downscaled. Possible values are c("CESM1-CAM5", "CSIRO-Mk3-6-0", "IPSL-CM5A-MR").}
 
-\item{indir}{TBW}
+\item{indir}{A character string indicating the directory path to look for the CMIP5 data. This directory should have a folder with the name of the RCP that is going to be loaded. The RCP folder should have in turn a folder with the name of the General Circulation Model that is goint to be loaded.}
 
-\item{uerra}{TBW}
+\item{uerra}{A climate4R grid object to be used as predictand of the dowscaling process, usually the historical high resolution dataset. This object is created with the \code{\link[dsclim]{loadUerra}}) or the \code{\link[loadeR]{loadGridData}}) functions.}
 
-\item{outdir}{TBW}
+\item{outdir}{A character string indicating the directory path to save the downscaled datasets.}
 
-\item{vars}{TBW}
+\item{vars}{A character vector indicating the CMIP5 variables to be used as predictors. If NULL (default value) the function use all  available variables: c("tas, "tasmax", "tasmin", "hurs", "ps", "pr", "clt", "sfcWind"), which represent mean surface temperature (tas), maximum surface temperature (tasmax), minimum surface temperature (tasmin), relative humidity (hurs), surface pressure (ps), precipitation (pr), total cloudiness (clt), and surface wind speed (sfcWind). These are the names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).}
 
-\item{cmip5_vars}{TBW}
+\item{cmip5_vars}{A character vector indicating the variables to be downloaded. If NULL (default value) the function downscaled all the available variables c("tas, "tasmax", "tasmin", "hurs", "ps", "pr", "cld", "wss"), which represent mean surface temperature (tas), maximum surface temperature (tasmax), minimum surface temperature (tasmin), relative humidity (hurs), surface pressure (ps), precipitation (pr), total cloudiness (cld), and surface wind speed (wss). These are the names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).}
 
-\item{lon_lim}{TBW}
+\item{lon_lim}{A numeric vector (length = 2) with the longitudinal extent that is going to be dowscaled}
 
-\item{lat_lim}{TBW}
+\item{lat_lim}{A numeric vector (length = 2) with the latitudinal extent that is going to be dowscaled.}
 
-\item{years}{TBW}
+\item{years}{A numeric vector with the sequence of years that are going to be downscaled. By default, it downscaled the whole future period in CMIP5 dataset (1991-2100).}
 
-\item{dictionary}{TBW}
+\item{dictionary}{A data dictionary (as in \code{\link[loadeR]{loadGridData}}) that is going to be used to load the data CMIP5 data. By default it uses an internal dictionary that standardize CMIP5, TraCE21ka, and UERRA data to the same format.}
 
-\item{method}{TBW}
+\item{method}{A character string indicating the downscaling method to be used. More details can be read at \code{\link[downscaleR]{downscaleTrain}}}
 
-\item{family_link}{TBW}
+\item{family_link}{A character string indicating the family link to be used if \code{method = "GLM"}.}
 
-\item{local_pars}{TBW}
+\item{local.predictors}{Default to \code{NULL}, and not used. Otherwise, a named list of arguments in the form \code{argument = value},
+with the following arguments:
+\itemize{
+  \item \code{vars}: names of the variables in \code{x} to be used as local predictors
+  \item \code{fun}: Optional. Aggregation function for the selected local neighbours.
+  The aggregation function is specified as a list, indicating the name of the aggregation function in
+   first place (as character), and other optional arguments to be passed to the aggregation function.
+   For instance, to compute the average skipping missing values: \code{fun = list(FUN= "mean", na.rm = TRUE)}.
+   Default to NULL, meaning that no aggregation is performed.
+  \item \code{n}: Integer. Number of nearest neighbours to use. If a single value is introduced, and there is more
+  than one variable in \code{vars}, the same value is used for all variables. Otherwise, this should be a vector of the same
+  length as \code{vars} to indicate a different number of nearest neighbours for different variables.
+}}
 
-\item{global_pars}{TBW}
+\item{global.vars}{An optional character vector with the short names of the variables of the input \code{x} 
+multigrid to be retained as global predictors (use the \code{\link{getVarNames}} helper if not sure about variable names).
+This argument just produces a call to \code{\link[transformeR]{subsetGrid}}, but it is included here for better
+flexibility in downscaling experiments (predictor screening...). For instance, it allows to use some 
+specific variables contained in \code{x} as local predictors and the remaining ones, specified in \code{subset.vars},
+as either raw global predictors or to construct the combined PC.}
 
-\item{spatial_pars}{TBW}
+\item{spatial.predictors}{Default to \code{NULL}, and not used. Otherwise, a named list of arguments in the form \code{argument = value},
+with the arguments to be passed to \code{\link[transformeR]{prinComp}} to perform Principal Component Analysis
+of the predictors grid (\code{x}). See Details on principal component analysis of predictors.}
 
-\item{global_nc_attributes}{TBW}
+\item{extended.predictors}{This is a parameter related to the extreme learning machine and reservoir computing framework where input data is randomly projected into a new space of size \code{n}. Default to \code{NULL}, and not used. Otherwise, a named list of arguments in the form \code{argument = value},
+with the following arguments:
+\itemize{
+  \item \code{n}: A numeric value. Indicates the size of the random nonlinear dimension where the input data is projected.
+  \item \code{module}: A numeric value (Optional). Indicates the size of the mask's module. Belongs to a specific type of ELM called RF-ELM.
+}}
+
+\item{combined.only}{Optional, and only used if spatial.predictors parameters are passed. Should the combined PC be used as the only
+global predictor? Default to TRUE. Otherwise, the combined PC constructed with \code{which.combine} argument in 
+\code{\link{prinComp}} is append to the PCs of the remaining variables within the grid.}
+
+\item{globalAttributes}{Optional. A list of global attributes included in the NetCDF file. Same format as \code{varAttributes}.}
 }
 \value{
-TBW
+The function return the string "Done" when completed successfully. However, the real output of the function is the output directory with the downscaled data in the same folder structure as the original dataset (Output/CMIP5/RCP/GCM/var). By default, the data are saved yearly (one file for each year) in two different formats: netCDF (nc) and raw text-tab-separated format (columns: x, y, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12; numbered columns represent the 10 months of the year).
 }
 \description{
 Downscale CMIP5 grid data
 }
 \examples{
-#TBW
+\dontrun{
+
+uerra <- dsclim::loadUerra(
+  "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc",
+  "tas"
+)
+
+dsclim::downscaleCMIP5("rcp6.0",
+  "CESM1-CAM5",
+  "Data/CMIP5/",
+  uerra,
+  "Output/CMIP5/",
+  lon_lim = c(-11, 12),
+  lat_lim = c(28, 44),
+  years = 1991:2100,
+  method = "GLM",
+  family_link = "gaussian"
+)
+}
+
 }

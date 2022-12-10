@@ -2,24 +2,34 @@
 % Please edit documentation in R/ext_climate4R_functions.R
 \name{modifyDates}
 \alias{modifyDates}
-\title{Title}
+\title{Modify dates in a climate4R object}
 \usage{
 modifyDates(x, start_date = "1961-01-01", end_date = "1990-12-31")
 }
 \arguments{
-\item{x}{TBW}
+\item{x}{A climate4R object as loaded by \code{\link[=loadUerra]{loadUerra()}}, \code{\link[=loadCMIP5]{loadCMIP5()}}, \code{\link[=loadTrace]{loadTrace()}}, or \code{\link[loadeR:loadGridData]{loadeR::loadGridData()}} functions.}
 
-\item{start_date}{TBW}
+\item{start_date}{A character string with the new starting date in the format "yyyy-mm-dd".}
 
-\item{end_date}{TBW}
+\item{end_date}{A character string with the new ending date in the format "yyyy-mm-dd".}
 }
 \value{
-TBW
+The function returns the same climate4R object with modified dates according to the new start and end dates.
 }
 \description{
-Title
+Modify dates in a climate4R object
+}
+\details{
+Because the dsclim package is designed to work and downscale monthly meteorological data, the function automatically create a vector of monthly dates from the new start to the new end dates. This new vector of dates should have the same length as the dates in the x object. Otherwise, it will through an error.
 }
 \examples{
-#TBW
+\dontrun{
+uerra <- dsclim::loadUerra(
+  "Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc",
+  "tas"
+)
+
+modifyDates(uerra, "1901-01-01", "1930-12-31")
+}
 
 }

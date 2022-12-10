@@ -19,9 +19,9 @@ loadCMIP5(
 \arguments{
 \item{indir}{A character string with the directory path for CMIP5 data. This directory should have a folder with the name of the RCP that is going to be loaded. The RCP folder should have in turn a folder with the name of the General Circulation Model that is goint to be loaded.}
 
-\item{rcp}{A character vector with the name of the RCP that is going to be loaded.}
+\item{rcp}{A character vector with the name of the RCP that is going to be loaded. Possible values are c("historical", "rcp2.6", "rcp4.5", "rcp6.0", "rcp8.5")}
 
-\item{mod}{A character vector with the name of the GCM that is going to be loaded.}
+\item{mod}{A character vector with the name of the GCM that is going to be loaded. Possible values are c("CESM1-CAM5", "CSIRO-Mk3-6-0", "IPSL-CM5A-MR").}
 
 \item{vars}{A character vector with names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).}
 
@@ -44,10 +44,11 @@ Load CMIP5 data into climate4R grid format
 \examples{
 \dontrun{
 dsclim::loadCMIP5("../../Data/CMIP5/",
-                 "rcp2.6",
-                 "CESM1-CAM5",
-                 lon_lim = c(-11, 12),
-                 lat_lim = c(28, 44),
-                 years = 2006:2100)
+  "rcp2.6",
+  "CESM1-CAM5",
+  lon_lim = c(-11, 12),
+  lat_lim = c(28, 44),
+  years = 2006:2100
+)
 }
 }

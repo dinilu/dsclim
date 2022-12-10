@@ -22,16 +22,20 @@ This file is to document the downscaling process of TraCE21ka paleoclimate and C
 ```{r load_packages_and_parameters`}
 library(dsclim)
 library(downscaleR)
-vars <- c("tas", "tasmin", "tasmax", "hurs@992.5561", "ps",
-          "pr", "cld", "wss")
+vars <- c(
+  "tas", "tasmin", "tasmax", "hurs@992.5561", "ps",
+  "pr", "cld", "wss"
+)
 
-spatial.pars <- list(which.combine = vars,
-                        v.exp = .95,
-                        rot = FALSE)
+spatial.pars <- list(
+  which.combine = vars,
+  v.exp = .95,
+  rot = FALSE
+)
 
-family.link <- gaussian(link="identity")
+family.link <- gaussian(link = "identity")
 
-global.nc.attributes = list("author" = "Diego Nieto Lugilde & Daniel Romera Romera", "institution" = "Universidad de Cordoba", "email" = "bv2nilud@uco.es")
+global.nc.attributes <- list("author" = "Diego Nieto Lugilde & Daniel Romera Romera", "institution" = "Universidad de Cordoba", "email" = "bv2nilud@uco.es")
 ```
 
 ### Loading UERRA data
@@ -64,7 +68,7 @@ model <- downscaleR::downscaleTrain(data, method = "GLM", family = family.link, 
 ### Downscale a single TraCE21ka file
 
 ```{r downscale_single_trace_file}
-downscaleTrace(4 , "../../Data/TraCE21ka/", "prueba/TraCE21ka/", mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
+downscaleTrace(4, "../../Data/TraCE21ka/", "prueba/TraCE21ka/", mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
 ```
 
 ### Downscale all TraCE21ka files for a single variable
