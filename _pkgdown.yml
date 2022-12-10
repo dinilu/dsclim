@@ -1,31 +1,29 @@
-url: http://dnietolugilde.com/dsclim/
+url: https://dnietolugilde.com/dsclim/
 template:
   bootstrap: 5
-
-
 reference:
-- title: "Loading data"
-  desc: "Functions for loading climate data from different sources."
+- title: Loading data
+  desc: Functions for loading climate data from different sources.
   contents:
   - loadUerra
   - loadCMIP5
   - loadHistoricalTraceGrid
   - loadTraceGrid
   - loadTrace
-- title: "Downscaling data"
-  desc: "Functions for downscaling climate data."
+- title: Downscaling data
+  desc: Functions for downscaling climate data.
   contents:
   - downscaleCMIP5
   - downscaleTrace
-- title: "Other functions"
-  desc: "Several functions for modifying climate data object and or helpers to other functions."
+- title: Other functions
+  desc: Several functions for modifying climate data object and or helpers to other
+    functions.
   contents:
   - computeWindSpeed
   - getVerticalLevelPars
   - modifyDates
   - nc2spatialdf
   - traceFileNames
-
 articles:
 - title: Articles
   navbar: ~
@@ -34,3 +32,4 @@ articles:
   - a2_Load_source_data
   - a3_Downscale_with_Cross-validation
   - a4_Downscale_climate_data
+
