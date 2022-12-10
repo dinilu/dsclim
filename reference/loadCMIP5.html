@@ -80,11 +80,11 @@
 
 
 <dt>rcp</dt>
-<dd><p>A character vector with the name of the RCP that is going to be loaded.</p></dd>
+<dd><p>A character vector with the name of the RCP that is going to be loaded. Possible values are c("historical", "rcp2.6", "rcp4.5", "rcp6.0", "rcp8.5")</p></dd>
 
 
 <dt>mod</dt>
-<dd><p>A character vector with the name of the GCM that is going to be loaded.</p></dd>
+<dd><p>A character vector with the name of the GCM that is going to be loaded. Possible values are c("CESM1-CAM5", "CSIRO-Mk3-6-0", "IPSL-CM5A-MR").</p></dd>
 
 
 <dt>vars</dt>
@@ -122,11 +122,12 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu">dsclim</span><span class="fu">::</span><span class="fu">loadCMIP5</span><span class="op">(</span><span class="st">"../../Data/CMIP5/"</span>,</span></span>
-<span class="r-in"><span>                 <span class="st">"rcp2.6"</span>,</span></span>
-<span class="r-in"><span>                 <span class="st">"CESM1-CAM5"</span>,</span></span>
-<span class="r-in"><span>                 lon_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 lat_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 years <span class="op">=</span> <span class="fl">2006</span><span class="op">:</span><span class="fl">2100</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="st">"rcp2.6"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"CESM1-CAM5"</span>,</span></span>
+<span class="r-in"><span>  lon_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  lat_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  years <span class="op">=</span> <span class="fl">2006</span><span class="op">:</span><span class="fl">2100</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>

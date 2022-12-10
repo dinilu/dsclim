@@ -1,4 +1,4 @@
-pandoc: 2.7.3
+pandoc: 2.19.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
@@ -6,8 +6,8 @@ articles:
   a2_Load_source_data: a2_Load_source_data.html
   a3_Downscale_with_Cross-validation: a3_Downscale_with_Cross-validation.html
   a4_Downscale_climate_data: a4_Downscale_climate_data.html
-last_built: 2022-10-24T17:45Z
+last_built: 2022-12-10T15:31Z
 urls:
-  reference: http://dnietolugilde.com/dsclim/reference
-  article: http://dnietolugilde.com/dsclim/articles
+  reference: https://dnietolugilde.com/dsclim/reference
+  article: https://dnietolugilde.com/dsclim/articles
 

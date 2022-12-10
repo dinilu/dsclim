@@ -1,87 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://dnietolugilde.com/dsclim/404.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/404.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/LICENSE.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/LICENSE.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/a1_Data_downloading_and_preprocessing.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/articles/a1_Data_downloading_and_preprocessing.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/a2_Load_source_data.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/articles/a2_Load_source_data.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/a3_Downscale_with_Cross-validation.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/articles/a3_Downscale_with_Cross-validation.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/a4_Downscale_climate_data.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/articles/a4_Downscale_climate_data.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/articles/index.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/articles/index.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/authors.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/authors.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/index.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/index.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/news/index.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/news/index.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/computeWindSpeed.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/computeWindSpeed.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/dictionaryLookup.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/dictionaryLookup.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/dot-DateSeq.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/dot-DateSeq.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/dot-copyXYCoords.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/dot-copyXYCoords.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/dot-elementwise.all.equal.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/dot-elementwise.all.equal.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/dot-recalcGridResolution.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/dot-recalcGridResolution.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/downscaleCMIP5.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/downscaleCMIP5.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/downscaleTrace.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/downscaleTrace.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/getVerticalLevelPars.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/getVerticalLevelPars.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/index.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/grid2spatialdf.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/loadCMIP5.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/index.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/loadHistoricalTraceGrid.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/loadCMIP5.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/loadTrace.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/loadHistoricalTraceGrid.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/loadTraceGrid.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/loadTrace.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/loadUerra.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/loadTraceGrid.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/modifyDates.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/loadUerra.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/nc2spatialdf.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/modifyDates.html</loc>
   </url>
   <url>
-    <loc>http://dnietolugilde.com/dsclim/reference/traceFileNames.html</loc>
+    <loc>https://dnietolugilde.com/dsclim/reference/traceFileNames.html</loc>
   </url>
 </urlset>

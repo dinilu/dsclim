@@ -116,15 +116,22 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># LGM.files &lt;- traceFileNames(</span></span></span>
-<span class="r-in"><span><span class="co">#                         "Data/TraCE21ka/", 1)</span></span></span>
-<span class="r-in"><span><span class="co"># data &lt;- loadTrace(LGM.files,</span></span></span>
-<span class="r-in"><span><span class="co">#                                  c("tas", "tasmax", "tasmin", "hurs@992.5561",</span></span></span>
-<span class="r-in"><span><span class="co">#                                  "ps", "pr", "cld", "u@992.5561", "v@992.5561"), 1,</span></span></span>
-<span class="r-in"><span><span class="co">#                                  selection_vars = c("tas", "tasmax", "tasmin",</span></span></span>
-<span class="r-in"><span><span class="co">#                                                  "hurs@992.5561", "ps", "pr",</span></span></span>
-<span class="r-in"><span><span class="co">#                                                  "cld", "wss"))</span></span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">LGM.files</span> <span class="op">&lt;-</span> <span class="fu"><a href="traceFileNames.html">traceFileNames</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"Data/TraCE21ka/"</span>, <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">loadTrace</span><span class="op">(</span><span class="va">LGM.files</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"tas"</span>, <span class="st">"tasmax"</span>, <span class="st">"tasmin"</span>, <span class="st">"hurs@992.5561"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"ps"</span>, <span class="st">"pr"</span>, <span class="st">"cld"</span>, <span class="st">"u@992.5561"</span>, <span class="st">"v@992.5561"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span>, <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  selection_vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"tas"</span>, <span class="st">"tasmax"</span>, <span class="st">"tasmin"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"hurs@992.5561"</span>, <span class="st">"ps"</span>, <span class="st">"pr"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"cld"</span>, <span class="st">"wss"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

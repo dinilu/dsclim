@@ -71,7 +71,8 @@
 
 
 
-<script src="a4_Downscale_climate_data_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>4. Downscaling climate data</h1>
             
@@ -82,7 +83,11 @@
 
     
     
-<p>This file is to document the downscaling process of TraCE21ka paleoclimate and CMIP5 future climate simulations data using the most updated and finer resolution “historical” climate data for the Western Mediterranean region and the methods and tools implemented in the <code>climate4R</code> framework.</p>
+<p>This file is to document the downscaling process of TraCE21ka
+paleoclimate and CMIP5 future climate simulations data using the most
+updated and finer resolution “historical” climate data for the Western
+Mediterranean region and the methods and tools implemented in the
+<code>climate4R</code> framework.</p>
 <div class="section level2">
 <h2 id="defining-common-parameters">Defining common parameters<a class="anchor" aria-label="anchor" href="#defining-common-parameters"></a>
 </h2>
@@ -92,16 +97,20 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dinilu/dsclim" class="external-link">dsclim</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.meteo.unican.es/climate4r" class="external-link">downscaleR</a></span><span class="op">)</span></span>
-<span><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tas"</span>, <span class="st">"tasmin"</span>, <span class="st">"tasmax"</span>, <span class="st">"hurs@992.5561"</span>, <span class="st">"ps"</span>,</span>
-<span>          <span class="st">"pr"</span>, <span class="st">"cld"</span>, <span class="st">"wss"</span><span class="op">)</span></span>
+<span><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"tas"</span>, <span class="st">"tasmin"</span>, <span class="st">"tasmax"</span>, <span class="st">"hurs@992.5561"</span>, <span class="st">"ps"</span>,</span>
+<span>  <span class="st">"pr"</span>, <span class="st">"cld"</span>, <span class="st">"wss"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">spatial.pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>which.combine <span class="op">=</span> <span class="va">vars</span>,</span>
-<span>                        v.exp <span class="op">=</span> <span class="fl">.95</span>,</span>
-<span>                        rot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">spatial.pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>  which.combine <span class="op">=</span> <span class="va">vars</span>,</span>
+<span>  v.exp <span class="op">=</span> <span class="fl">.95</span>,</span>
+<span>  rot <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">family.link</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span>link<span class="op">=</span><span class="st">"identity"</span><span class="op">)</span></span>
+<span><span class="va">family.link</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">global.nc.attributes</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"author"</span> <span class="op">=</span> <span class="st">"Diego Nieto Lugilde &amp; Daniel Romera Romera"</span>, <span class="st">"institution"</span> <span class="op">=</span> <span class="st">"Universidad de Cordoba"</span>, <span class="st">"email"</span> <span class="op">=</span> <span class="st">"bv2nilud@uco.es"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">global.nc.attributes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"author"</span> <span class="op">=</span> <span class="st">"Diego Nieto Lugilde &amp; Daniel Romera Romera"</span>, <span class="st">"institution"</span> <span class="op">=</span> <span class="st">"Universidad de Cordoba"</span>, <span class="st">"email"</span> <span class="op">=</span> <span class="st">"bv2nilud@uco.es"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="loading-uerra-data">Loading UERRA data<a class="anchor" aria-label="anchor" href="#loading-uerra-data"></a>
@@ -136,7 +145,7 @@
 <h3 id="downscale-a-single-trace21ka-file">Downscale a single TraCE21ka file<a class="anchor" aria-label="anchor" href="#downscale-a-single-trace21ka-file"></a>
 </h3>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/downscaleTrace.html">downscaleTrace</a></span><span class="op">(</span><span class="fl">4</span> , <span class="st">"../../Data/TraCE21ka/"</span>, <span class="st">"prueba/TraCE21ka/"</span>, mod_data <span class="op">=</span> <span class="va">data</span>, model <span class="op">=</span> <span class="va">model</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/downscaleTrace.html">downscaleTrace</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"../../Data/TraCE21ka/"</span>, <span class="st">"prueba/TraCE21ka/"</span>, mod_data <span class="op">=</span> <span class="va">data</span>, model <span class="op">=</span> <span class="va">model</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="downscale-all-trace21ka-files-for-a-single-variable">Downscale all TraCE21ka files for a single variable<a class="anchor" aria-label="anchor" href="#downscale-all-trace21ka-files-for-a-single-variable"></a>
@@ -159,13 +168,15 @@
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span><span class="va">cmip5.rcps</span>, <span class="va">cmip5.mods</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="downscaling-cmip5-data-for-a-single-combination-of-rcps-and-climate-model">Downscaling CMIP5 data for a single combination of RCPs and climate model<a class="anchor" aria-label="anchor" href="#downscaling-cmip5-data-for-a-single-combination-of-rcps-and-climate-model"></a>
+<h3 id="downscaling-cmip5-data-for-a-single-combination-of-rcps-and-climate-model">Downscaling CMIP5 data for a single combination of RCPs and climate
+model<a class="anchor" aria-label="anchor" href="#downscaling-cmip5-data-for-a-single-combination-of-rcps-and-climate-model"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/downscaleCMIP5.html">downscaleCMIP5</a></span><span class="op">(</span><span class="va">cmip5.rcps</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">cmip5.mods</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, indir <span class="op">=</span> <span class="st">"../../Data/CMIP5/"</span>, <span class="va">uerra</span>, outdir <span class="op">=</span> <span class="st">"prueba/CMIP5/"</span>, method <span class="op">=</span> <span class="st">"GLM"</span>, family_link <span class="op">=</span> <span class="st">"gaussian"</span>, spatial_pars <span class="op">=</span> <span class="va">spatial.pars</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="downscaling-cmip5-data-for-all-combination-of-rcps-and-climate-models">Downscaling CMIP5 data for all combination of RCPs and climate models<a class="anchor" aria-label="anchor" href="#downscaling-cmip5-data-for-all-combination-of-rcps-and-climate-models"></a>
+<h3 id="downscaling-cmip5-data-for-all-combination-of-rcps-and-climate-models">Downscaling CMIP5 data for all combination of RCPs and climate
+models<a class="anchor" aria-label="anchor" href="#downscaling-cmip5-data-for-all-combination-of-rcps-and-climate-models"></a>
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply</a></span><span class="op">(</span><span class="va">downscaleCMIP5</span>, <span class="va">df</span><span class="op">$</span><span class="va">Var1</span>, <span class="va">df</span><span class="op">$</span><span class="va">Var2</span>, MoreArgs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>indir <span class="op">=</span> <span class="st">"../../Data/CMIP5/"</span>, uerra <span class="op">=</span> <span class="va">uerra</span>, outdir <span class="op">=</span> <span class="st">"prueba/CMIP5/"</span>, method <span class="op">=</span> <span class="st">"GLM"</span>, family_link <span class="op">=</span> <span class="st">"gaussian"</span>, spatial_pars <span class="op">=</span> <span class="va">spatial.pars</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>

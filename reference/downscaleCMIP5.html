@@ -74,94 +74,144 @@
 <span>  dictionary <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"CMIP5_dictionary.csv"</span>, package <span class="op">=</span> <span class="st">"dsclim"</span><span class="op">)</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"GLM"</span>,</span>
 <span>  family_link <span class="op">=</span> <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span>,</span>
-<span>  local_pars <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  global_pars <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  spatial_pars <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  global_nc_attributes <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  local.predictors <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  global.vars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  spatial.predictors <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  extended.predictors <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  combined.only <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  globalAttributes <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>rcp</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character string indicating the Historical or the Representative Concentration Pathway (RCP) that is going to be downscaled. Possible values are c("historical", "rcp2.6", "rcp4.5", "rcp6.0", "rcp8.5").</p></dd>
 
 
 <dt>mod</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character string indicating the General Circulation Model that is going to be downscaled. Possible values are c("CESM1-CAM5", "CSIRO-Mk3-6-0", "IPSL-CM5A-MR").</p></dd>
 
 
 <dt>indir</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character string indicating the directory path to look for the CMIP5 data. This directory should have a folder with the name of the RCP that is going to be loaded. The RCP folder should have in turn a folder with the name of the General Circulation Model that is goint to be loaded.</p></dd>
 
 
 <dt>uerra</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A climate4R grid object to be used as predictand of the dowscaling process, usually the historical high resolution dataset. This object is created with the <code><a href="loadUerra.html">loadUerra</a></code>) or the <code><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></code>) functions.</p></dd>
 
 
 <dt>outdir</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character string indicating the directory path to save the downscaled datasets.</p></dd>
 
 
 <dt>vars</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character vector indicating the CMIP5 variables to be used as predictors. If NULL (default value) the function use all  available variables: c("tas, "tasmax", "tasmin", "hurs", "ps", "pr", "clt", "sfcWind"), which represent mean surface temperature (tas), maximum surface temperature (tasmax), minimum surface temperature (tasmin), relative humidity (hurs), surface pressure (ps), precipitation (pr), total cloudiness (clt), and surface wind speed (sfcWind). These are the names of the CMIP5 variables in their standardized format (as they should match those from other datasets, e.g. TraCE21ka and UERRA datasets).</p></dd>
 
 
 <dt>cmip5_vars</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character vector indicating the variables to be downloaded. If NULL (default value) the function downscaled all the available variables c("tas, "tasmax", "tasmin", "hurs", "ps", "pr", "cld", "wss"), which represent mean surface temperature (tas), maximum surface temperature (tasmax), minimum surface temperature (tasmin), relative humidity (hurs), surface pressure (ps), precipitation (pr), total cloudiness (cld), and surface wind speed (wss). These are the names of the CMIP5 variables in their original format (as coded in original CMIP5 datasets).</p></dd>
 
 
 <dt>lon_lim</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A numeric vector (length = 2) with the longitudinal extent that is going to be dowscaled</p></dd>
 
 
 <dt>lat_lim</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A numeric vector (length = 2) with the latitudinal extent that is going to be dowscaled.</p></dd>
 
 
 <dt>years</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A numeric vector with the sequence of years that are going to be downscaled. By default, it downscaled the whole future period in CMIP5 dataset (1991-2100).</p></dd>
 
 
 <dt>dictionary</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A data dictionary (as in <code><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData</a></code>) that is going to be used to load the data CMIP5 data. By default it uses an internal dictionary that standardize CMIP5, TraCE21ka, and UERRA data to the same format.</p></dd>
 
 
 <dt>method</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character string indicating the downscaling method to be used. More details can be read at <code><a href="https://rdrr.io/pkg/downscaleR/man/downscaleTrain.html" class="external-link">downscaleTrain</a></code></p></dd>
 
 
 <dt>family_link</dt>
-<dd><p>TBW</p></dd>
+<dd><p>A character string indicating the family link to be used if <code>method = "GLM"</code>.</p></dd>
 
 
-<dt>local_pars</dt>
-<dd><p>TBW</p></dd>
+<dt>local.predictors</dt>
+<dd><p>Default to <code>NULL</code>, and not used. Otherwise, a named list of arguments in the form <code>argument = value</code>,
+with the following arguments:</p><ul><li><p><code>vars</code>: names of the variables in <code>x</code> to be used as local predictors</p></li>
+<li><p><code>fun</code>: Optional. Aggregation function for the selected local neighbours.
+  The aggregation function is specified as a list, indicating the name of the aggregation function in
+   first place (as character), and other optional arguments to be passed to the aggregation function.
+   For instance, to compute the average skipping missing values: <code>fun = list(FUN= "mean", na.rm = TRUE)</code>.
+   Default to NULL, meaning that no aggregation is performed.</p></li>
+<li><p><code>n</code>: Integer. Number of nearest neighbours to use. If a single value is introduced, and there is more
+  than one variable in <code>vars</code>, the same value is used for all variables. Otherwise, this should be a vector of the same
+  length as <code>vars</code> to indicate a different number of nearest neighbours for different variables.</p></li>
+</ul></dd>
 
 
-<dt>global_pars</dt>
-<dd><p>TBW</p></dd>
+<dt>global.vars</dt>
+<dd><p>An optional character vector with the short names of the variables of the input <code>x</code> 
+multigrid to be retained as global predictors (use the <code>getVarNames</code> helper if not sure about variable names).
+This argument just produces a call to <code><a href="https://rdrr.io/pkg/transformeR/man/subsetGrid.html" class="external-link">subsetGrid</a></code>, but it is included here for better
+flexibility in downscaling experiments (predictor screening...). For instance, it allows to use some 
+specific variables contained in <code>x</code> as local predictors and the remaining ones, specified in <code>subset.vars</code>,
+as either raw global predictors or to construct the combined PC.</p></dd>
 
 
-<dt>spatial_pars</dt>
-<dd><p>TBW</p></dd>
+<dt>spatial.predictors</dt>
+<dd><p>Default to <code>NULL</code>, and not used. Otherwise, a named list of arguments in the form <code>argument = value</code>,
+with the arguments to be passed to <code><a href="https://rdrr.io/pkg/transformeR/man/prinComp.html" class="external-link">prinComp</a></code> to perform Principal Component Analysis
+of the predictors grid (<code>x</code>). See Details on principal component analysis of predictors.</p></dd>
 
 
-<dt>global_nc_attributes</dt>
-<dd><p>TBW</p></dd>
+<dt>extended.predictors</dt>
+<dd><p>This is a parameter related to the extreme learning machine and reservoir computing framework where input data is randomly projected into a new space of size <code>n</code>. Default to <code>NULL</code>, and not used. Otherwise, a named list of arguments in the form <code>argument = value</code>,
+with the following arguments:</p><ul><li><p><code>n</code>: A numeric value. Indicates the size of the random nonlinear dimension where the input data is projected.</p></li>
+<li><p><code>module</code>: A numeric value (Optional). Indicates the size of the mask's module. Belongs to a specific type of ELM called RF-ELM.</p></li>
+</ul></dd>
+
+
+<dt>combined.only</dt>
+<dd><p>Optional, and only used if spatial.predictors parameters are passed. Should the combined PC be used as the only
+global predictor? Default to TRUE. Otherwise, the combined PC constructed with <code>which.combine</code> argument in 
+<code>prinComp</code> is append to the PCs of the remaining variables within the grid.</p></dd>
+
+
+<dt>globalAttributes</dt>
+<dd><p>Optional. A list of global attributes included in the NetCDF file. Same format as <code>varAttributes</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>TBW</p>
+<p>The function return the string "Done" when completed successfully. However, the real output of the function is the output directory with the downscaled data in the same folder structure as the original dataset (Output/CMIP5/RCP/GCM/var). By default, the data are saved yearly (one file for each year) in two different formats: netCDF (nc) and raw text-tab-separated format (columns: x, y, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12; numbered columns represent the 10 months of the year).</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#TBW</span></span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">uerra</span> <span class="op">&lt;-</span> <span class="fu">dsclim</span><span class="fu">::</span><span class="fu"><a href="loadUerra.html">loadUerra</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="st">"Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"tas"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">dsclim</span><span class="fu">::</span><span class="fu">downscaleCMIP5</span><span class="op">(</span><span class="st">"rcp6.0"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"CESM1-CAM5"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"Data/CMIP5/"</span>,</span></span>
+<span class="r-in"><span>  <span class="va">uerra</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"Output/CMIP5/"</span>,</span></span>
+<span class="r-in"><span>  lon_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  lat_lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  years <span class="op">=</span> <span class="fl">1991</span><span class="op">:</span><span class="fl">2100</span>,</span></span>
+<span class="r-in"><span>  method <span class="op">=</span> <span class="st">"GLM"</span>,</span></span>
+<span class="r-in"><span>  family_link <span class="op">=</span> <span class="st">"gaussian"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
