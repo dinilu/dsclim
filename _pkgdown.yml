@@ -21,8 +21,8 @@ reference:
   contents:
   - computeWindSpeed
   - getVerticalLevelPars
+  - grid2spatialdf
   - modifyDates
-  - nc2spatialdf
   - traceFileNames
 articles:
 - title: Articles
