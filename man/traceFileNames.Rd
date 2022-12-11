@@ -2,22 +2,22 @@
 % Please edit documentation in R/TraCE21ka_functions.R
 \name{traceFileNames}
 \alias{traceFileNames}
-\title{Return names of TraCE21ka data files}
+\title{Return names (including path) of TraCE21ka data files}
 \usage{
 traceFileNames(indir, files_n = 36, vars = NULL)
 }
 \arguments{
-\item{indir}{String with the relative path to the TraCE21ka data folder}
+\item{indir}{Character string with the relative path to the TraCE21ka data folder}
 
 \item{files_n}{Integer indicating the number of the desired file. Default to 36, which is the file with the data incorporating the most recent (historical) period.}
 
-\item{vars}{String vector with the name of the vars to include in the output. Default is null, which return tas, tasmin, tasmax, pr, ps, hurs, cld, and wss.}
+\item{vars}{String vector with the name of the vars to include in the output. Default is null, which return tas, tasmin, tasmax, pr, ps, hurs, cld, u, and v.}
 }
 \value{
 This function return a string vector with the filenames for all variables of the desired file number in TraCE21ka dataset.
 }
 \description{
-Return names of TraCE21ka data files
+Return names (including path) of TraCE21ka data files
 }
 \examples{
 \dontrun{

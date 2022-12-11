@@ -2,7 +2,9 @@
 % Please edit documentation in R/TraCE21ka_functions.R
 \name{loadTrace}
 \alias{loadTrace}
-\title{Title}
+\alias{loadHistoricalTraceGrid}
+\alias{loadTraceGrid}
+\title{Load TraCE21ka data}
 \usage{
 loadTrace(
   files,
@@ -15,45 +17,92 @@ loadTrace(
     "wss"),
   dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")
 )
+
+loadHistoricalTraceGrid(
+  file,
+  var = NULL,
+  lon_lim = c(-25, 25),
+  lat_lim = c(25, 50),
+  years = NULL,
+  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")
+)
+
+loadTraceGrid(
+  file,
+  var,
+  lon_lim = c(-25, 25),
+  lat_lim = c(25, 50),
+  dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")
+)
 }
 \arguments{
-\item{files}{TBW}
+\item{files}{Character vector indicating the TraCE21ka files to be loaded.}
 
-\item{vars}{TBW}
+\item{vars}{Character vector indicating the variables to be loaded.}
 
-\item{lon_lim}{TBW}
+\item{lon_lim}{Numeric vector of length 2 with the longitudinal limits of the area of interest to be loaded.}
 
-\item{lat_lim}{TBW}
+\item{lat_lim}{Numeric vector of length 2 with the latitudinal limits of the area of interest to be loaded.}
 
-\item{years}{TBW}
+\item{years}{Numeric vector indicating the years of interest to be loaded. This is only relevant when loading historical period and not applied when loading files for older periods.}
 
-\item{compute_wss}{TBW}
+\item{compute_wss}{Logical value indicating whether to compute wind speed (wss) from the two wind components (i.e. u and v) and include it in the output.}
 
-\item{selection_vars}{TBW}
+\item{selection_vars}{Character vector indicating the name of the variables that are going to be kept in the output. This is useful when computing wind speed (wss) but the two wind components are not of interest and want to be excluded from the output.}
 
-\item{dictionary}{TBW}
+\item{dictionary}{Character string indicating a dictionary file to standardize climate variables, following the standard of climate4R framework (https://github.com/SantanderMetGroup/loadeR/wiki/Harmonization).}
+
+\item{file}{Character string with the name of the file (including relative path if not in the working directory).}
+
+\item{var}{Character string indicating the name of the variable that is being loaded from the 'file'. It should be a standard name as defined in the 'dictionary' argument.}
 }
 \value{
-TBW
+List object with the structure of climate4R grids with the data from the TraCE21ka data.
 }
 \description{
-Title
+\code{loadTrace} loads TraCE21ka for multiple time periods and variables.
+
+\code{loadHistoricalTraceGrid} loads historical TraCE21ka data file for a single variable.
+
+\code{loadTraceGrid}  Load non-historical TraCE21ka data for a single variable.
+}
+\details{
+\code{loadHistoricalTraceGrid} function is needed because dates in those files do not comply with standard dates format (because of negative dates) that are assumed in the internal functions of the \link[loadeR:loadGridData]{loadeR::loadGridData} function. Hence, we extract the information manually and replicate the structure of the climate4R grid format.
 }
 \examples{
 \dontrun{
 LGM.files <- traceFileNames(
-  "Data/TraCE21ka/", 1
+  "Data/TraCE21ka/",
+  1
 )
-data <- loadTrace(LGM.files,
+data <- loadTrace(
+  LGM.files,
   c(
     "tas", "tasmax", "tasmin", "hurs@992.5561",
     "ps", "pr", "cld", "u@992.5561", "v@992.5561"
-  ), 1,
+  ),
+  compute_wss = TRUE,
   selection_vars = c(
     "tas", "tasmax", "tasmin",
     "hurs@992.5561", "ps", "pr",
     "cld", "wss"
   )
 )
+
+tas <- loadHistoricalTraceGrid(
+  "Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc",
+  "tas"
+)
+
+
+tas <- loadTraceGrid(
+  "Data/TraCE21ka/TS/trace.01.22000-20001BP.cam2.h0.TS.0000101-0200012.nc",
+  "tas",
+  lon_lim = NULL,
+  lat_lim = NULL
+)
 }
+}
+\references{
+https://github.com/SantanderMetGroup/loadeR/wiki/Harmonization
 }

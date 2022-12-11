@@ -1,9 +1,9 @@
 
-#' Return names of TraCE21ka data files
+#' Return names (including path) of TraCE21ka data files
 #'
-#' @param indir String with the relative path to the TraCE21ka data folder
+#' @param indir Character string with the relative path to the TraCE21ka data folder
 #' @param files_n Integer indicating the number of the desired file. Default to 36, which is the file with the data incorporating the most recent (historical) period.
-#' @param vars String vector with the name of the vars to include in the output. Default is null, which return tas, tasmin, tasmax, pr, ps, hurs, cld, and wss.
+#' @param vars String vector with the name of the vars to include in the output. Default is null, which return tas, tasmin, tasmax, pr, ps, hurs, cld, u, and v.
 #'
 #' @return This function return a string vector with the filenames for all variables of the desired file number in TraCE21ka dataset.
 #'
@@ -27,29 +27,97 @@ traceFileNames <- function(indir, files_n = 36, vars = NULL) {
 }
 
 
-
-#' Load TraCE21ka data file for a single variable.
+#' Load TraCE21ka data
 #'
-#' @param file String with the name of the file (including relative path if not in the working directory).
-#' @param var String indicating the name of the variable that should be loaded.
-#' @param lon_lim Vector with two integers, indicating the longitudinal extent of the desired study area.
-#' @param lat_lim  Vector with two integers, indicating the latitudinal extent of the desired study area.
-#' @param years Integer vector indicating the years that should be loaded.
-#' @param dictionary String indicating the path to a dictionary for the TraCE21ka dataset. Default is a predefined dictionary.
+#' @description `loadTrace` loads TraCE21ka for multiple time periods and variables.
 #'
-#' @return List object with the structure defined in the loadeR package.
+#' @param files Character vector indicating the TraCE21ka files to be loaded.
+#' @param vars Character vector indicating the variables to be loaded.
+#' @param lon_lim Numeric vector of length 2 with the longitudinal limits of the area of interest to be loaded.
+#' @param lat_lim Numeric vector of length 2 with the latitudinal limits of the area of interest to be loaded.
+#' @param years Numeric vector indicating the years of interest to be loaded. This is only relevant when loading historical period and not applied when loading files for older periods.
+#' @param compute_wss Logical value indicating whether to compute wind speed (wss) from the two wind components (i.e. u and v) and include it in the output.
+#' @param selection_vars Character vector indicating the name of the variables that are going to be kept in the output. This is useful when computing wind speed (wss) but the two wind components are not of interest and want to be excluded from the output.
+#' @param dictionary Character string indicating a dictionary file to standardize climate variables, following the standard of climate4R framework (https://github.com/SantanderMetGroup/loadeR/wiki/Harmonization).
 #'
-#' @import loadeR
+#' @return List object with the structure of climate4R grids with the data from the TraCE21ka data.
+#'
+#'
+#' @details `loadHistoricalTraceGrid` function is needed because dates in those files do not comply with standard dates format (because of negative dates) that are assumed in the internal functions of the [loadeR::loadGridData] function. Hence, we extract the information manually and replicate the structure of the climate4R grid format.
+#'
+#' @references https://github.com/SantanderMetGroup/loadeR/wiki/Harmonization
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
+#' LGM.files <- traceFileNames(
+#'   "Data/TraCE21ka/",
+#'   1
+#' )
+#' data <- loadTrace(
+#'   LGM.files,
+#'   c(
+#'     "tas", "tasmax", "tasmin", "hurs@992.5561",
+#'     "ps", "pr", "cld", "u@992.5561", "v@992.5561"
+#'   ),
+#'   compute_wss = TRUE,
+#'   selection_vars = c(
+#'     "tas", "tasmax", "tasmin",
+#'     "hurs@992.5561", "ps", "pr",
+#'     "cld", "wss"
+#'   )
+#' )
+#'
 #' tas <- loadHistoricalTraceGrid(
 #'   "Data/TraCE21ka/TS/trace.36.400BP-1990CE.cam2.h0.TS.2160101-2204012.nc",
 #'   "tas"
 #' )
+#'
+#'
+#' tas <- loadTraceGrid(
+#'   "Data/TraCE21ka/TS/trace.01.22000-20001BP.cam2.h0.TS.0000101-0200012.nc",
+#'   "tas",
+#'   lon_lim = NULL,
+#'   lat_lim = NULL
+#' )
 #' }
+loadTrace <- function(files, vars = NULL, lon_lim = c(-25, 25), lat_lim = c(25, 50), years = NULL, compute_wss = TRUE, selection_vars = c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps", "pr", "cld", "wss"), dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")) {
+  if (is.null(vars)) {
+    vars <- trace.standard.var.names
+  }
+
+  if (grep("trace.36.400BP-1990CE", files[1]) && !is.null(years)) {
+    data <- mapply(loadHistoricalTraceGrid, file = files, var = vars, MoreArgs = list(lon_lim = lon_lim, lat_lim = lat_lim, years = years, dictionary = dictionary), SIMPLIFY = FALSE)
+  } else {
+    data <- mapply(loadTraceGrid, file = files, var = vars, MoreArgs = list(lon_lim = lon_lim, lat_lim = lat_lim, dictionary = dictionary), SIMPLIFY = FALSE)
+  }
+
+  names(data) <- vars
+
+  if (compute_wss == TRUE) {
+    data$wss <- computeWindSpeed(data$"u@992.5561", data$"v@992.5561")
+  }
+
+  data <- transformeR::makeMultiGrid(data)
+  data <- transformeR::subsetGrid(data, var = selection_vars)
+
+  return(data)
+}
+
+
+
+#' @description `loadHistoricalTraceGrid` loads historical TraCE21ka data file for a single variable.
+#'
+#' @rdname loadTrace
+#'
+#' @param file Character string with the name of the file (including relative path if not in the working directory).
+#' @param var Character string indicating the name of the variable that is being loaded from the 'file'. It should be a standard name as defined in the 'dictionary' argument.
+#'
+#' @import loadeR
+#'
+#' @export
+#'
 loadHistoricalTraceGrid <- function(file, var = NULL, lon_lim = c(-25, 25), lat_lim = c(25, 50), years = NULL, dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")) {
   if (is.null(var)) {
     stop("Argument var not defined. Please define a variable to be loaded.")
@@ -72,35 +140,15 @@ loadHistoricalTraceGrid <- function(file, var = NULL, lon_lim = c(-25, 25), lat_
 }
 
 
-#' Title
+#' @description `loadTraceGrid`  Load non-historical TraCE21ka data for a single variable.
 #'
-#' @param file TBW
-#' @param var TBW
-#' @param lon_lim TBW
-#' @param lat_lim TBW
-#' @param dictionary TBW
-#'
-#' @return TBW
+#' @rdname loadTrace
 #'
 #' @import loadeR loadeR.java
 #'
 #' @export
 #'
-#' @examples
-#' \dontrun{
-#' tas <- loadTraceGrid(
-#'   "Data/TraCE21ka/TS/trace.01.22000-20001BP.cam2.h0.TS.0000101-0200012.nc",
-#'   "tas", 1,
-#'   lon_lim = NULL, lat_lim = NULL
-#' )
-#' }
 loadTraceGrid <- function(file, var, lon_lim = c(-25, 25), lat_lim = c(25, 50), dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")) {
-  # file <- "Data/TraCE21ka/TS/trace.01.22000-20001BP.cam2.h0.TS.0000101-0200012.nc"
-  # var <- "tas"
-  # lon_lim <- c(-25, 25)
-  # lat_lim <- c(25, 50)
-  # dictionary <- system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")
-
   file.number <- as.numeric(substr(sub(".*trace.", "", file), 1, 2))
 
   trace.y1 <- trace.years.y1[file.number]
@@ -189,95 +237,64 @@ loadTraceGrid <- function(file, var, lon_lim = c(-25, 25), lat_lim = c(25, 50), 
 }
 
 
-#' Title
+
+
+#' Downscale TraCE21ka data
 #'
-#' @param files TBW
-#' @param vars TBW
-#' @param lon_lim TBW
-#' @param lat_lim TBW
-#' @param years TBW
-#' @param compute_wss TBW
-#' @param selection_vars TBW
-#' @param dictionary TBW
+#' @param outdir Character string indicating the output directory where to save the downscaled data.
+#' @param mod_data List object in climate4R format used to calibrate the model that is going to be used to downscale the TraCE21ka data.
+#' @param model Model object from the climate4R framework to be used to download the TraCE21ka data. See [downscaleR::downscaleTrain]
+#' @param model_bin Optional model object from the climate4R framework to be used for binary projection prior to the quantitative projection. See [downscaleR::downscaleTrain].
 #'
-#' @return TBW
+#' @inheritParams traceFileNames
+#' @inheritParams loadTrace
+#' @inheritParams loadeR.2nc::grid2nc
 #'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' LGM.files <- traceFileNames(
-#'   "Data/TraCE21ka/", 1
-#' )
-#' data <- loadTrace(LGM.files,
-#'   c(
-#'     "tas", "tasmax", "tasmin", "hurs@992.5561",
-#'     "ps", "pr", "cld", "u@992.5561", "v@992.5561"
-#'   ), 1,
-#'   selection_vars = c(
-#'     "tas", "tasmax", "tasmin",
-#'     "hurs@992.5561", "ps", "pr",
-#'     "cld", "wss"
-#'   )
-#' )
-#' }
-loadTrace <- function(files, vars = NULL, lon_lim = c(-25, 25), lat_lim = c(25, 50), years = NULL, compute_wss = TRUE, selection_vars = c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps", "pr", "cld", "wss"), dictionary = system.file("extdata", "TraCE21ka_dictionary.csv", package = "dsclim")) {
-  if (is.null(vars)) {
-    vars <- trace.standard.var.names
-  }
-
-  if (grep("trace.36.400BP-1990CE", files[1]) && !is.null(years)) {
-    data <- mapply(loadHistoricalTraceGrid, file = files, var = vars, MoreArgs = list(lon_lim = lon_lim, lat_lim = lat_lim, years = years, dictionary = dictionary), SIMPLIFY = FALSE)
-  } else {
-    data <- mapply(loadTraceGrid, file = files, var = vars, MoreArgs = list(lon_lim = lon_lim, lat_lim = lat_lim, dictionary = dictionary), SIMPLIFY = FALSE)
-  }
-
-  names(data) <- vars
-
-  if (compute_wss == TRUE) {
-    data$wss <- computeWindSpeed(data$"u@992.5561", data$"v@992.5561")
-  }
-
-  data <- transformeR::makeMultiGrid(data)
-  data <- transformeR::subsetGrid(data, var = selection_vars)
-
-  return(data)
-}
-
-
-#' Title
-#'
-#' @param files_n TBW
-#' @param trace_dir TBW
-#' @param outdir TBW
-#' @param mod_data TBW
-#' @param model TBW
-#' @param model_bin TBW
-#' @param vars TBW
-#' @param lon_lim TBW
-#' @param lat_lim TBW
-#' @param selection_vars TBW
-#' @param global_nc_attributes TBW
-#'
-#' @return TBW
+#' @return Character string "Done" when completed sucessfully. However, the real output of the function are the downscaled data saved in the `output` directory.
 #'
 #' @import loadeR loadeR.java
 #'
 #' @export
 #'
-#' @examples # TBW
-downscaleTrace <- function(files_n, trace_dir, outdir, mod_data, model, model_bin = NULL, vars = NULL, lon_lim = c(-25, 25), lat_lim = c(25, 50), selection_vars = NULL, global_nc_attributes = NULL) {
-  # files_n <- 1
-  # outdir <- "Output/Trace21ka/"
-  # trace_dir <- "Data/TraCE21ka/"
-  # mod_data <- data
-  # model <- model
-  # vars <- NULL
-  # lon_lim <- c(-25, 25)
-  # lat_lim <- c(25, 50)
-  # selection_vars <- NULL
-  # global_nc_attributes <- global.nc.attributes
-
+#' @examples
+#' \dontrun{
+#' vars <- c(
+#'   "tas", "tasmin", "tasmax", "hurs@992.5561", "ps",
+#'   "pr", "cld", "wss"
+#' )
+#'
+#' spatial.pars <- list(
+#'   which.combine = vars,
+#'   v.exp = .95,
+#'   rot = FALSE
+#' )
+#'
+#' uerra <- loadUerra(
+#'   "../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc",
+#'   "tas"
+#' )
+#'
+#' trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
+#' hist.trace <- loadTrace(trace.file.names, vars, years = 1961:1990)
+#'
+#' data <- downscaleR::prepareData(hist.trace,
+#'   uerra,
+#'   spatial.predictors = spatial.pars
+#' )
+#'
+#' model <- downscaleR::downscaleTrain(data,
+#'   method = "GLM",
+#'   family = gaussian(link = "identity")
+#' )
+#'
+#' downscaleTrace(4,
+#'   "../Data/TraCE21ka/",
+#'   "output/TraCE21ka/",
+#'   mod_data = data,
+#'   model = model
+#' )
+#' }
+downscaleTrace <- function(files_n, indir, outdir, mod_data, model, model_bin = NULL, vars = NULL, lon_lim = c(-25, 25), lat_lim = c(25, 50), selection_vars = NULL, globalAttributes = NULL) {
   y.var <- mod_data$y$Variable$varName
 
   if (!dir.exists(paste0(outdir, y.var, "/dat"))) {
@@ -288,7 +305,7 @@ downscaleTrace <- function(files_n, trace_dir, outdir, mod_data, model, model_bi
     selection_vars <- c("tas", "tasmax", "tasmin", "hurs@992.5561", "ps", "pr", "cld", "wss")
   }
 
-  new.data <- traceFileNames(trace_dir, files_n)
+  new.data <- traceFileNames(indir, files_n)
 
   new.trace <- loadTrace(new.data, vars, lon_lim, lat_lim, selection_vars = selection_vars)
 
@@ -324,7 +341,7 @@ downscaleTrace <- function(files_n, trace_dir, outdir, mod_data, model, model_bi
 
     pred$Data <- round(pred$Data, 2)
 
-    loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, y.var, "/", y.var, real.years[j], "_tmp.nc"), missval = -9999, globalAttributes = global_nc_attributes)
+    loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, y.var, "/", y.var, real.years[j], "_tmp.nc"), missval = -9999, globalAttributes = globalAttributes)
 
     infile <- paste0(outdir, y.var, "/", y.var, real.years[j], "_tmp.nc")
     outfile <- paste0(outdir, y.var, "/", y.var, real.years[j], ".nc")

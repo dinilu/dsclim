@@ -2,11 +2,11 @@
 % Please edit documentation in R/TraCE21ka_functions.R
 \name{downscaleTrace}
 \alias{downscaleTrace}
-\title{Title}
+\title{Downscale TraCE21ka data}
 \usage{
 downscaleTrace(
   files_n,
-  trace_dir,
+  indir,
   outdir,
   mod_data,
   model,
@@ -15,38 +15,71 @@ downscaleTrace(
   lon_lim = c(-25, 25),
   lat_lim = c(25, 50),
   selection_vars = NULL,
-  global_nc_attributes = NULL
+  globalAttributes = NULL
 )
 }
 \arguments{
-\item{files_n}{TBW}
+\item{files_n}{Integer indicating the number of the desired file. Default to 36, which is the file with the data incorporating the most recent (historical) period.}
 
-\item{trace_dir}{TBW}
+\item{indir}{Character string with the relative path to the TraCE21ka data folder}
 
-\item{outdir}{TBW}
+\item{outdir}{Character string indicating the output directory where to save the downscaled data.}
 
-\item{mod_data}{TBW}
+\item{mod_data}{List object in climate4R format used to calibrate the model that is going to be used to downscale the TraCE21ka data.}
 
-\item{model}{TBW}
+\item{model}{Model object from the climate4R framework to be used to download the TraCE21ka data. See \link[downscaleR:downscaleTrain]{downscaleR::downscaleTrain}}
 
-\item{model_bin}{TBW}
+\item{model_bin}{Optional model object from the climate4R framework to be used for binary projection prior to the quantitative projection. See \link[downscaleR:downscaleTrain]{downscaleR::downscaleTrain}.}
 
-\item{vars}{TBW}
+\item{vars}{String vector with the name of the vars to include in the output. Default is null, which return tas, tasmin, tasmax, pr, ps, hurs, cld, u, and v.}
 
-\item{lon_lim}{TBW}
+\item{lon_lim}{Numeric vector of length 2 with the longitudinal limits of the area of interest to be loaded.}
 
-\item{lat_lim}{TBW}
+\item{lat_lim}{Numeric vector of length 2 with the latitudinal limits of the area of interest to be loaded.}
 
-\item{selection_vars}{TBW}
+\item{selection_vars}{Character vector indicating the name of the variables that are going to be kept in the output. This is useful when computing wind speed (wss) but the two wind components are not of interest and want to be excluded from the output.}
 
-\item{global_nc_attributes}{TBW}
+\item{globalAttributes}{Optional. A list of global attributes included in the NetCDF file. Same format as \code{varAttributes}.}
 }
 \value{
-TBW
+Character string "Done" when completed sucessfully. However, the real output of the function are the downscaled data saved in the \code{output} directory.
 }
 \description{
-Title
+Downscale TraCE21ka data
 }
 \examples{
-# TBW
+\dontrun{
+vars <- c(
+  "tas", "tasmin", "tasmax", "hurs@992.5561", "ps",
+  "pr", "cld", "wss"
+  )
+
+spatial.pars <- list(
+  which.combine = vars,
+  v.exp = .95,
+  rot = FALSE
+  )
+
+uerra <- loadUerra(
+  "../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc",
+  "tas"
+  )
+
+trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
+hist.trace <- loadTrace(trace.file.names, vars, years = 1961:1990)
+
+data <- downscaleR::prepareData(hist.trace,
+  uerra,
+  spatial.predictors = spatial.pars)
+
+model <- downscaleR::downscaleTrain(data,
+  method = "GLM",
+  family = gaussian(link = "identity"))
+
+downscaleTrace(4,
+  "../Data/TraCE21ka/",
+  "output/TraCE21ka/",
+  mod_data = data,
+  model = model)
+}
 }
