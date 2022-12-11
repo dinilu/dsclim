@@ -14,5 +14,5 @@ You can install the development version of dsclim like so:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("dinilu/dsclim")
+devtools::install_github("dinilu/dsclim", build_vignettes = TRUE)
 ```
