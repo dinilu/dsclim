@@ -94,6 +94,9 @@ going on.
 <div class="section level2">
 <h2 id="trace21ka-data">TraCE21ka data<a class="anchor" aria-label="anchor" href="#trace21ka-data"></a>
 </h2>
+<p>Original TraCE21ka data are in NetCDF format. However, they have
+several characteristics that makes not straightforward to import them
+using function from the [loadeR] package.</p>
 <div class="section level3">
 <h3 id="defining-region-limits-for-trace21ka-data">Defining region limits for TraCE21ka data<a class="anchor" aria-label="anchor" href="#defining-region-limits-for-trace21ka-data"></a>
 </h3>
@@ -107,7 +110,7 @@ going on.
 <p>To load the TraCE21ka data for the historical period, we use the
 <code><a href="../reference/loadTrace.html">dsclim::loadHistoricalTraceGrid</a></code> function. This function
 internally use functions from the <a href="https://github.com/SantanderMetGroup/loadeR/wiki" class="external-link">loadeR</a> package. This
-function require the file (including the path to the file) and the
+function requires the file (including the path to the file) and the
 variable name (as it is specified in the data dictionary for
 standardization). Optionally, the spatial coverage can be controlled,
 specifying an extent by the longitudinal and latitudinal extents. The
