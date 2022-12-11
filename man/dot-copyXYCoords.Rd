@@ -7,12 +7,12 @@
 .copyXYCoords(x, y)
 }
 \arguments{
-\item{x}{A grid object (see loadeR package) to be modified.}
+\item{x}{A grid object (see \link[loadeR:loadGridData]{loadeR::loadGridData} function) to be modified.}
 
 \item{y}{A grid object from which to extract the coordinates info.}
 }
 \value{
-The x grid object with the coordinates info from the y grid object.
+The \code{x} grid object with the coordinates info from the \code{y} grid object.
 }
 \description{
 Copy coordinates from one grid to another

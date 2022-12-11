@@ -1,9 +1,9 @@
-#' Title
+#' Check equality in all elements of two vectors
 #'
-#' @param x TBW
-#' @param y TBW
+#' @param x Vector
+#' @param y Vector
 #'
-#' @return TBW
+#' @return Logical value indicating whether all elements in the two vectors are equal or not.
 #'
 #' @keywords internal
 #'
@@ -14,14 +14,14 @@
 
 
 
-#' Title
+#' Create dates sequence
 #'
-#' @param st TBW
-#' @param en TBW
-#' @param freq TBW
-#' @param frac TBW
+#' @param st Character string indicating a starting date for the sequencce in the format "yyyy-mm-dd".
+#' @param en Character string indicating a ending date for the sequencce in the format "yyyy-mm-dd".
+#' @param freq Numeric value indicating the frequency of dates within a year. For instance, if monthly dates are required, `freq` should be 12. However, if annual dates are required, `freq` should be 1.
+#' @param frac Numeric value indicating the period supplied to [zoo::as.Date]. Here it is used to specified the first day of the month `frac = 0`, or the last day of the month `frac = 1`.
 #'
-#' @return TBW
+#' @return Date object (see [base::as.Date])
 #'
 #' @keywords internal
 #'
@@ -36,10 +36,10 @@
 
 #' Copy coordinates from one grid to another
 #'
-#' @param x A grid object (see loadeR package) to be modified.
+#' @param x A grid object (see [loadeR::loadGridData] function) to be modified.
 #' @param y A grid object from which to extract the coordinates info.
 #'
-#' @return The x grid object with the coordinates info from the y grid object.
+#' @return The `x` grid object with the coordinates info from the `y` grid object.
 #'
 #' @keywords internal
 #'
@@ -58,11 +58,13 @@
 
 
 
-#' Title
+#' Recalculate grid resolution
 #'
-#' @param grid TBW
+#' @param grid List object with climate4R framework (see [loadeR::loadGridData]).
 #'
-#' @return TBW
+#' @return A modified version of the `grid` object with new `resX` and `resY` info based on the actual coordinates `xyCoords` that is already in the `grid` object.
+#'
+#' @details This function is designed to recalculate grid resolution when a grid object has been cropped to geographical subset region.
 #'
 #' @keywords internal
 #'

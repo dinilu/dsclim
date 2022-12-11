@@ -2,17 +2,20 @@
 % Please edit documentation in R/hidden_functions.R
 \name{.recalcGridResolution}
 \alias{.recalcGridResolution}
-\title{Title}
+\title{Recalculate grid resolution}
 \usage{
 .recalcGridResolution(grid)
 }
 \arguments{
-\item{grid}{TBW}
+\item{grid}{List object with climate4R framework (see \link[loadeR:loadGridData]{loadeR::loadGridData}).}
 }
 \value{
-TBW
+A modified version of the \code{grid} object with new \code{resX} and \code{resY} info based on the actual coordinates \code{xyCoords} that is already in the \code{grid} object.
 }
 \description{
-Title
+Recalculate grid resolution
+}
+\details{
+This function is designed to recalculate grid resolution when a grid object has been cropped to geographical subset region.
 }
 \keyword{internal}

@@ -52,34 +52,37 @@ Downscale TraCE21ka data
 vars <- c(
   "tas", "tasmin", "tasmax", "hurs@992.5561", "ps",
   "pr", "cld", "wss"
-  )
+)
 
 spatial.pars <- list(
   which.combine = vars,
   v.exp = .95,
   rot = FALSE
-  )
+)
 
 uerra <- loadUerra(
   "../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc",
   "tas"
-  )
+)
 
 trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
 hist.trace <- loadTrace(trace.file.names, vars, years = 1961:1990)
 
 data <- downscaleR::prepareData(hist.trace,
   uerra,
-  spatial.predictors = spatial.pars)
+  spatial.predictors = spatial.pars
+)
 
 model <- downscaleR::downscaleTrain(data,
   method = "GLM",
-  family = gaussian(link = "identity"))
+  family = gaussian(link = "identity")
+)
 
 downscaleTrace(4,
   "../Data/TraCE21ka/",
   "output/TraCE21ka/",
   mod_data = data,
-  model = model)
+  model = model
+)
 }
 }

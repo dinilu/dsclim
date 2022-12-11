@@ -2,23 +2,23 @@
 % Please edit documentation in R/hidden_functions.R
 \name{.DateSeq}
 \alias{.DateSeq}
-\title{Title}
+\title{Create dates sequence}
 \usage{
 .DateSeq(st, en, freq, frac = 0)
 }
 \arguments{
-\item{st}{TBW}
+\item{st}{Character string indicating a starting date for the sequencce in the format "yyyy-mm-dd".}
 
-\item{en}{TBW}
+\item{en}{Character string indicating a ending date for the sequencce in the format "yyyy-mm-dd".}
 
-\item{freq}{TBW}
+\item{freq}{Numeric value indicating the frequency of dates within a year. For instance, if monthly dates are required, \code{freq} should be 12. However, if annual dates are required, \code{freq} should be 1.}
 
-\item{frac}{TBW}
+\item{frac}{Numeric value indicating the period supplied to \link[zoo:yearmon]{zoo::as.Date}. Here it is used to specified the first day of the month \code{frac = 0}, or the last day of the month \code{frac = 1}.}
 }
 \value{
-TBW
+Date object (see \link[base:as.Date]{base::as.Date})
 }
 \description{
-Title
+Create dates sequence
 }
 \keyword{internal}

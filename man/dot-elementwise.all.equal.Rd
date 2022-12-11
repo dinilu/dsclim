@@ -2,19 +2,19 @@
 % Please edit documentation in R/hidden_functions.R
 \name{.elementwise.all.equal}
 \alias{.elementwise.all.equal}
-\title{Title}
+\title{Check equality in all elements of two vectors}
 \usage{
 .elementwise.all.equal(x, y)
 }
 \arguments{
-\item{x}{TBW}
+\item{x}{Vector}
 
-\item{y}{TBW}
+\item{y}{Vector}
 }
 \value{
-TBW
+Logical value indicating whether all elements in the two vectors are equal or not.
 }
 \description{
-Title
+Check equality in all elements of two vectors
 }
 \keyword{internal}
