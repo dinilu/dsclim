@@ -88,8 +88,8 @@
 <div class="alert alert-warning" role="alert">
 This vignettes require climate data from three different sources:
 TraCE21ka, UERRA, and CMIP5. Please follow
-<code>vignette("Data_downloading_and_preprocessing")</code> before going
-on.
+<code><a href="../articles/a1_Data_downloading_and_preprocessing.html">vignette("a1_Data_downloading_and_preprocessing")</a></code> before
+going on.
 </div>
 <div class="section level2">
 <h2 id="trace21ka-data">TraCE21ka data<a class="anchor" aria-label="anchor" href="#trace21ka-data"></a>
@@ -271,18 +271,14 @@ the downscaling process.</p>
 </h2>
 <p>The UERRA dataset were transformed after downloading to reproject
 them (see code in the vignette
-<code>vignette("Data_downloading_and_preprocessing")</code>). As result
-of such transformation, we obtained NetCDF files that can be directly
-imported in R using the <code><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData()</a></code> from the {loadeR}
-package. This function also allow to specify a geographical region to
-subset the loaded data.</p>
-<div class="section level3">
-<h3 id="defining-region-limits-for-uerra-data">Defining region limits for UERRA data<a class="anchor" aria-label="anchor" href="#defining-region-limits-for-uerra-data"></a>
-</h3>
+<code><a href="../articles/a1_Data_downloading_and_preprocessing.html">vignette("a1_Data_downloading_and_preprocessing")</a></code>). As
+result of such transformation, we obtained NetCDF files that can be
+directly imported in R using the <code><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData()</a></code> from the
+<a href="https://github.com/SantanderMetGroup/loadeR/wiki" class="external-link">loadeR</a> package. This function also allow to specify a
+geographical region to subset the loaded data.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uerra.lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="va">uerra.lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span></span></code></pre></div>
-</div>
 <div class="section level3 tabset">
 <h3 class="tabset" id="loading-uerra-data">Loading UERRA data<a class="anchor" aria-label="anchor" href="#loading-uerra-data"></a>
 </h3>
