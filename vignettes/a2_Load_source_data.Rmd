@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 ## TraCE21ka data
 
-Original TraCE21ka data are in NetCDF format. However, they have several characteristics that makes not straightforward to import them using function from the `{loadeR}` package. Hence, we have developed a set of wrapper functions to import those data into R with the `climate4r` format. More specifically, to load the TraCE21ka data for the historical period, we use the `dsclim::loadHistoricalTraceGrid` function. This function requires the file (including the path to the file) and the variable name (as it is specified in the data dictionary for standardization). Optionally, the spatial coverage can be controlled, specifying an extent by the longitudinal and latitudinal extents. In this tutorial we use the same extent used to create our dsclim data for the Western Mediterranean region. 
+Original TraCE21ka data are in NetCDF format. However, they have several characteristics that makes not straightforward to import them using function from the `{loadeR}` package. Hence, we have developed a set of wrapper functions to import those data into R with the `climate4r` format. More specifically, to load the TraCE21ka data for the historical period, we use the `dsclim::loadHistoricalTraceGrid()` function. This function requires the file (including the path to the file) and the variable name (as it is specified in the data dictionary for standardization). Optionally, the spatial coverage can be controlled, specifying an extent by the longitudinal and latitudinal extents. In this tutorial we use the same extent used to create our dsclim data for the Western Mediterranean region. 
 
 ```{r set_trace_limits}
 library(dsclim) 
@@ -159,7 +159,7 @@ visualizeR::spatialPlot(transformeR::climatology(hist.trace), backdrop.theme = "
 
 ## UERRA historical reanalisis data
 
-The UERRA dataset were transformed after downloading to reproject them (see code in the vignette `vignette("Data_downloading_and_preprocessing")`). As result of such transformation, we obtained NetCDF files that can be directly imported in R using the `loadGridData` from the {loadeR} package. This function also allow to specify a geographical region to subset the loaded data.
+The UERRA dataset were transformed after downloading to reproject them (see code in the vignette `vignette("Data_downloading_and_preprocessing")`). As result of such transformation, we obtained NetCDF files that can be directly imported in R using the `loadGridData()` from the {loadeR} package. This function also allow to specify a geographical region to subset the loaded data.
 
 ### Defining region limits for UERRA data
 
@@ -263,7 +263,7 @@ visualizeR::spatialPlot(transformeR::climatology(uerra.wss), main = "wss", backd
 
 ### Fix dates 
 
-Dates from the UERRA files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. The `modifyDates` function from the `{dsclim}` package modify the dates and fix this small issue.
+Dates from the UERRA files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. The `modifyDates()` function from the `{dsclim}` package modify the dates and fix this small issue.
 
 ```{r correct_uerra_dates}
 uerra.tasmax <- modifyDates(uerra.tasmax)
@@ -278,7 +278,7 @@ uerra.wss <- modifyDates(uerra.wss)
 
 ## CMIP5 future data
 
-CMIP5 data can be directly loaded with the `loadGridData` from the `{loadeR}` package. Here, we used the same extent than for TraCE21ka dataset. For this example, we are going to use the data set from the rcp2.6 and CESM1-CAM5 combination of representative concentration pathways and general circulation model.
+CMIP5 data can be directly loaded with the `loadGridData()` from the `{loadeR}` package. Here, we used the same extent than for TraCE21ka dataset. For this example, we are going to use the data set from the rcp2.6 and CESM1-CAM5 combination of representative concentration pathways and general circulation model.
 
 ```{r set_cmip5_limits}
 cmip5.lon <- c(-11.25, 12.50)
@@ -377,7 +377,7 @@ visualizeR::spatialPlot(transformeR::climatology(cmip.wss), main = "wss", backdr
 
 ### Fix dates 
 
-Similarly to the UERRA data, dates from the CMIP5 files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. Again, the `modifyDates` function from the `dsclim` package modify the dates and fix helps to fix this small issue.
+Similarly to the UERRA data, dates from the CMIP5 files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. Again, the `modifyDates()` function from the `{dsclim}` package modify the dates and fix helps to fix this small issue.
 
 ```{r correct_cmip_dates}
 cmip.tasmax <- modifyDates(cmip.tasmax)
