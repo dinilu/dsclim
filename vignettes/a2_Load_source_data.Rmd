@@ -159,19 +159,19 @@ visualizeR::spatialPlot(transformeR::climatology(hist.trace), backdrop.theme = "
 
 ## UERRA historical reanalisis data
 
-The UERRA dataset were transformed after downloading to reproject them (see code in the vignette `vignette("Data_downloading_and_preprocessing")`). As result of such transformation, we obtained NetCDF files that can be directly imported in R using the `loadGridData` from the {loadeR} package. 
+The UERRA dataset were transformed after downloading to reproject them (see code in the vignette `vignette("Data_downloading_and_preprocessing")`). As result of such transformation, we obtained NetCDF files that can be directly imported in R using the `loadGridData` from the {loadeR} package. This function also allow to specify a geographical region to subset the loaded data.
 
 ### Defining region limits for UERRA data
 
 ```{r set_uerra_limits}
 uerra.lon <- c(-11, 12)
 uerra.lat <- c(28, 44)
-# uerra.lon <- c(-11, 4)
-# uerra.lat <- c(36, 44)
 ```
 
 
 ### Loading UERRA data {.tabset} 
+
+Now, we load the tailored data of the UERRA dataset for the period 1961-1990. More specifically, we loaded the same variables that we were interested to downscale. These grid objects were used as predictands in the downscale process.
 
 Select a variable 
 
@@ -263,7 +263,7 @@ visualizeR::spatialPlot(transformeR::climatology(uerra.wss), main = "wss", backd
 
 ### Fix dates 
 
-Dates from the UERRA files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. The `modifyDates` function from the `dsclim` package modify the dates and fix this small issue.
+Dates from the UERRA files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. The `modifyDates` function from the `{dsclim}` package modify the dates and fix this small issue.
 
 ```{r correct_uerra_dates}
 uerra.tasmax <- modifyDates(uerra.tasmax)
@@ -276,11 +276,9 @@ uerra.wss <- modifyDates(uerra.wss)
 ```
 
 
-## CMIP future data
+## CMIP5 future data
 
-We are going to use the same extent than for TraCE21ka data-set. For this example, we are going to use the data set from the rcp2.6 and CESM1-CAM5 combination of representative concentration pathways and general circulation model from the CMIP5 data set.
-
-### Defining region limits for UERRA data
+CMIP5 data can be directly loaded with the `loadGridData` from the `{loadeR}` package. Here, we used the same extent than for TraCE21ka dataset. For this example, we are going to use the data set from the rcp2.6 and CESM1-CAM5 combination of representative concentration pathways and general circulation model.
 
 ```{r set_cmip5_limits}
 cmip5.lon <- c(-11.25, 12.50)
@@ -379,7 +377,7 @@ visualizeR::spatialPlot(transformeR::climatology(cmip.wss), main = "wss", backdr
 
 ### Fix dates 
 
-Dates from the CMIP5 files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. The `modifyDates` function from the `dsclim` package modify the dates and fix this small issue.
+Similarly to the UERRA data, dates from the CMIP5 files match the actual year and month, but are interpreted as the central date of the month, rather than the whole range of data. Again, the `modifyDates` function from the `dsclim` package modify the dates and fix helps to fix this small issue.
 
 ```{r correct_cmip_dates}
 cmip.tasmax <- modifyDates(cmip.tasmax)
