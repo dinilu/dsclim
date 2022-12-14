@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-<div class="alert alert-warning" role="alert">This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow `vignette("Data_downloading_and_preprocessing")` before going on.</div>  
+<div class="alert alert-warning" role="alert">This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow `vignette("a1_Data_downloading_and_preprocessing")` before going on.</div>  
 
 ## TraCE21ka data
 
@@ -159,9 +159,7 @@ visualizeR::spatialPlot(transformeR::climatology(hist.trace), backdrop.theme = "
 
 ## UERRA historical reanalisis data
 
-The UERRA dataset were transformed after downloading to reproject them (see code in the vignette `vignette("Data_downloading_and_preprocessing")`). As result of such transformation, we obtained NetCDF files that can be directly imported in R using the `loadGridData()` from the {loadeR} package. This function also allow to specify a geographical region to subset the loaded data.
-
-### Defining region limits for UERRA data
+The UERRA dataset were transformed after downloading to reproject them (see code in the vignette `vignette("a1_Data_downloading_and_preprocessing")`). As result of such transformation, we obtained NetCDF files that can be directly imported in R using the `loadGridData()` from the `{loadeR}` package. This function also allow to specify a geographical region to subset the loaded data.
 
 ```{r set_uerra_limits}
 uerra.lon <- c(-11, 12)
