@@ -273,19 +273,22 @@ them (see code in the vignette
 <code>vignette("Data_downloading_and_preprocessing")</code>). As result
 of such transformation, we obtained NetCDF files that can be directly
 imported in R using the <code>loadGridData</code> from the {loadeR}
-package.</p>
+package. This function also allow to specify a geographical region to
+subset the loaded data.</p>
 <div class="section level3">
 <h3 id="defining-region-limits-for-uerra-data">Defining region limits for UERRA data<a class="anchor" aria-label="anchor" href="#defining-region-limits-for-uerra-data"></a>
 </h3>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uerra.lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span></span>
-<span><span class="va">uerra.lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span></span>
-<span><span class="co"># uerra.lon &lt;- c(-11, 4)</span></span>
-<span><span class="co"># uerra.lat &lt;- c(36, 44)</span></span></code></pre></div>
+<span><span class="va">uerra.lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>, <span class="fl">44</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3 tabset">
 <h3 class="tabset" id="loading-uerra-data">Loading UERRA data<a class="anchor" aria-label="anchor" href="#loading-uerra-data"></a>
 </h3>
+<p>Now, we load the tailored data of the UERRA dataset for the period
+1961-1990. More specifically, we loaded the same variables that we were
+interested to downscale. These grid objects were used as predictands in
+the downscale process.</p>
 <p>Select a variable</p>
 
 
@@ -398,7 +401,7 @@ package.</p>
 <p>Dates from the UERRA files match the actual year and month, but are
 interpreted as the central date of the month, rather than the whole
 range of data. The <code>modifyDates</code> function from the
-<code>dsclim</code> package modify the dates and fix this small
+<a href="https://github.com/dinilu/dsclim" class="external-link">dsclim</a> package modify the dates and fix this small
 issue.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uerra.tasmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modifyDates.html">modifyDates</a></span><span class="op">(</span><span class="va">uerra.tasmax</span><span class="op">)</span></span>
@@ -411,19 +414,16 @@ issue.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="cmip-future-data">CMIP future data<a class="anchor" aria-label="anchor" href="#cmip-future-data"></a>
+<h2 id="cmip5-future-data">CMIP5 future data<a class="anchor" aria-label="anchor" href="#cmip5-future-data"></a>
 </h2>
-<p>We are going to use the same extent than for TraCE21ka data-set. For
-this example, we are going to use the data set from the rcp2.6 and
-CESM1-CAM5 combination of representative concentration pathways and
-general circulation model from the CMIP5 data set.</p>
-<div class="section level3">
-<h3 id="defining-region-limits-for-uerra-data-1">Defining region limits for UERRA data<a class="anchor" aria-label="anchor" href="#defining-region-limits-for-uerra-data-1"></a>
-</h3>
+<p>CMIP5 data can be directly loaded with the <code>loadGridData</code>
+from the <a href="https://github.com/SantanderMetGroup/loadeR/wiki" class="external-link">loadeR</a> package. Here, we used the same extent
+than for TraCE21ka dataset. For this example, we are going to use the
+data set from the rcp2.6 and CESM1-CAM5 combination of representative
+concentration pathways and general circulation model.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cmip5.lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11.25</span>, <span class="fl">12.50</span><span class="op">)</span></span>
 <span><span class="va">cmip5.lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">45</span><span class="op">)</span></span></code></pre></div>
-</div>
 <div class="section level3 tabset">
 <h3 class="tabset" id="loading-cmip5-data">Loading CMIP5 data<a class="anchor" aria-label="anchor" href="#loading-cmip5-data"></a>
 </h3>
@@ -536,11 +536,11 @@ general circulation model from the CMIP5 data set.</p>
 <div class="section level3">
 <h3 id="fix-dates-1">Fix dates<a class="anchor" aria-label="anchor" href="#fix-dates-1"></a>
 </h3>
-<p>Dates from the CMIP5 files match the actual year and month, but are
-interpreted as the central date of the month, rather than the whole
-range of data. The <code>modifyDates</code> function from the
-<code>dsclim</code> package modify the dates and fix this small
-issue.</p>
+<p>Similarly to the UERRA data, dates from the CMIP5 files match the
+actual year and month, but are interpreted as the central date of the
+month, rather than the whole range of data. Again, the
+<code>modifyDates</code> function from the <code>dsclim</code> package
+modify the dates and fix helps to fix this small issue.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cmip.tasmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modifyDates.html">modifyDates</a></span><span class="op">(</span><span class="va">cmip.tasmax</span><span class="op">)</span></span>
 <span><span class="va">cmip.tasmin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modifyDates.html">modifyDates</a></span><span class="op">(</span><span class="va">cmip.tasmin</span><span class="op">)</span></span>
