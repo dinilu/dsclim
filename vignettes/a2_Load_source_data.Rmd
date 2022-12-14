@@ -23,12 +23,13 @@ knitr::opts_chunk$set(
 
 ## TraCE21ka data
 
-Original TraCE21ka data are in NetCDF format. However, they have several characteristics that makes not straightforward to import them using function from the {loadeR} package. Hence, we have developed a set of wrapper functions to import those data into R with the `climate4r` format.
+Original TraCE21ka data are in NetCDF format. However, they have several characteristics that makes not straightforward to import them using function from the `{loadeR}` package. Hence, we have developed a set of wrapper functions to import those data into R with the `climate4r` format.
 
 
 ### Loading TraCE21ka data {.tabset} 
 
 To load the TraCE21ka data for the historical period, we use the `dsclim::loadHistoricalTraceGrid` function. This function internally use functions from the `{loadeR}` package. This function requires the file (including the path to the file) and the variable name (as it is specified in the data dictionary for standardization). Optionally, the spatial coverage can be controlled, specifying an extent by the longitudinal and latitudinal extents. In this tutorial we use the same extent used to create our dsclim data for the Western Mediterranean region. 
+
 
 ```{r set_trace_limits}
 library(dsclim) 
@@ -36,6 +37,7 @@ library(dsclim)
 trace.lon <- c(-25, 25)
 trace.lat <- c(25, 50)
 ```
+
 
 The function also allow to specify the starting and ending year of the desired period. If not specified, it uses the period 1961 to 1990, both years included.
 
