@@ -389,7 +389,7 @@ cmip.wss <- modifyDates(cmip.wss)
 
 Similarly to TraCE21ka dataset, the resulting objects for CMIP5 dataset can be combined in a multigrid object. This will be required afterwards to use all those variables as predictors in the downscaling process.
 
-```{r combine_trace_data}
+```{r combine_cmip_data}
 hist.cmip <- transformeR::makeMultiGrid(cmip.tasmax, cmip.tasmin, cmip.tas, cmip.pr, cmip.hurs, cmip.cld, cmip.ps, cmip.wss)
 
 rm(cmip.tasmax, cmip.tasmin, cmip.tas, cmip.pr, cmip.hurs, cmip.cld, cmip.ps, cmip.wss)
