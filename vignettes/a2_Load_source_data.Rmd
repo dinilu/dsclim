@@ -37,7 +37,7 @@ trace.lat <- c(25, 50)
 
 The function also allow to specify the starting and ending year of the desired period. If not specified, it uses the period 1961 to 1990, both years included.
 
-Once the data are loaded, we used the `transformeR::climatology` function to calculate the average value of the variable for the whole period (e.g. 1961-1990) and the `visualizeR::spatialPlot` to plot the resulting map.
+Once the data are loaded, we used the `transformeR::climatology()` function to calculate the average value of the variable for the whole period (e.g. 1961-1990) and the `visualizeR::spatialPlot()` function to plot the resulting map.
 
 Select a variable:
 
