@@ -100,7 +100,7 @@ using function from the <a href="https://github.com/SantanderMetGroup/loadeR/wik
 developed a set of wrapper functions to import those data into R with
 the <code>climate4r</code> format. More specifically, to load the
 TraCE21ka data for the historical period, we use the
-<code><a href="../reference/loadTrace.html">dsclim::loadHistoricalTraceGrid</a></code> function. This function
+<code><a href="../reference/loadTrace.html">dsclim::loadHistoricalTraceGrid()</a></code> function. This function
 requires the file (including the path to the file) and the variable name
 (as it is specified in the data dictionary for standardization).
 Optionally, the spatial coverage can be controlled, specifying an extent
@@ -273,7 +273,7 @@ the downscaling process.</p>
 them (see code in the vignette
 <code>vignette("Data_downloading_and_preprocessing")</code>). As result
 of such transformation, we obtained NetCDF files that can be directly
-imported in R using the <code>loadGridData</code> from the {loadeR}
+imported in R using the <code><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData()</a></code> from the {loadeR}
 package. This function also allow to specify a geographical region to
 subset the loaded data.</p>
 <div class="section level3">
@@ -401,7 +401,7 @@ the downscale process.</p>
 </h3>
 <p>Dates from the UERRA files match the actual year and month, but are
 interpreted as the central date of the month, rather than the whole
-range of data. The <code>modifyDates</code> function from the
+range of data. The <code><a href="../reference/modifyDates.html">modifyDates()</a></code> function from the
 <a href="https://github.com/dinilu/dsclim" class="external-link">dsclim</a> package modify the dates and fix this small
 issue.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
@@ -417,11 +417,12 @@ issue.</p>
 <div class="section level2">
 <h2 id="cmip5-future-data">CMIP5 future data<a class="anchor" aria-label="anchor" href="#cmip5-future-data"></a>
 </h2>
-<p>CMIP5 data can be directly loaded with the <code>loadGridData</code>
-from the <a href="https://github.com/SantanderMetGroup/loadeR/wiki" class="external-link">loadeR</a> package. Here, we used the same extent
-than for TraCE21ka dataset. For this example, we are going to use the
-data set from the rcp2.6 and CESM1-CAM5 combination of representative
-concentration pathways and general circulation model.</p>
+<p>CMIP5 data can be directly loaded with the
+<code><a href="https://rdrr.io/pkg/loadeR/man/loadGridData.html" class="external-link">loadGridData()</a></code> from the <a href="https://github.com/SantanderMetGroup/loadeR/wiki" class="external-link">loadeR</a> package.
+Here, we used the same extent than for TraCE21ka dataset. For this
+example, we are going to use the data set from the rcp2.6 and CESM1-CAM5
+combination of representative concentration pathways and general
+circulation model.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cmip5.lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">11.25</span>, <span class="fl">12.50</span><span class="op">)</span></span>
 <span><span class="va">cmip5.lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">27</span>, <span class="fl">45</span><span class="op">)</span></span></code></pre></div>
@@ -540,8 +541,8 @@ concentration pathways and general circulation model.</p>
 <p>Similarly to the UERRA data, dates from the CMIP5 files match the
 actual year and month, but are interpreted as the central date of the
 month, rather than the whole range of data. Again, the
-<code>modifyDates</code> function from the <code>dsclim</code> package
-modify the dates and fix helps to fix this small issue.</p>
+<code><a href="../reference/modifyDates.html">modifyDates()</a></code> function from the <a href="https://github.com/dinilu/dsclim" class="external-link">dsclim</a>
+package modify the dates and fix helps to fix this small issue.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cmip.tasmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modifyDates.html">modifyDates</a></span><span class="op">(</span><span class="va">cmip.tasmax</span><span class="op">)</span></span>
 <span><span class="va">cmip.tasmin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/modifyDates.html">modifyDates</a></span><span class="op">(</span><span class="va">cmip.tasmin</span><span class="op">)</span></span>
