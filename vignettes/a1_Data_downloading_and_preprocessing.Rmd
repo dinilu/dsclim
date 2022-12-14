@@ -812,7 +812,7 @@ c.retrieve(
 
 ### Create dictionary
 
-Before importing the data in an R session, we need to define a dictionary to standarize units of variables to the [climate4R](https://github.com/SantanderMetGroup/climate4R) vocabulary (check ` climate4R.UDG::C4R.vocabulary()`.
+Before importing the data in an R session, we need to define a dictionary to standarize units of variables to the [climate4R](https://github.com/SantanderMetGroup/climate4R) vocabulary (check `climate4R.UDG::C4R.vocabulary()`).
 
 ```{r create_cmip5_dictionary, eval = FALSE}
 
