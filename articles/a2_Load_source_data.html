@@ -98,20 +98,23 @@ on.
 several characteristics that makes not straightforward to import them
 using function from the <a href="https://github.com/SantanderMetGroup/loadeR/wiki" class="external-link">loadeR</a> package. Hence, we have
 developed a set of wrapper functions to import those data into R with
-the <code>climate4r</code> format.</p>
+the <code>climate4r</code> format. More specifically, to load the
+TraCE21ka data for the historical period, we use the
+<code><a href="../reference/loadTrace.html">dsclim::loadHistoricalTraceGrid</a></code> function. This function
+requires the file (including the path to the file) and the variable name
+(as it is specified in the data dictionary for standardization).
+Optionally, the spatial coverage can be controlled, specifying an extent
+by the longitudinal and latitudinal extents. In this tutorial we use the
+same extent used to create our dsclim data for the Western Mediterranean
+region.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dinilu/dsclim" class="external-link">dsclim</a></span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">trace.lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">25</span>, <span class="fl">25</span><span class="op">)</span></span>
+<span><span class="va">trace.lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3 tabset">
 <h3 class="tabset" id="loading-trace21ka-data">Loading TraCE21ka data<a class="anchor" aria-label="anchor" href="#loading-trace21ka-data"></a>
 </h3>
-<p>To load the TraCE21ka data for the historical period, we use the
-<code><a href="../reference/loadTrace.html">dsclim::loadHistoricalTraceGrid</a></code> function. This function
-internally use functions from the <a href="https://github.com/SantanderMetGroup/loadeR/wiki" class="external-link">loadeR</a> package. This
-function requires the file (including the path to the file) and the
-variable name (as it is specified in the data dictionary for
-standardization). Optionally, the spatial coverage can be controlled,
-specifying an extent by the longitudinal and latitudinal extents. In
-this tutorial we use the same extent used to create our dsclim data for
-the Western Mediterranean region.</p>
-
 <p>The function also allow to specify the starting and ending year of
 the desired period. If not specified, it uses the period 1961 to 1990,
 both years included.</p>
@@ -131,12 +134,7 @@ value of the variable for the whole period (e.g. 1961-1990) and the
 
 
 <ul class="nav nav-tabs" id="loading-trace21ka-data" role="tablist">
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#NA" id="NA-tab" type="button" role="tab" aria-controls="NA" aria-selected="true" class="active nav-link">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dinilu/dsclim" class="external-link">dsclim</a></span><span class="op">)</span> </span>
-<span></span>
-<span><span class="va">trace.lon</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">25</span>, <span class="fl">25</span><span class="op">)</span></span>
-<span><span class="va">trace.lat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span><span class="op">)</span></span></code></button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#tsmx" id="tsmx-tab" type="button" role="tab" aria-controls="tsmx" aria-selected="false" class="nav-link">TSMX</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#tsmx" id="tsmx-tab" type="button" role="tab" aria-controls="tsmx" aria-selected="true" class="active nav-link">TSMX</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#tsmn" id="tsmn-tab" type="button" role="tab" aria-controls="tsmn" aria-selected="false" class="nav-link">TSMN</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#ts" id="ts-tab" type="button" role="tab" aria-controls="ts" aria-selected="false" class="nav-link">TS</button></li>
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#precc" id="precc-tab" type="button" role="tab" aria-controls="precc" aria-selected="false" class="nav-link">PRECC</button></li>
@@ -148,8 +146,7 @@ value of the variable for the whole period (e.g. 1961-1990) and the
 <li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#wss" id="wss-tab" type="button" role="tab" aria-controls="wss" aria-selected="false" class="nav-link">WSS</button></li>
 </ul>
 <div class="tab-content">
-<div class="active  tab-pane" id="NA" role="tabpanel" aria-labelledby="NA-tab"></div>
-<div class="tab-pane" id="tsmx" role="tabpanel" aria-labelledby="tsmx-tab">
+<div class="active  tab-pane" id="tsmx" role="tabpanel" aria-labelledby="tsmx-tab">
 
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trace.tsmx</span> <span class="op">&lt;-</span> <span class="fu">dsclim</span><span class="fu">::</span><span class="fu"><a href="../reference/loadTrace.html">loadHistoricalTraceGrid</a></span><span class="op">(</span><span class="st">"../../Data/TraCE21ka/TSMX/trace.36.400BP-1990CE.cam2.h0.TSMX.2160101-2204012.nc"</span>, var <span class="op">=</span> <span class="st">"tasmax"</span>, lon_lim <span class="op">=</span> <span class="va">trace.lon</span>, lat_lim <span class="op">=</span> <span class="va">trace.lat</span><span class="op">)</span></span>
