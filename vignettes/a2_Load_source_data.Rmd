@@ -19,22 +19,25 @@ knitr::opts_chunk$set(
 )
 ```
 
-<div class="alert alert-warning" role="alert">This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow `vignette("Data_downloading_and_preprocessing"")` before going on.</div>  
+<div class="alert alert-warning" role="alert">This vignettes require climate data from three different sources: TraCE21ka, UERRA, and CMIP5. Please follow `vignette("Data_downloading_and_preprocessing")` before going on.</div>  
 
 ## TraCE21ka data
 
-Original TraCE21ka data are in NetCDF format. However, they have several characteristics that makes not straightforward to import them using function from the [loadeR] package. 
+Original TraCE21ka data are in NetCDF format. However, they have several characteristics that makes not straightforward to import them using function from the {loadeR} package. Hence, we have developed a set of wrapper functions to import those data into R with the `climate4r` format.
 
-### Defining region limits for TraCE21ka data
+
+### Loading TraCE21ka data {.tabset} 
+
+To load the TraCE21ka data for the historical period, we use the `dsclim::loadHistoricalTraceGrid` function. This function internally use functions from the `{loadeR}` package. This function requires the file (including the path to the file) and the variable name (as it is specified in the data dictionary for standardization). Optionally, the spatial coverage can be controlled, specifying an extent by the longitudinal and latitudinal extents. In this tutorial we use the same extent used to create our dsclim data for the Western Mediterranean region. 
 
 ```{r set_trace_limits}
+library(dsclim) 
+
 trace.lon <- c(-25, 25)
 trace.lat <- c(25, 50)
 ```
 
-### Loading TraCE21ka data {.tabset} 
-
-To load the TraCE21ka data for the historical period, we use the `dsclim::loadHistoricalTraceGrid` function. This function internally use functions from the `{loadeR}` package. This function requires the file (including the path to the file) and the variable name (as it is specified in the data dictionary for standardization). Optionally, the spatial coverage can be controlled, specifying an extent by the longitudinal and latitudinal extents. The function also allow to specify the starting and ending year of the desired period. If not specified, it uses the period 1961 to 1990, both years included.
+The function also allow to specify the starting and ending year of the desired period. If not specified, it uses the period 1961 to 1990, both years included.
 
 Once the data are loaded, we used the `transformeR::climatology` function to calculate the average value of the variable for the whole period (e.g. 1961-1990) and the `visualizeR::spatialPlot` to plot the resulting map.
 
@@ -144,6 +147,8 @@ visualizeR::spatialPlot(transformeR::climatology(trace.wss), backdrop.theme = "c
 
 ### Make multivariable grid
 
+The resulting objects can be combined in a multigrid object. This will be required afterwards to use all those variables as predictors in the downscaling process.
+
 ```{r combine_trace_data}
 hist.trace <- transformeR::makeMultiGrid(trace.tsmx, trace.tsmn, trace.ts, trace.precc, trace.relhum, trace.cldtot, trace.ps, trace.wss)
 
@@ -156,7 +161,7 @@ visualizeR::spatialPlot(transformeR::climatology(hist.trace), backdrop.theme = "
 
 ## UERRA historical reanalisis data
 
-Now, we are ready to import the files in R and check them out with the `climate4r` framework. More specifically, we are using the `loadeR` and `visualizeR` packages.
+The UERRA dataset were transformed after downloading to reproject them (see code in the vignette `vignette("Data_downloading_and_preprocessing")`). As result of such transformation, we obtained NetCDF files that can be directly imported in R using the `loadGridData` from the {loadeR} package. 
 
 ### Defining region limits for UERRA data
 
