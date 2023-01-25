@@ -19,15 +19,17 @@ This file is to document the downscaling process of TraCE21ka paleoclimate and C
 
 ### Defining variables and folds for crossvalidation
 
+This code is setting up the parameters for a downscaling process in the `dsclim` library. The `vars` variable is setting up the variables that will be included in the dataset. The `spatial.pars` variable is setting up the parameters of the spatial combination. The `family.link` variable is setting the link function for the Generalized Linear Model used as transfer model in the downscaling process. Lastly, the `global.nc.attributes` variable is setting the author, institution, and email of the responsible of the downscaled dataset.
+
 ```{r load_packages_and_parameters`}
 library(dsclim)
-library(downscaleR)
-vars <- c(
+
+vars <- c( 
   "tas", "tasmin", "tasmax", "hurs@992.5561", "ps",
   "pr", "cld", "wss"
 )
 
-spatial.pars <- list(
+spatial.pars <- list( 
   which.combine = vars,
   v.exp = .95,
   rot = FALSE
@@ -40,6 +42,8 @@ global.nc.attributes <- list("author" = "Diego Nieto Lugilde & Daniel Romera Rom
 
 ### Loading UERRA data
 
+Next, we loads the UERRA (Unified European Reanalysis) data for 2m temperature variable, "tas", from the "../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc" file. The data is then stored in an object called "uerra".
+
 ```{r load_uerra_data} 
 uerra <- loadUerra("../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc", "tas")
 ```
@@ -48,6 +52,8 @@ uerra <- loadUerra("../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-9
 
 ### Loading TraCE21ka data
 
+This R code is loading TraCE21ka data from the directory "../../Data/TraCE21ka/". The first line of code assigns the variable "trace.file.names" to a list of the trace file names in the given directory. The second line of code assigns the variable "hist.trace" to the trace data loaded from the trace file names over the years 1961 to 1990.
+
 ```{r load_trace_data}
 trace.file.names <- traceFileNames("../../Data/TraCE21ka/")
 hist.trace <- loadTrace(trace.file.names, years = 1961:1990)
@@ -55,11 +61,15 @@ hist.trace <- loadTrace(trace.file.names, years = 1961:1990)
 
 ### Prepare data for downscaling 
 
+Now, the following code uses the downscaleR R package to prepare data for downscaling. The prepareData function takes two arguments: hist.trace and uerra. The hist.trace argument is a historical TraCE21ka data that will be used as predictors for downscaling, and the uerra argument is the set of UERRA data containing regional climate model output (used as predictand). The third argument, spatial.predictors, contains the spatial parameters that will be used to predict the downscaled data. The data object is then populated with the prepared data.
+
 ```{r prepare_data}
 data <- downscaleR::prepareData(hist.trace, uerra, spatial.predictors = spatial.pars)
 ```
 
 ### Train downscaling model
+
+This code is using the downscaleR R package to train a model. The model is based on a Generalized Linear Model (GLM) with a specified family link (family.link = gaussian(link = "identity")). Model prediction for the training data will be calculated and stored in the model object (predict = TRUE).
 
 ```{r calibrate_model}
 model <- downscaleR::downscaleTrain(data, method = "GLM", family = family.link, predict = TRUE)
@@ -67,19 +77,25 @@ model <- downscaleR::downscaleTrain(data, method = "GLM", family = family.link, 
 
 ### Downscale a single TraCE21ka file
 
+The next R code downscale a single trace file using the "downscaleTrace" function from the `dsclim` package. The first argument (4) is the number of the trace file to be downscaled, and the second and third arguments are the directory paths of the original trace file and the output directory, respectively. The fourth argument, "mod_data" refers to the input data used to downscale the trace file, while the fifth argument, "model", specifies the model used for the downscaling process. The last argument, "global_nc_attributes", refers to the global attributes associated with the trace file, which are required for the downscaling process. Note that the result of the function is not saved as an R object in the environment but a series of downscaled files that are saved in the output directory ("output/TraCE21ka/").
+
 ```{r downscale_single_trace_file}
-downscaleTrace(4, "../../Data/TraCE21ka/", "prueba/TraCE21ka/", mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
+downscaleTrace(4, "../../Data/TraCE21ka/", "output/TraCE21ka/", mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
 ```
 
 ### Downscale all TraCE21ka files for a single variable
 
+Similarly, we can use the `lapply` function to call the `downscaleTrace` function on a list of values (1:36). This will downscale each trace file in the specified directory ("../../Data/TraCE21ka/") and write the result in the output directory ("output/TraCE21ka"). The downscaleTrace function also has the parameters hist_trace, mod_data, model, and global_nc_attributes.
+
 ```{r downscale_all_trace_files} 
-lapply(1:36, downscaleTrace, "prueba/", "../../Data/TraCE21ka/", hist_trace = hist.trace, mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
+lapply(1:36, downscaleTrace, "../../Data/TraCE21ka/", "output/TraCE21ka", hist_trace = hist.trace, mod_data = data, model = model, global_nc_attributes = global.nc.attributes)
 ```
 
 ## Downscale CMIP5 data
 
 ### Defining specific arguments 
+
+Now, we create a data frame with all combinations of the cmip5.rcps and cmip5.mods variables. These variables are "rcp2.6", "rcp4.5", "rcp6.0" and "rcp8.5" for cmip5.rcps, and "CESM1-CAM5", "CSIRO-Mk3-6-0" and "IPSL-CM5A-MR" for cmip5.mods. The data frame will contain all of the possible combinations of these two variables. Here, we also create a "vars" variable with the name of all the CMIP5 variables names to be used afterwards.
 
 ```{r define_cmip5_arguments}
 cmip5.rcps <- c("rcp2.6", "rcp4.5", "rcp6.0", "rcp8.5")
@@ -91,14 +107,16 @@ df <- expand.grid(cmip5.rcps, cmip5.mods)
 
 ### Downscaling CMIP5 data for a single combination of RCPs and climate model
 
+This R code downscale a single RCP from the CMIP5 dataset. The `downscaleCMIP5` function takes 5 parameters: cmip5.rcps[[1]], cmip5.mods[[1]], indir, uerra, outdir and method. The first two parameters are the RCP and GCM to downscale, respectively. The indir parameter is the directory where the CMIP5 data is located. The uerra parameter is used to specify UERRA dataset (predictand) in the downscaling process. The outdir parameter is the directory where the downscaled data should be saved. The method parameter specifies the downscaling method to use, which in this case is the GLM (generalized linear model) method. The family_link and spatial_pars parameters are used to specify the family link and spatial parameters for the GLM model. Finally, the global_nc_attributes parameter is used to specify global attributes for the output NetCDF files.
+
 ```{r downscale_single_rcp_mod_cmip5} 
-downscaleCMIP5(cmip5.rcps[[1]], cmip5.mods[[1]], indir = "../../Data/CMIP5/", uerra, outdir = "prueba/CMIP5/", method = "GLM", family_link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes)
+downscaleCMIP5(cmip5.rcps[[1]], cmip5.mods[[1]], indir = "../../Data/CMIP5/", uerra, outdir = "output/CMIP5/", method = "GLM", family_link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes)
 ```
 
 ### Downscaling CMIP5 data for all combination of RCPs and climate models
 
-```{r downscale_all_rcp_mod_cmip5}
-mapply(downscaleCMIP5, df$Var1, df$Var2, MoreArgs = list(indir = "../../Data/CMIP5/", uerra = uerra, outdir = "prueba/CMIP5/", method = "GLM", family_link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes))
-```
+Finally, we downscale climate data from all RCPs and GCMs in the CMIP5 dataset by using the `mapply` function to apply the `downscaleCMIP5` function to all RCPs and GCMs values (stored in the Var1 and Var2 columns of the df data frame). The `downscaleCMIP5` function takes other parameters that include the indir directory ("../../Data/CMIP5/"), the UERRA data (uerra), the outdir directory ("output/CMIP5/"), the method used ("GLM"), the family_link (gaussian), the spatial_pars variable, and the global_nc_attributes variable. 
 
-<!-- ![Bias summary histograms](figures/a3/a3_val_summary_histograms.png) -->
+```{r downscale_all_rcp_mod_cmip5}
+mapply(downscaleCMIP5, df$Var1, df$Var2, MoreArgs = list(indir = "../../Data/CMIP5/", uerra = uerra, outdir = "output/CMIP5/", method = "GLM", family_link = "gaussian", spatial_pars = spatial.pars, global_nc_attributes = global.nc.attributes))
+```
