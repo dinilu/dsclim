@@ -8,10 +8,10 @@
 <meta name="description" content="dsclim">
 <title>4. Downscaling climate data • dsclim</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="4. Downscaling climate data">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="4. Downscaling climate data">
 <meta property="og:description" content="dsclim">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -94,15 +94,24 @@ Mediterranean region and the methods and tools implemented in the
 <div class="section level3">
 <h3 id="defining-variables-and-folds-for-crossvalidation">Defining variables and folds for crossvalidation<a class="anchor" aria-label="anchor" href="#defining-variables-and-folds-for-crossvalidation"></a>
 </h3>
+<p>This code is setting up the parameters for a downscaling process in
+the <code>dsclim</code> library. The <code>vars</code> variable is
+setting up the variables that will be included in the dataset. The
+<code>spatial.pars</code> variable is setting up the parameters of the
+spatial combination. The <code>family.link</code> variable is setting
+the link function for the Generalized Linear Model used as transfer
+model in the downscaling process. Lastly, the
+<code>global.nc.attributes</code> variable is setting the author,
+institution, and email of the responsible of the downscaled dataset.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dinilu/dsclim" class="external-link">dsclim</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.meteo.unican.es/climate4r" class="external-link">downscaleR</a></span><span class="op">)</span></span>
-<span><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span></span>
+<span><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span> </span>
 <span>  <span class="st">"tas"</span>, <span class="st">"tasmin"</span>, <span class="st">"tasmax"</span>, <span class="st">"hurs@992.5561"</span>, <span class="st">"ps"</span>,</span>
 <span>  <span class="st">"pr"</span>, <span class="st">"cld"</span>, <span class="st">"wss"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">spatial.pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span><span class="va">spatial.pars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> </span>
 <span>  which.combine <span class="op">=</span> <span class="va">vars</span>,</span>
 <span>  v.exp <span class="op">=</span> <span class="fl">.95</span>,</span>
 <span>  rot <span class="op">=</span> <span class="cn">FALSE</span></span>
@@ -115,6 +124,10 @@ Mediterranean region and the methods and tools implemented in the
 <div class="section level3">
 <h3 id="loading-uerra-data">Loading UERRA data<a class="anchor" aria-label="anchor" href="#loading-uerra-data"></a>
 </h3>
+<p>Next, we loads the UERRA (Unified European Reanalysis) data for 2m
+temperature variable, “tas”, from the
+“../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc”
+file. The data is then stored in an object called “uerra”.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uerra</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadUerra.html">loadUerra</a></span><span class="op">(</span><span class="st">"../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_temperature.nc"</span>, <span class="st">"tas"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -125,6 +138,12 @@ Mediterranean region and the methods and tools implemented in the
 <div class="section level3">
 <h3 id="loading-trace21ka-data">Loading TraCE21ka data<a class="anchor" aria-label="anchor" href="#loading-trace21ka-data"></a>
 </h3>
+<p>This R code is loading TraCE21ka data from the directory
+“../../Data/TraCE21ka/”. The first line of code assigns the variable
+“trace.file.names” to a list of the trace file names in the given
+directory. The second line of code assigns the variable “hist.trace” to
+the trace data loaded from the trace file names over the years 1961 to
+1990.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trace.file.names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/traceFileNames.html">traceFileNames</a></span><span class="op">(</span><span class="st">"../../Data/TraCE21ka/"</span><span class="op">)</span></span>
 <span><span class="va">hist.trace</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadTrace.html">loadTrace</a></span><span class="op">(</span><span class="va">trace.file.names</span>, years <span class="op">=</span> <span class="fl">1961</span><span class="op">:</span><span class="fl">1990</span><span class="op">)</span></span></code></pre></div>
@@ -132,26 +151,59 @@ Mediterranean region and the methods and tools implemented in the
 <div class="section level3">
 <h3 id="prepare-data-for-downscaling">Prepare data for downscaling<a class="anchor" aria-label="anchor" href="#prepare-data-for-downscaling"></a>
 </h3>
+<p>Now, the following code uses the downscaleR R package to prepare data
+for downscaling. The prepareData function takes two arguments:
+hist.trace and uerra. The hist.trace argument is a historical TraCE21ka
+data that will be used as predictors for downscaling, and the uerra
+argument is the set of UERRA data containing regional climate model
+output (used as predictand). The third argument, spatial.predictors,
+contains the spatial parameters that will be used to predict the
+downscaled data. The data object is then populated with the prepared
+data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">downscaleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/downscaleR/man/prepareData.html" class="external-link">prepareData</a></span><span class="op">(</span><span class="va">hist.trace</span>, <span class="va">uerra</span>, spatial.predictors <span class="op">=</span> <span class="va">spatial.pars</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="train-downscaling-model">Train downscaling model<a class="anchor" aria-label="anchor" href="#train-downscaling-model"></a>
 </h3>
+<p>This code is using the downscaleR R package to train a model. The
+model is based on a Generalized Linear Model (GLM) with a specified
+family link (family.link = gaussian(link = “identity”)). Model
+prediction for the training data will be calculated and stored in the
+model object (predict = TRUE).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu">downscaleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/downscaleR/man/downscaleTrain.html" class="external-link">downscaleTrain</a></span><span class="op">(</span><span class="va">data</span>, method <span class="op">=</span> <span class="st">"GLM"</span>, family <span class="op">=</span> <span class="va">family.link</span>, predict <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="downscale-a-single-trace21ka-file">Downscale a single TraCE21ka file<a class="anchor" aria-label="anchor" href="#downscale-a-single-trace21ka-file"></a>
 </h3>
+<p>The next R code downscale a single trace file using the
+“downscaleTrace” function from the <code>dsclim</code> package. The
+first argument (4) is the number of the trace file to be downscaled, and
+the second and third arguments are the directory paths of the original
+trace file and the output directory, respectively. The fourth argument,
+“mod_data” refers to the input data used to downscale the trace file,
+while the fifth argument, “model”, specifies the model used for the
+downscaling process. The last argument, “global_nc_attributes”, refers
+to the global attributes associated with the trace file, which are
+required for the downscaling process. Note that the result of the
+function is not saved as an R object in the environment but a series of
+downscaled files that are saved in the output directory
+(“output/TraCE21ka/”).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/downscaleTrace.html">downscaleTrace</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"../../Data/TraCE21ka/"</span>, <span class="st">"prueba/TraCE21ka/"</span>, mod_data <span class="op">=</span> <span class="va">data</span>, model <span class="op">=</span> <span class="va">model</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/downscaleTrace.html">downscaleTrace</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"../../Data/TraCE21ka/"</span>, <span class="st">"output/TraCE21ka/"</span>, mod_data <span class="op">=</span> <span class="va">data</span>, model <span class="op">=</span> <span class="va">model</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="downscale-all-trace21ka-files-for-a-single-variable">Downscale all TraCE21ka files for a single variable<a class="anchor" aria-label="anchor" href="#downscale-all-trace21ka-files-for-a-single-variable"></a>
 </h3>
+<p>Similarly, we can use the <code>lapply</code> function to call the
+<code>downscaleTrace</code> function on a list of values (1:36). This
+will downscale each trace file in the specified directory
+(“../../Data/TraCE21ka/”) and write the result in the output directory
+(“output/TraCE21ka”). The downscaleTrace function also has the
+parameters hist_trace, mod_data, model, and global_nc_attributes.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">36</span>, <span class="va">downscaleTrace</span>, <span class="st">"prueba/"</span>, <span class="st">"../../Data/TraCE21ka/"</span>, hist_trace <span class="op">=</span> <span class="va">hist.trace</span>, mod_data <span class="op">=</span> <span class="va">data</span>, model <span class="op">=</span> <span class="va">model</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">36</span>, <span class="va">downscaleTrace</span>, <span class="st">"../../Data/TraCE21ka/"</span>, <span class="st">"output/TraCE21ka"</span>, hist_trace <span class="op">=</span> <span class="va">hist.trace</span>, mod_data <span class="op">=</span> <span class="va">data</span>, model <span class="op">=</span> <span class="va">model</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -160,6 +212,13 @@ Mediterranean region and the methods and tools implemented in the
 <div class="section level3">
 <h3 id="defining-specific-arguments">Defining specific arguments<a class="anchor" aria-label="anchor" href="#defining-specific-arguments"></a>
 </h3>
+<p>Now, we create a data frame with all combinations of the cmip5.rcps
+and cmip5.mods variables. These variables are “rcp2.6”, “rcp4.5”,
+“rcp6.0” and “rcp8.5” for cmip5.rcps, and “CESM1-CAM5”, “CSIRO-Mk3-6-0”
+and “IPSL-CM5A-MR” for cmip5.mods. The data frame will contain all of
+the possible combinations of these two variables. Here, we also create a
+“vars” variable with the name of all the CMIP5 variables names to be
+used afterwards.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cmip5.rcps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rcp2.6"</span>, <span class="st">"rcp4.5"</span>, <span class="st">"rcp6.0"</span>, <span class="st">"rcp8.5"</span><span class="op">)</span></span>
 <span><span class="va">cmip5.mods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CESM1-CAM5"</span>, <span class="st">"CSIRO-Mk3-6-0"</span>, <span class="st">"IPSL-CM5A-MR"</span><span class="op">)</span></span>
@@ -171,16 +230,37 @@ Mediterranean region and the methods and tools implemented in the
 <h3 id="downscaling-cmip5-data-for-a-single-combination-of-rcps-and-climate-model">Downscaling CMIP5 data for a single combination of RCPs and climate
 model<a class="anchor" aria-label="anchor" href="#downscaling-cmip5-data-for-a-single-combination-of-rcps-and-climate-model"></a>
 </h3>
+<p>This R code downscale a single RCP from the CMIP5 dataset. The
+<code>downscaleCMIP5</code> function takes 5 parameters:
+cmip5.rcps[[1]], cmip5.mods[[1]], indir, uerra, outdir and method. The
+first two parameters are the RCP and GCM to downscale, respectively. The
+indir parameter is the directory where the CMIP5 data is located. The
+uerra parameter is used to specify UERRA dataset (predictand) in the
+downscaling process. The outdir parameter is the directory where the
+downscaled data should be saved. The method parameter specifies the
+downscaling method to use, which in this case is the GLM (generalized
+linear model) method. The family_link and spatial_pars parameters are
+used to specify the family link and spatial parameters for the GLM
+model. Finally, the global_nc_attributes parameter is used to specify
+global attributes for the output NetCDF files.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/downscaleCMIP5.html">downscaleCMIP5</a></span><span class="op">(</span><span class="va">cmip5.rcps</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">cmip5.mods</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, indir <span class="op">=</span> <span class="st">"../../Data/CMIP5/"</span>, <span class="va">uerra</span>, outdir <span class="op">=</span> <span class="st">"prueba/CMIP5/"</span>, method <span class="op">=</span> <span class="st">"GLM"</span>, family_link <span class="op">=</span> <span class="st">"gaussian"</span>, spatial_pars <span class="op">=</span> <span class="va">spatial.pars</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/downscaleCMIP5.html">downscaleCMIP5</a></span><span class="op">(</span><span class="va">cmip5.rcps</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">cmip5.mods</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, indir <span class="op">=</span> <span class="st">"../../Data/CMIP5/"</span>, <span class="va">uerra</span>, outdir <span class="op">=</span> <span class="st">"output/CMIP5/"</span>, method <span class="op">=</span> <span class="st">"GLM"</span>, family_link <span class="op">=</span> <span class="st">"gaussian"</span>, spatial_pars <span class="op">=</span> <span class="va">spatial.pars</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="downscaling-cmip5-data-for-all-combination-of-rcps-and-climate-models">Downscaling CMIP5 data for all combination of RCPs and climate
 models<a class="anchor" aria-label="anchor" href="#downscaling-cmip5-data-for-all-combination-of-rcps-and-climate-models"></a>
 </h3>
+<p>Finally, we downscale climate data from all RCPs and GCMs in the
+CMIP5 dataset by using the <code>mapply</code> function to apply the
+<code>downscaleCMIP5</code> function to all RCPs and GCMs values (stored
+in the Var1 and Var2 columns of the df data frame). The
+<code>downscaleCMIP5</code> function takes other parameters that include
+the indir directory (“../../Data/CMIP5/”), the UERRA data (uerra), the
+outdir directory (“output/CMIP5/”), the method used (“GLM”), the
+family_link (gaussian), the spatial_pars variable, and the
+global_nc_attributes variable.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply</a></span><span class="op">(</span><span class="va">downscaleCMIP5</span>, <span class="va">df</span><span class="op">$</span><span class="va">Var1</span>, <span class="va">df</span><span class="op">$</span><span class="va">Var2</span>, MoreArgs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>indir <span class="op">=</span> <span class="st">"../../Data/CMIP5/"</span>, uerra <span class="op">=</span> <span class="va">uerra</span>, outdir <span class="op">=</span> <span class="st">"prueba/CMIP5/"</span>, method <span class="op">=</span> <span class="st">"GLM"</span>, family_link <span class="op">=</span> <span class="st">"gaussian"</span>, spatial_pars <span class="op">=</span> <span class="va">spatial.pars</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<!-- ![Bias summary histograms](figures/a3/a3_val_summary_histograms.png) -->
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mapply.html" class="external-link">mapply</a></span><span class="op">(</span><span class="va">downscaleCMIP5</span>, <span class="va">df</span><span class="op">$</span><span class="va">Var1</span>, <span class="va">df</span><span class="op">$</span><span class="va">Var2</span>, MoreArgs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>indir <span class="op">=</span> <span class="st">"../../Data/CMIP5/"</span>, uerra <span class="op">=</span> <span class="va">uerra</span>, outdir <span class="op">=</span> <span class="st">"output/CMIP5/"</span>, method <span class="op">=</span> <span class="st">"GLM"</span>, family_link <span class="op">=</span> <span class="st">"gaussian"</span>, spatial_pars <span class="op">=</span> <span class="va">spatial.pars</span>, global_nc_attributes <span class="op">=</span> <span class="va">global.nc.attributes</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -196,7 +276,7 @@ models<a class="anchor" aria-label="anchor" href="#downscaling-cmip5-data-for-al
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
