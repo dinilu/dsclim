@@ -85,20 +85,34 @@
 
     
     
-<p>This file is to document the downscaling process of Trace-21ka
-paleoclimate data using the most updated and finer resolution
-“historical” climate data for the Western Mediterranean region and the
-methods and tools implemented in the <code>climate4R</code>
-framework.</p>
+<p>Here, we document the downscaling process with crossvalidation of
+Trace-21ka paleoclimate data using the UERRA dataset for the historical
+period. This evaluation allows us to test several configurations of the
+downscaling process and select the optimal ones to run the downscaling
+of the whole dataset.</p>
 <p>More information can be found <a href="https://github.com/SantanderMetGroup/notebooks/blob/master/2019_downscaleR_GMD.pdf" class="external-link">here</a>,
 <a href="https://github.com/SantanderMetGroup/notebooks" class="external-link">here</a>, and
 <a href="https://github.com/SantanderMetGroup/downscaleR/wiki" class="external-link">here</a>.</p>
 <div class="section level2">
 <h2 id="downscaling">Downscaling<a class="anchor" aria-label="anchor" href="#downscaling"></a>
 </h2>
+<p>The downscaling process will be divided in several steps.</p>
 <div class="section level3">
 <h3 id="defining-variables-and-folds-for-crossvalidation">Defining variables and folds for crossvalidation<a class="anchor" aria-label="anchor" href="#defining-variables-and-folds-for-crossvalidation"></a>
 </h3>
+<p>Let start by loading the R package <code>dsclim</code>. Then, we
+create a vector (<code>vars</code>) containing the names of several
+climate variables to be used as predictors in the downscaling process.
+The variable <code>local.var</code> is assigned the value “tasmin”,
+which is the variable that we aim to downscale in the first place. The
+next line creates a list of six elements containing the years 1961 to
+1990 split into five-year groups, this is where we are defining the
+years to be used in the crossvalidation. To do so, we will fit one
+downscaling model for each of the five years period using data from the
+rest of the years and using this period to evaluate/validate the model.
+Hence, we will fit six models. Finally, the <code>trace.dir</code>
+variable is set to the path of a directory containing TraCE21ka
+data.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dinilu/dsclim" class="external-link">dsclim</a></span><span class="op">)</span></span>
 <span></span>
@@ -116,6 +130,20 @@ framework.</p>
 <div class="section level3">
 <h3 id="defining-parameters-for-downscaling">Defining parameters for downscaling<a class="anchor" aria-label="anchor" href="#defining-parameters-for-downscaling"></a>
 </h3>
+<p>The following code is setting up parameters for the R package
+<code>downscaleR</code>. The <code>spatial.pars</code> list is defining
+the variables that should be combined using a Principal Component
+Analysis. Here, we specify all predictor variables. Hence, those models
+using spatial.pars argument will use all the variables to fit a PCA and
+transform the varibles. More especifically, the PCA will retain those
+axis that explain up to 90% of the variance (<code>v.exp</code>) and
+will not be rotated. The <code>local.pars.XXX</code> objects define
+different configurations of local vars for the models. <code>M2</code>
+models use the only one variable as the local variable, whereas
+<code>M3</code> uses all predictor variables as local variables.
+Finally, models ending in 1 use the information of the local pixel as
+predictor, whereas models ending in 4 use the information from the 4
+closest pixels as predictors.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.meteo.unican.es/climate4r" class="external-link">downscaleR</a></span><span class="op">)</span></span>
 <span></span>
@@ -136,6 +164,13 @@ framework.</p>
 <div class="section level3">
 <h3 id="data-loading">Data loading<a class="anchor" aria-label="anchor" href="#data-loading"></a>
 </h3>
+<p>To load the data, we retrieve file names from all files in the trace
+directory. The first line assigns the trace file names from the trace
+directory to the variable “trace.file.names”. Then, we loads the trace
+files into the variable “hist.trace” and specifies the years 1961-1990,
+since we are not intended to downscale the whole period but only the
+historical period to run the crossvalidation. The following lines check
+that the data were loaded properly.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">trace.file.names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/traceFileNames.html">traceFileNames</a></span><span class="op">(</span><span class="va">trace.dir</span><span class="op">)</span></span>
 <span><span class="va">hist.trace</span> <span class="op">&lt;-</span> <span class="fu">dsclim</span><span class="fu">::</span><span class="fu"><a href="../reference/loadTrace.html">loadTrace</a></span><span class="op">(</span><span class="va">trace.file.names</span>, years <span class="op">=</span> <span class="fl">1961</span><span class="op">:</span><span class="fl">1990</span><span class="op">)</span></span>
@@ -144,6 +179,15 @@ framework.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">hist.trace</span><span class="op">$</span><span class="va">Dates</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">start</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hist.trace</span><span class="op">$</span><span class="va">Dates</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">end</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">hist.trace</span><span class="op">$</span><span class="va">Dates</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">end</span><span class="op">)</span></span></code></pre></div>
+<p>Now, we need to load the data from the UERRA project since this is
+going to be our current high resolution climate data to be used as
+predictand. The first line is loading the local variable
+(<code>local.var</code>) from the
+<code>2m_temperature/latlon/1961-90_2m_tmin.nc</code> file in the
+UERRA-HARMONIE directory and and assigning it to the variable
+<code>uerra.data</code>. The following lines just check that data were
+loaded properly and matches the same dates than loaded TraCE21ka
+data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uerra.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/loadUerra.html">loadUerra</a></span><span class="op">(</span><span class="st">"../../Data/UERRA/UERRA-HARMONIE/2m_temperature/latlon/1961-90_2m_tmin.nc"</span>, <span class="va">local.var</span><span class="op">)</span></span>
 <span><span class="va">uerra.data</span><span class="op">$</span><span class="va">Variable</span><span class="op">$</span><span class="va">varName</span></span>
@@ -155,7 +199,25 @@ framework.</p>
 <div class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills" id="downscaling-1">Downscaling<a class="anchor" aria-label="anchor" href="#downscaling-1"></a>
 </h3>
-<p>Select a model</p>
+<p>Now, we can start fitting models with the cross validation
+approach.</p>
+<p>In general, the code uses the <code>downscaleR</code> package to fit
+a Generalized Linear Model (GLM) downscaling method to create a model
+that predicts paleoclimate data from historical climate. The
+<code>family</code> argument sets the distribution of the model to a
+Gaussian distribution with an <code>identity</code> link. The
+<code>folds</code> argument sets the number of folds to use in the
+cross-validation. The <code>prepareData.args</code> is a list of
+arguments that sets the global, local, and spatial predictors to use in
+the model.</p>
+<p>The result from the downscaling is a high resolution dataset for the
+whole period (1961-1990), although the data for group of five years were
+not used to fit the particular model used to dowscale this five years
+data. Finally, we use the <code>spatialPlot</code> function from the
+<code>visualizeR</code> package to plot an average of the output (e.g. a
+<code>climatology</code> calculated with the <code>transformeR</code>
+package).</p>
+<p>To see the code for each model, select a tab:</p>
 
 
 
@@ -175,6 +237,8 @@ framework.</p>
 <div class="tab-content">
 <div class="active  tab-pane" id="glm-1-sp" role="tabpanel" aria-labelledby="glm-1-sp-tab">
 
+<p>This model uses spatial pars but do not use global or local
+variables.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GLM.1.sp</span> <span class="op">&lt;-</span> <span class="fu">downscaleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/downscaleR/man/downscaleCV.html" class="external-link">downscaleCV</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">hist.trace</span>,</span>
@@ -199,6 +263,8 @@ specifications.</p>
 </div>
 <div class="tab-pane" id="glm-21" role="tabpanel" aria-labelledby="glm-21-tab">
 
+<p>This model uses a local variables with 1 local pixel, but no spatial
+or global variables.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GLM.21</span> <span class="op">&lt;-</span> <span class="fu">downscaleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/downscaleR/man/downscaleCV.html" class="external-link">downscaleCV</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">hist.trace</span>,</span>
@@ -222,6 +288,8 @@ specifications.</p>
 </div>
 <div class="tab-pane" id="glm-21-sp" role="tabpanel" aria-labelledby="glm-21-sp-tab">
 
+<p>This model uses a local variables with 1 local pixel and spatial
+variables, but no global variables.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GLM.21.sp</span> <span class="op">&lt;-</span> <span class="fu">downscaleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/downscaleR/man/downscaleCV.html" class="external-link">downscaleCV</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">hist.trace</span>,</span>
@@ -246,6 +314,8 @@ specifications.</p>
 </div>
 <div class="tab-pane" id="glm-24" role="tabpanel" aria-labelledby="glm-24-tab">
 
+<p>This model uses a local variables with 4 local pixel, but no spatial
+or global variables.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GLM.24</span> <span class="op">&lt;-</span> <span class="fu">downscaleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/downscaleR/man/downscaleCV.html" class="external-link">downscaleCV</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">hist.trace</span>,</span>
@@ -269,6 +339,8 @@ specifications.</p>
 </div>
 <div class="tab-pane" id="glm-24-sp" role="tabpanel" aria-labelledby="glm-24-sp-tab">
 
+<p>This model uses a local variables with 4 local pixel and spatial
+variables, but no global variables.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GLM.24.sp</span> <span class="op">&lt;-</span> <span class="fu">downscaleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/downscaleR/man/downscaleCV.html" class="external-link">downscaleCV</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">hist.trace</span>,</span>
@@ -292,6 +364,8 @@ specifications.</p>
 </div>
 <div class="tab-pane" id="glm-31" role="tabpanel" aria-labelledby="glm-31-tab">
 
+<p>This model uses all variables as local variables with 1 local pixel,
+but no spatial or global variables.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GLM.31</span> <span class="op">&lt;-</span> <span class="fu">downscaleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/downscaleR/man/downscaleCV.html" class="external-link">downscaleCV</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">hist.trace</span>,</span>
@@ -315,6 +389,8 @@ specifications.</p>
 </div>
 <div class="tab-pane" id="glm-34" role="tabpanel" aria-labelledby="glm-34-tab">
 
+<p>This model uses all variables as local variables with 4 local pixel,
+but no spatial or global variables.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">GLM.34</span> <span class="op">&lt;-</span> <span class="fu">downscaleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/downscaleR/man/downscaleCV.html" class="external-link">downscaleCV</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="va">hist.trace</span>,</span>
@@ -342,9 +418,14 @@ specifications.</p>
 <div class="section level2">
 <h2 id="evaluate-downscaling-performance">Evaluate downscaling performance<a class="anchor" aria-label="anchor" href="#evaluate-downscaling-performance"></a>
 </h2>
+<p>Now that we have a downscaled version of the data, we can evaluate
+their values against the “real” data, represented here by the UERRA
+dataset.</p>
 <div class="section level3">
 <h3 id="create-function-to-extract-info">Create function to extract info<a class="anchor" aria-label="anchor" href="#create-function-to-extract-info"></a>
 </h3>
+<p>First, we define a function that will run the evaluation and extract
+significant metrics.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ds_validation</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">models</span>, <span class="va">obs</span>, <span class="va">measure.code</span> <span class="op">=</span> <span class="st">"bias"</span>, <span class="va">index.code</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">l</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span></span>
@@ -367,6 +448,9 @@ specifications.</p>
 <div class="section level3">
 <h3 id="run-evaluation">Run evaluation<a class="anchor" aria-label="anchor" href="#run-evaluation"></a>
 </h3>
+<p>Then, we can use this function to evaluate all the models. To speed
+things up, we run this code in several cores of the computer using the
+<code>parallel</code> package.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ds.methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GLM.1.sp"</span>, <span class="st">"GLM.21"</span>, <span class="st">"GLM.21.sp"</span>, <span class="st">"GLM.24"</span>, <span class="st">"GLM.24.sp"</span>, <span class="st">"GLM.31"</span>, <span class="st">"GLM.34"</span><span class="op">)</span></span>
 <span></span>
@@ -402,10 +486,13 @@ specifications.</p>
 <div class="section level2">
 <h2 id="plot-evaluations-results">Plot evaluations’ results<a class="anchor" aria-label="anchor" href="#plot-evaluations-results"></a>
 </h2>
+<p>Finally, we can plot the results from the evaluations in several
+formats.</p>
 <div class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills" id="error-or-bias-maps">Error (or bias) maps<a class="anchor" aria-label="anchor" href="#error-or-bias-maps"></a>
 </h3>
-<p>Select a model</p>
+<p>First, we plot mean bias in each pixel (the mean include 30 years *
+12 months data). To see the maps from each model select a tab:</p>
 
 
 
@@ -505,6 +592,9 @@ specifications.</p>
 <div class="section level3">
 <h3 id="violin-plots-sumarizing-results">Violin plots sumarizing results<a class="anchor" aria-label="anchor" href="#violin-plots-sumarizing-results"></a>
 </h3>
+<p>To have an overall perspective of all the metrics from the different
+models, we can use violin plots for each model and the three metrics of
+the bias (mean, sd, and skewness).</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/reshape" class="external-link">reshape2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -529,6 +619,8 @@ specifications.</p>
 <div class="section level3">
 <h3 id="error-or-bias-histograms">Error or bias histograms<a class="anchor" aria-label="anchor" href="#error-or-bias-histograms"></a>
 </h3>
+<p>Finally, we complement previous evaluations ploting the histograms
+from each metric.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.meteo.unican.es/climate4r" class="external-link">transformeR</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
