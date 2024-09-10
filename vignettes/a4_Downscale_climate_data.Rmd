@@ -31,7 +31,7 @@ vars <- c(
 
 spatial.pars <- list( 
   which.combine = vars,
-  v.exp = .95,
+  v.exp = .7,
   rot = FALSE
 )
 
