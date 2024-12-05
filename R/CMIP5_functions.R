@@ -181,10 +181,10 @@ downscaleCMIP5 <- function(rcp, mod, indir, uerra, outdir, vars = NULL, cmip5_va
 
     loadeR.2nc::grid2nc(pred_i, NetCDFOutFile = paste0(outdir, rcp, "/", mod, "/", y.var, "/", y.var, yBP, ".nc"), missval = -9999, globalAttributes = globalAttributes)
 
-    pred_df <- grid2spatialdf(pred_i)
+    # pred_df <- grid2spatialdf(pred_i)
 
-    file_name <- paste0(outdir, rcp, "/", mod, "/", y.var, "/dat/", y.var, yBP, ".dat")
-    utils::write.table(pred_df, file = file_name, sep = "\t")
+    # file_name <- paste0(outdir, rcp, "/", mod, "/", y.var, "/dat/", y.var, yBP, ".dat")
+    # utils::write.table(pred_df, file = file_name, sep = "\t")
   }
   return("Done")
 }

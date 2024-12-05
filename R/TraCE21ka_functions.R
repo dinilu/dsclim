@@ -352,9 +352,9 @@ downscaleTrace <- function(files_n, indir, outdir, mod_data, model, model_bin = 
     system2("cdo", c("-r", "setreftime,1950-01-01,00:00:00,1mon", "-setcalendar,standard", paste0("-shifttime,", ydiff, "y"), infile, outfile))
     file.remove(infile)
 
-    pred.df <- grid2spatialdf(pred)
+    # pred.df <- grid2spatialdf(pred)
 
-    utils::write.table(pred.df, file = paste0(outdir, y.var, "/dat/", y.var, real.years[j], ".dat"), sep = "\t")
+    # utils::write.table(pred.df, file = paste0(outdir, y.var, "/dat/", y.var, real.years[j], ".dat"), sep = "\t")
 
     message("   ...done")
   }
