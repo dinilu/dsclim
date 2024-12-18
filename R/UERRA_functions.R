@@ -29,6 +29,11 @@ loadUerra <- function(file, var, lon_lim = c(-11, 12), lat_lim = c(28, 44), dict
     data <- transformeR::upscaleGrid(data, times = aggr_times, aggr.fun = list(FUN = aggr_fun))
   }
 
+  if(data$Variable$varName == "cld"){
+    attributes(data$Variable)$units <- "%"
+    attributes(data$Variable)$longname <- "Total Cloud Cover"
+  }
+
   data <- modifyDates(data)
 
   return(data)

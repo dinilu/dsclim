@@ -297,8 +297,8 @@ loadTraceGrid <- function(file, var, lon_lim = c(-25, 25), lat_lim = c(25, 50), 
 downscaleTrace <- function(files_n, indir, outdir, mod_data, model, model_bin = NULL, vars = NULL, lon_lim = c(-25, 25), lat_lim = c(25, 50), selection_vars = NULL, globalAttributes = NULL) {
   y.var <- mod_data$y$Variable$varName
 
-  if (!dir.exists(paste0(outdir, y.var, "/dat"))) {
-    dir.create(paste0(outdir, y.var, "/dat"), recursive = TRUE)
+  if (!dir.exists(paste0(outdir, y.var))) {
+    dir.create(paste0(outdir, y.var), recursive = TRUE)
   }
 
   if (is.null(selection_vars)) {

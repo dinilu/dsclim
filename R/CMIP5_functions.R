@@ -113,8 +113,8 @@ loadCMIP5 <- function(indir, rcp, mod, vars = NULL, cmip5_vars = NULL, lon_lim =
 downscaleCMIP5 <- function(rcp, mod, indir, uerra, outdir, vars = NULL, cmip5_vars = NULL, lon_lim = c(-11, 12), lat_lim = c(28, 44), years = 1991:2100, dictionary = system.file("extdata", "CMIP5_dictionary.csv", package = "dsclim"), method = "GLM", family_link = stats::gaussian(link = "identity"), local.predictors = NULL, global.vars = NULL, spatial.predictors = NULL, extended.predictors = NULL, combined.only = TRUE, globalAttributes = NULL) {
   y.var <- uerra$Variable$varName
 
-  if (!dir.exists(paste0(outdir, rcp, "/", mod, "/", y.var, "/dat"))) {
-    dir.create(paste0(outdir, rcp, "/", mod, "/", y.var, "/dat"), recursive = TRUE)
+  if (!dir.exists(paste0(outdir, "/", rcp, "/", mod, "/", y.var))) {
+    dir.create(paste0(outdir, "/", rcp, "/", mod, "/", y.var), recursive = TRUE)
   }
 
   if (is.null(cmip5_vars)) {
@@ -171,7 +171,7 @@ downscaleCMIP5 <- function(rcp, mod, indir, uerra, outdir, vars = NULL, cmip5_va
 
   pred$Data <- round(pred$Data, 2)
 
-  # loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, rcp, "/", mod, "/", y.var, "/", y.var, "1991-2100.nc"), missval = -9999, globalAttributes = globalAttributes)
+  # loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, "/", rcp, "/", mod, "/", y.var, "/", y.var, "1991-2100.nc"), missval = -9999, globalAttributes = globalAttributes)
 
   for (i in 1:length(years)) {
     message("SAVING YEAR: ", years[i])
@@ -179,11 +179,11 @@ downscaleCMIP5 <- function(rcp, mod, indir, uerra, outdir, vars = NULL, cmip5_va
     yBP <- (years - 1950)[i]
     pred_i <- transformeR::subsetGrid(pred, years = y)
 
-    loadeR.2nc::grid2nc(pred_i, NetCDFOutFile = paste0(outdir, rcp, "/", mod, "/", y.var, "/", y.var, yBP, ".nc"), missval = -9999, globalAttributes = globalAttributes)
+    loadeR.2nc::grid2nc(pred_i, NetCDFOutFile = paste0(outdir, "/", rcp, "/", mod, "/", y.var, "/", y.var, yBP, ".nc"), missval = -9999, globalAttributes = globalAttributes)
 
     # pred_df <- grid2spatialdf(pred_i)
 
-    # file_name <- paste0(outdir, rcp, "/", mod, "/", y.var, "/dat/", y.var, yBP, ".dat")
+    # file_name <- paste0(outdir, "/", rcp, "/", mod, "/", y.var, "/dat/", y.var, yBP, ".dat")
     # utils::write.table(pred_df, file = file_name, sep = "\t")
   }
   return("Done")
