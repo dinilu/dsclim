@@ -297,8 +297,8 @@ loadTraceGrid <- function(file, var, lon_lim = c(-25, 25), lat_lim = c(25, 50), 
 downscaleTrace <- function(files_n, indir, outdir, mod_data, model, model_bin = NULL, vars = NULL, lon_lim = c(-25, 25), lat_lim = c(25, 50), selection_vars = NULL, globalAttributes = NULL) {
   y.var <- mod_data$y$Variable$varName
 
-  if (!dir.exists(paste0(outdir, y.var))) {
-    dir.create(paste0(outdir, y.var), recursive = TRUE)
+  if (!dir.exists(paste0(outdir, "/", y.var))) {
+    dir.create(paste0(outdir, "/", y.var), recursive = TRUE)
   }
 
   if (is.null(selection_vars)) {
@@ -341,10 +341,10 @@ downscaleTrace <- function(files_n, indir, outdir, mod_data, model, model_bin = 
 
     pred$Data <- round(pred$Data, 2)
 
-    loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, y.var, "/", y.var, real.years[j], "_tmp.nc"), missval = -9999, globalAttributes = globalAttributes)
+    loadeR.2nc::grid2nc(pred, NetCDFOutFile = paste0(outdir, "/", y.var, "/", y.var, real.years[j], "_tmp.nc"), missval = -9999, globalAttributes = globalAttributes)
 
-    infile <- paste0(outdir, y.var, "/", y.var, real.years[j], "_tmp.nc")
-    outfile <- paste0(outdir, y.var, "/", y.var, real.years[j], ".nc")
+    infile <- paste0(outdir, "/", y.var, "/", y.var, real.years[j], "_tmp.nc")
+    outfile <- paste0(outdir, "/", y.var, "/", y.var, real.years[j], ".nc")
 
     message("New year: ", fake.years[[j]] + ydiff)
 
@@ -354,7 +354,7 @@ downscaleTrace <- function(files_n, indir, outdir, mod_data, model, model_bin = 
 
     # pred.df <- grid2spatialdf(pred)
 
-    # utils::write.table(pred.df, file = paste0(outdir, y.var, "/dat/", y.var, real.years[j], ".dat"), sep = "\t")
+    # utils::write.table(pred.df, file = paste0(outdir, "/", y.var, "/dat/", y.var, real.years[j], ".dat"), sep = "\t")
 
     message("   ...done")
   }
