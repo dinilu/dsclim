@@ -1,6 +1,6 @@
 Package: dsclim
 Title: Functions to downscale grid climate data (TraCE21ka or CMIP5)
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     c(person("Diego", "Nieto-Lugilde", email = "dnietolugilde@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-4135-2881")), person("Daniel", "Romera-Romera", role = "aut",
@@ -13,7 +13,7 @@ Description: The package provides to ease the use of climate4R R-package to down
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 LazyData: true
 Imports: 
     climate4R.UDG,
